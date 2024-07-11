@@ -8,4 +8,10 @@ const Button = sequelize.define('Button', {
     }
 });
 
+// Button.getAllButtons = async function() {
+//     const sql = "SELECT * FROM Buttons;";
+//     const results = await sequelize.query(sql);
+//     return results;
+// };
+
 module.exports = Button;

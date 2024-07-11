@@ -19,7 +19,7 @@ const Teams = sequelize.define('Team', {
 
 Teams.getStarter = async function() {
     const sql = "SELECT * FROM TEAMS WHERE team_id < 5;";
-    const results = await sequelize.query(sql);
+    const [results, metadata] = await sequelize.query(sql);
     return results;
 }
 

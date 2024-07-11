@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON `EpiPool-Points`.* TO 'user'@'%';
+FLUSH PRIVILEGES;

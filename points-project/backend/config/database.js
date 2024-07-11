@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('EpiPool-Points', 'user', 'password', {
+const sequelize = new Sequelize('EpiPool-DB', 'user', 'password', {
     host: 'localhost',
     dialect: 'mysql'
 });

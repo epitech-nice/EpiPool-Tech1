@@ -23,4 +23,16 @@ Teams.getStarter = async function() {
     return results;
 }
 
+Teams.getOrders = async function() {
+    const sql = "SELECT * FROM TEAMS WHERE team_id > 4;";
+    const [results, metadata] = await sequelize.query(sql);
+    return results;
+}
+
+Teams.getAll = async function() {
+    const sql = "SELECT * FROM TEAMS;";
+    const [results, metadata] = await sequelize.query(sql);
+    return results;
+}
+
 module.exports = Teams;

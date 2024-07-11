@@ -9,9 +9,9 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-sequelize.sync().then(() => {
-    console.log('Database & tables created!');
-});
+// sequelize.sync().then(() => {
+//     console.log('Database & tables created!');
+// });
 
 // app.get('/api/buttons', async (req, res) => {
 //     const buttons = await Button.findAll();

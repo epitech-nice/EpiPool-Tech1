@@ -30,7 +30,7 @@ Students.getAll = async function() {
 
 Students.getByTeam = async function(team_id) {
     const sql = `SELECT * FROM STUDENTS WHERE team_id = ${team_id};`;
-    const [results, metadata] = await sequelize.query
+    const [results, metadata] = await sequelize.query(sql);
     return results;
 }
 

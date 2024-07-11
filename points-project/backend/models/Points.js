@@ -15,13 +15,13 @@ const Points = sequelize.define('Point', {
 
 Points.getAll = async function() {
     const sql = "SELECT * FROM POINTS;";
-    const [results, metadata] = await sequelize.query
+    const [results, metadata] = await sequelize.query(sql);
     return results;
 }
 
 Points.getByTeam = async function(team_id) {
     const sql = `SELECT * FROM POINTS WHERE team_id = ${team_id};`;
-    const [results, metadata] = await sequelize.query
+    const [results, metadata] = await sequelize.query(sql);
     return results;
 }
 

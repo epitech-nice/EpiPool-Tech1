@@ -113,6 +113,7 @@ app.put('/api/remove_points_to_team', async (req, res) => {
     const { team_id, points } = req.body;
     const point = await Points.removePoints(team_id, points);
     res.json(point);
+    res.status(200);
 });
 
 app.listen(port, () => {

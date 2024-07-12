@@ -23,7 +23,7 @@ Teams.getStarter = async function() {
     return results;
 }
 
-Teams.getOrders = async function() {
+Teams.getFactions = async function() {
     const sql = "SELECT * FROM TEAMS WHERE team_id > 4;";
     const [results, metadata] = await sequelize.query(sql);
     return results;

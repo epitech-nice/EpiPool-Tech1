@@ -14,13 +14,16 @@ app.get('/api/starter_teams', async (req, res) => {
     res.json(teams);
 });
 
-app.get('/api/orders_teams', async (req, res) => {
-
+app.get('/api/factions_teams', async (req, res) => {
+    const teams = await Teams.getFactions();
+    res.json(teams);
 });
 
 app.get('/api/all_teams', async (req, res) => {
-
+    const teams = await Teams.getAll();
+    res.json(teams);
 });
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });

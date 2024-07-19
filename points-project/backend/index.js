@@ -97,10 +97,10 @@ app.get('/api/points', async (req, res) => {
     res.json(points);
 });
 
-app.get('/api/points_by_team', async (req, res) => {
+app.post('/api/points_by_team', async (req, res) => {
     const { team_id } = req.body;
     const points = await Points.getByTeam(team_id);
-    res.json(points);
+    res.json({ points });
 });
 
 app.put('/api/add_points_to_team', async (req, res) => {

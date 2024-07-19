@@ -1,13 +1,13 @@
 <template>
     <div class="slide-holder" ref="slider">
-        <div v-for="team in teams" :key="team.id" class="slide" :style="{ backgroundColor: team.color }">
-            {{ team.name }}
+        <div v-for="team in teams" :key="team.id" class="slide" @click="selectTeam(team)" :style="{ backgroundImage: `url(/assets/${team.filename})` }">
         </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { nextTick } from 'vue';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import $ from 'jquery';
@@ -20,13 +20,10 @@ export default {
             teams: []
         };
     },
-    created() {
-        this.fetchTeams();
-    },
-    updated() {
-        this.$nextTick(() => {
-            this.initSlider();
-        });
+    async mounted() {
+        await this.fetchTeams();
+        await nextTick();
+        this.initializeSlider();
     },
     methods: {
         async fetchTeams() {
@@ -37,20 +34,21 @@ export default {
             console.error('There was an error fetching the teams!', error);
             }
         },
-        initSlider() {
-            if (this.teams.length) {
-            $(this.$refs.slider).not('.slick-initialized').slick({
+        initializeSlider() {
+            $(this.$refs.slider).slick({
+                dots: true,
                 infinite: true,
-                speed: 500,
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 arrows: false,
-                fade: true,
-                cssEase: 'linear',
-                autoplay: true,
-                autoplaySpeed: 3000
+                // autoplay: true,
+                // autoplaySpeed: 4000
+            }).on('afterChange', (event, slick, currentSlide) => {
+                this.selectTeam(this.teams[currentSlide]);
             });
-            }
+        },
+        selectTeam(team) {
+            this.$emit('teamSelected', team);
         }
     }
 };
@@ -58,10 +56,9 @@ export default {
 
 <style>
 .slide-holder {
-    border: 1px solid #304963;
     border-radius: 10px;
-    height: 360px;
-    background-color: #304963;
+    height: fit-content;
+    background-color: #3a3b4b;
     width: min(30%, 385px);
 }
 .slide {
@@ -71,6 +68,16 @@ export default {
     font-size: 24px;
     color: white;
     border-radius: 10px;
-    height: 360px;
+    height: 593px;
+    width: 100%;
+    background-size: 100% 100%;
+    background-position: center;
+}
+.slick-dots li button:before {
+    color: white;
+}
+.slick-dots li.slick-active button:before {
+    color: white;
 }
 </style>
+

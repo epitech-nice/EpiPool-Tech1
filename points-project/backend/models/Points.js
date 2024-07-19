@@ -36,3 +36,5 @@ Points.removePoints = async function(team_id, points) {
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }
+
+module.exports = Points;

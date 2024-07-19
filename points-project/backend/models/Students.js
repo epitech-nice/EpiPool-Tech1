@@ -67,5 +67,7 @@ Students.deleteStudent = async function(student_id) {
     return results;
 }
 
+module.exports = Students;
+
 //get Students API LIONEL
 //qd on init //soit csv //soit db + //trucs de test

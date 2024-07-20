@@ -4,6 +4,7 @@ const sequelize = require('./config/database');
 const Teams = require('./models/Teams');
 const Students = require('./models/Students');
 const Points = require('./models/Points');
+const Logs = require('./models/Logs');
 
 const app = express();
 const port = 3000;
@@ -52,7 +53,7 @@ app.get('/api/all_students', async (req, res) => {
 });
 
 app.get('/api/students_by_team', async (req, res) => {
-    const { team_id } = req.body;
+    const { team_id } = req.query;
     const students = await Students.getByTeam(team_id);
     res.json(students);
 });
@@ -97,8 +98,8 @@ app.get('/api/points', async (req, res) => {
     res.json(points);
 });
 
-app.post('/api/points_by_team', async (req, res) => {
-    const { team_id } = req.body;
+app.get('/api/points_by_team', async (req, res) => {
+    const { team_id } = req.query;
     const points = await Points.getByTeam(team_id);
     res.json({ points });
 });
@@ -114,6 +115,24 @@ app.put('/api/remove_points_to_team', async (req, res) => {
     const point = await Points.removePoints(team_id, points);
     res.json(point);
     res.status(200);
+});
+
+//REQUEST for the logs
+app.get('/api/logs', async (req, res) => {
+    const logs = await Logs.getAll();
+    res.json(logs);
+});
+
+app.get('/api/logs_by_team', async (req, res) => {
+    const { team_id } = req.query;
+    const logs = await Logs.getByTeam(team_id);
+    res.json(logs);
+});
+
+app.get('/api/logs_by_student', async (req, res) => {
+    const { student_id } = req.query;
+    const logs = await Logs.getByStudent(student_id);
+    res.json(logs);
 });
 
 app.listen(port, () => {

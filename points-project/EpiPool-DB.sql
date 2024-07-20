@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Jul 11, 2024 at 02:44 PM
+-- Generation Time: Jul 20, 2024 at 10:43 AM
 -- Server version: 9.0.0
 -- PHP Version: 8.2.8
 
@@ -24,6 +24,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `LOGS`
+--
+
+CREATE TABLE `LOGS` (
+  `team_id` int NOT NULL,
+  `student_id` int NOT NULL,
+  `points` int NOT NULL,
+  `event` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `POINTS`
 --
 
@@ -31,18 +44,6 @@ CREATE TABLE `POINTS` (
   `team_id` int NOT NULL,
   `points` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `POINTS`
---
-
-INSERT INTO `POINTS` (`team_id`, `points`) VALUES
-(1, 0),
-(2, 0),
-(3, 0),
-(4, 0),
-(5, 0),
-(6, 0);
 
 -- --------------------------------------------------------
 
@@ -54,15 +55,9 @@ CREATE TABLE `STUDENTS` (
   `team_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `points` int NOT NULL
+  `points` int NOT NULL,
+  `student_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `STUDENTS`
---
-
-INSERT INTO `STUDENTS` (`team_id`, `name`, `email`, `points`) VALUES
-(3, 'Justin', 'justin.bridou@epitech.eu', 2);
 
 -- --------------------------------------------------------
 
@@ -73,24 +68,25 @@ INSERT INTO `STUDENTS` (`team_id`, `name`, `email`, `points`) VALUES
 CREATE TABLE `TEAMS` (
   `team_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
-  `color` varchar(255) NOT NULL
+  `color` varchar(255) NOT NULL,
+  `filename` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `TEAMS`
---
-
-INSERT INTO `TEAMS` (`team_id`, `name`, `color`) VALUES
-(1, 'Bugs Hunter', 'red'),
-(2, 'Game Alchemist', 'blue'),
-(3, 'Kernel Barbarian', 'yellow'),
-(4, 'DevOps Bard', 'green'),
-(5, 'Chaos Order', 'black'),
-(6, 'Light Order', 'white');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `POINTS`
+--
+ALTER TABLE `POINTS`
+  ADD PRIMARY KEY (`team_id`);
+
+--
+-- Indexes for table `STUDENTS`
+--
+ALTER TABLE `STUDENTS`
+  ADD PRIMARY KEY (`student_id`);
 
 --
 -- Indexes for table `TEAMS`
@@ -103,10 +99,16 @@ ALTER TABLE `TEAMS`
 --
 
 --
+-- AUTO_INCREMENT for table `STUDENTS`
+--
+ALTER TABLE `STUDENTS`
+  MODIFY `student_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `TEAMS`
 --
 ALTER TABLE `TEAMS`
-  MODIFY `team_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `team_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,9 +1,9 @@
 <template>
     <div class="team-points add-points">
-        <h3>Delete Points</h3>
+        <h3>Remove Points</h3>
         <form @submit.prevent="submitPoints">
             <input type="number" v-model="pointsToAdd" placeholder="Enter points" required />
-            <button type="submit">Delete Points</button>
+            <button type="submit">Remove Points</button>
         </form>
     </div>
 </template>
@@ -27,12 +27,12 @@ export default {
     methods: {
         async submitPoints() {
             try {
-                const response = await axios.put('http://localhost:3000/api/remove_points_to_team', {
+                await axios.put('http://localhost:3000/api/remove_points_to_team', {
                     team_id: this.team.team_id,
                     points: this.pointsToAdd
                 });
-                this.$emit('points-added', response.data.updatedPoints);
                 this.pointsToAdd = 0;
+                this.$emit('points-updated');
             } catch (error) {
                 console.error('Error adding points:', error);
             }

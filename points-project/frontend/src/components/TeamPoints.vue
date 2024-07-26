@@ -34,7 +34,9 @@ export default {
     methods: {
         async fetchPoints(team_id) {
             try {
-                const response = await axios.post('http://localhost:3000/api/points_by_team', { team_id });
+                const response = await axios.get('http://localhost:3000/api/points_by_team', {
+                    params: { team_id: team_id }
+                });
                 this.points = response.data.points;
             } catch (error) {
                 console.error('Error fetching points:', error);

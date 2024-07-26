@@ -1,7 +1,12 @@
 <template>
     <div class="team-points add-points">
-        <h3>Add Points</h3>
+        <h3>Add Points Student</h3>
         <form @submit.prevent="submitPoints">
+            <select v-model="selectedStudent" required>
+                <option v-for="student in students" :key="student.email" :value="student">
+                    {{ student.name }}
+                </option>
+            </select>
             <input type="number" v-model="pointsToAdd" placeholder="Enter points" required />
             <button type="submit">Add Points</button>
         </form>
@@ -21,14 +26,44 @@ export default {
     },
     data() {
         return {
-            pointsToAdd: 0
+            pointsToAdd: 0,
+            students: [],
+            selectedStudent: null
         };
     },
+    watch: {
+        team: {
+            immediate: true,
+            handler(newTeam) {
+                if (newTeam) {
+                    this.fetchStudents(newTeam.team_id);
+                }
+            }
+        }
+    },
     methods: {
-        async submitPoints() {
+        async fetchStudents(team_id) {
             try {
-                await axios.put('http://localhost:3000/api/add_points_to_team', {
-                    team_id: this.team.team_id,
+                const response = await axios.get('http://localhost:3000/api/students_by_team', {
+                    params: { team_id: team_id }
+                });
+                this.students = response.data;
+                if (this.students.length > 0) {
+                    this.selectedStudent = this.students[0];
+                }
+            } catch (error) {
+                console.error('Error fetching students:', error);
+            }
+        },
+        async submitPoints() {
+            if (!this.selectedStudent) {
+                alert('Please select a student.');
+                return;
+            }
+
+            try {
+                await axios.put('http://localhost:3000/api/add_points_to_student', {
+                    student_id: this.selectedStudent.student_id,
                     points: this.pointsToAdd
                 });
                 this.pointsToAdd = 0;
@@ -53,7 +88,7 @@ export default {
     flex-direction: column;
     align-items: center;
 }
-input {
+input, select {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;

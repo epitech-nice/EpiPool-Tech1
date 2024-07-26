@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard-container">
         <div class="header">
-            <TeamPoints :team="team" :points="currentPoints" />
+            <TeamPoints ref="teamPoints" :team="team" />
             <div v-if="team" class="team-points team-name">
                 <h2>{{ team.name }} ( {{ team.color }} )</h2>
             </div>
@@ -11,10 +11,16 @@
         </div>
         <div class="header mt10">
             <div v-if="team">
-                <AddPoints :team="team" @points-added="updatePoints" />
+                <AddPoints :team="team" @points-updated="refreshPoints" />
             </div>
             <div v-if="team">
-                <DeletePoints :team="team" @points-added="updatePoints" />
+                <DeletePoints :team="team" @points-updated="refreshPoints" />
+            </div>
+            <div v-if="team">
+                <AddPointsStudent :team="team" @points-updated="refreshPoints" />
+            </div>
+            <div v-if="team">
+                <DeletePointsStudent :team="team" @points-updated="refreshPoints" />
             </div>
         </div>
     </div>
@@ -24,13 +30,17 @@
 import TeamPoints from './TeamPoints.vue';
 import AddPoints from './AddPoints.vue';
 import DeletePoints from './DeletePoints.vue';
+import AddPointsStudent from './AddPointsStudent.vue';
+import DeletePointsStudent from './DeletePointsStudent.vue';
 
 export default {
     name: 'TeamDashboard',
     components: {
         TeamPoints,
         AddPoints,
-        DeletePoints
+        DeletePoints,
+        AddPointsStudent,
+        DeletePointsStudent
     },
     props: {
         team: {
@@ -44,14 +54,9 @@ export default {
         };
     },
     methods: {
-        updatePoints(newPoints) {
-            this.currentPoints = newPoints;
-        }
-    },
-    watch: {
-        team(newTeam) {
-            if (newTeam) {
-                this.currentPoints = newTeam.points;
+        refreshPoints() {
+            if (this.$refs.teamPoints) {
+                this.$refs.teamPoints.fetchPoints(this.team.team_id);
             }
         }
     }

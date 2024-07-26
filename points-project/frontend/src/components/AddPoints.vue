@@ -27,7 +27,7 @@ export default {
     methods: {
         async submitPoints() {
             try {
-                const response = await axios.put('http://localhost:3000/api/add_points_to_team', {
+                const response = await axios.post('http://localhost:3000/api/add_points_to_team', {
                     team_id: this.team.team_id,
                     points: this.pointsToAdd
                 });

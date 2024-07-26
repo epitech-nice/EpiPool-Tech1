@@ -18,11 +18,11 @@ const Students = sequelize.define('Student', {
     points: {
         type: DataTypes.INTEGER,
         allowNull: false
-    }
-    /*student_id: {
+    },
+    student_id: {
         type: DataTypes.INTEGER,
         allowNull: false
-    }*/
+    }
 });
 
 Students.getAll = async function() {

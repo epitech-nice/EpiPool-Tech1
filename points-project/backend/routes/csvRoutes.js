@@ -10,6 +10,42 @@ const Points = require('../models/Points');
 const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
 
+/**
+ * @swagger
+ * tags:
+ *  name: CSV
+ * description: API for processing CSV files
+ */
+
+/**
+ * @swagger
+ * /api/upload_csv:
+ * post:
+ * summary: Process a CSV file
+ * tags: [CSV]
+ * requestBody:
+ * content:
+ * multipart/form-data:
+ * schema:
+ * type: object
+ * properties:
+ * file:
+ * type: string
+ * format: binary
+ * required: true
+ * responses:
+ * 200:
+ * description: CSV processed successfully
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * success:
+ * type: boolean
+ * message:
+ * type: string
+ */
 router.post('/upload_csv', upload.single('file'), async (req, res) => {
     const filePath = path.join(__dirname, '../uploads', req.file.filename);
     const results = [];

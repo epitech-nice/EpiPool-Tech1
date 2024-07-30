@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const logsController = require('../controllers/logsController');
-const authenticateToken = require('../middleware/authMiddleware'); // Import the middleware
 
 /**
  * @swagger
@@ -102,7 +101,7 @@ router.get('/logs_by_student', logsController.getLogsByStudent);
  *       401:
  *         description: Unauthorized
  */
-router.post('/addLogs', authenticateToken, logsController.addLog);
+router.post('/addLogs', logsController.addLog);
 
 /**
  * @swagger
@@ -130,6 +129,6 @@ router.post('/addLogs', authenticateToken, logsController.addLog);
  *       404:
  *         description: Log entry not found
  */
-router.delete('/deleteLogs', authenticateToken, logsController.deleteLog);
+router.delete('/deleteLogs', logsController.deleteLog);
 
 module.exports = router;

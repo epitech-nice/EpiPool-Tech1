@@ -101,6 +101,12 @@ Students.getChampionByTeam = async function(team_id) {
     return results;
 }
 
+Students.changeTeam = async function(student_id, team_id) {
+    const sql = `UPDATE STUDENTS SET team_id = ${team_id} WHERE student_id = ${student_id};`;
+    const [results, metadata] = await sequelize.query(sql);
+    return results;
+}
+
 module.exports = Students;
 
 //get Students API LIONEL

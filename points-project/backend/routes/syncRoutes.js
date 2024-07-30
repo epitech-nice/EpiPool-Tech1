@@ -3,6 +3,32 @@ const axios = require('axios');
 const router = express.Router();
 require('dotenv').config();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Sync
+ *   description: API for syncing data
+ */
+
+/**
+ * @swagger
+ * /api/sync_students:
+ *  post:
+ *   summary: Sync students from the Intra API
+ *  tags: [Sync]
+ * responses:
+ * 200:
+ * description: Students synced successfully
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * success:
+ * type: boolean
+ * data:
+ * type: object
+ */
 router.post('/sync_students', async (req, res) => {
     try {
         const requestData = {

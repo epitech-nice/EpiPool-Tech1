@@ -94,6 +94,32 @@ const swaggerDefinition = {
             description: 'The total points associated with the team'
           }
         }
+      },
+      CsvRecord: {  // Nouveau schéma pour les enregistrements CSV
+        type: 'object',
+        properties: {
+          name: {
+            type: 'string',
+            description: 'The name of the student or team member'
+          },
+          email: {
+            type: 'string',
+            description: 'The email of the student or team member'
+          },
+          name_team: {
+            type: 'string',
+            description: 'The name of the team'
+          },
+          color: {
+            type: 'string',
+            description: 'The color associated with the team'
+          },
+          points: {
+            type: 'integer',
+            description: 'The points to be allocated'
+          }
+        },
+        required: ['name_team', 'color', 'points']
       }
     }
   }

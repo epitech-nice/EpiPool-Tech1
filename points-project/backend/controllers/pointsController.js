@@ -1,5 +1,3 @@
-// controllers/pointsController.js
-
 const Points = require('../models/Points');
 
 exports.getAllPoints = async (req, res) => {

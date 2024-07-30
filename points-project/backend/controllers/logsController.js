@@ -1,5 +1,3 @@
-// controllers/logsController.js
-
 const Logs = require('../models/Logs');
 
 exports.getAllLogs = async (req, res) => {

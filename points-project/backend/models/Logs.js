@@ -32,7 +32,7 @@ Logs.getAll = async function() {
 }
 
 Logs.getByTeam = async function(team_id) {
-    const sql = `SELECT * FROM LOGS WHERE team_id = ${team_id};`;
+    const sql = `SELECT * FROM LOGS WHERE team_id = ${team_id} ORDER BY log_id DESC LIMIT 5;`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }
@@ -42,3 +42,5 @@ Logs.getByStudent = async function(student_id) {
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }
+
+module.exports = Logs;

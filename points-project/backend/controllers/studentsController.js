@@ -114,3 +114,13 @@ exports.getChampionByTeam = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.changeTeam = async (req, res) => {
+    try {
+        const { student_id, team_id } = req.body;
+        const student = await Students.changeTeam(student_id, team_id);
+        res.json(student);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}

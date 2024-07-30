@@ -223,4 +223,7 @@ router.put('/remove_points_from_student', studentController.removePointsFromStud
  *         description: Champion not found
  */
 router.get('/getChampionByTeam', studentController.getChampionByTeam);
+
+router.put('/changeTeam', studentController.changeTeam);
+
 module.exports = router;

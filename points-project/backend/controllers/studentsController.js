@@ -54,14 +54,14 @@ exports.changeStudent = async (req, res) => {
 exports.deleteStudent = async (req, res) => {
     try {
         const { student_id } = req.body
-        const student = await Students.getStudent(student_id);
+        const [student, meta] = await Students.getStudent(student_id)
         if (!student)
             return res.status(404).json({ error: 'Student not found' });
         const points = student.points;
         const team_id = student.team_id;
         const deleted_student = await Students.deleteStudent(student_id);
         const students = await Students.getByTeam(team_id);
-        const nb_students_in_team = students.length;
+        const nb_students_in_team = students.length
         if (nb_students_in_team > 0) {
             const points_to_give = Math.floor(points / nb_students_in_team);
             const remainder_points = points % nb_students_in_team;

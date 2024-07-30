@@ -1,7 +1,6 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
-
 require('dotenv').config();
 
 router.post('/sync_students', async (req, res) => {
@@ -11,7 +10,8 @@ router.post('/sync_students', async (req, res) => {
             year: 2023,
             promotions: ["tek1"]
         };
-        const apiUrl = 'http://10.73.190.239/intra/getStudents';
+        const apiIp = process.env.API_IP;
+        const apiUrl = `http://${apiIp}/intra/getStudents`;
         const response = await axios.post(apiUrl, requestData);
         res.status(200).json({
             success: true,

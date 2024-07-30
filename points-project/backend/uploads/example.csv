@@ -1,0 +1,4 @@
+name,email,name_team,color,points
+John Doe,john.doe@example.com,Team A,red,100
+Jane Smith,jane.smith@example.com,Team A,red,150
+,,Team B,blue,200

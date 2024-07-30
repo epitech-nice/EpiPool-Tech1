@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `LOGS` (
+  `log_id` int NOT NULL,
   `team_id` int NOT NULL,
   `student_id` int NOT NULL,
   `points` int NOT NULL,
@@ -95,6 +96,11 @@ ALTER TABLE `TEAMS`
   ADD PRIMARY KEY (`team_id`);
 
 --
+-- Indexes for table `LOGS`
+--
+ALTER TABLE `LOGS`
+  ADD PRIMARY KEY (`log_id`);
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -105,11 +111,17 @@ ALTER TABLE `STUDENTS`
   MODIFY `student_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `LOGS`
+--
+ALTER TABLE `LOGS`
+  MODIFY `log_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
 -- AUTO_INCREMENT for table `TEAMS`
 --
 ALTER TABLE `TEAMS`
   MODIFY `team_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

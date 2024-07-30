@@ -95,6 +95,12 @@ Students.deleteStudent = async function(student_id) {
     return results;
 }
 
+Students.getChampionByTeam = async function(team_id) {
+    const sql = `SELECT * FROM STUDENTS WHERE team_id = ${team_id} ORDER BY points DESC LIMIT 1;`;
+    const [results, metadata] = await sequelize.query(sql);
+    return results;
+}
+
 module.exports = Students;
 
 //get Students API LIONEL

@@ -199,4 +199,28 @@ router.put('/add_points_to_student', studentController.addPointsToStudent);
  */
 router.put('/remove_points_from_student', studentController.removePointsFromStudent);
 
+/**
+ * @swagger
+ * /api/getChampionByTeam:
+ *   get:
+ *     summary: Retrieve the champion of a team
+ *     tags: [Students]
+ *     parameters:
+ *       - in: query
+ *         name: team_id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID of the team to retrieve the champion for
+ *     responses:
+ *       200:
+ *         description: The champion of the specified team
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Student'
+ *       404:
+ *         description: Champion not found
+ */
+router.get('/getChampionByTeam', studentController.getChampionByTeam);
 module.exports = router;

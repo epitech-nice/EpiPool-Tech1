@@ -8,6 +8,8 @@ const teamsRoutes = require('./routes/teamsRoutes');
 const studentsRoutes = require('./routes/studentsRoutes');
 const pointsRoutes = require('./routes/pointsRoutes');
 const logsRoutes = require('./routes/logsRoutes');
+const csvRoutes = require('./routes/csvRoutes');
+const syncRoutes = require('./routes/syncRoutes');
 
 const app = express();
 const port = 3000;
@@ -26,6 +28,8 @@ app.use('/api/teams', teamsRoutes);
 app.use('/api/students', studentsRoutes);
 app.use('/api/points', pointsRoutes);
 app.use('/api/logs', logsRoutes);
+app.use('/api/csv', csvRoutes);
+app.use('api/sync', syncRoutes);
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);

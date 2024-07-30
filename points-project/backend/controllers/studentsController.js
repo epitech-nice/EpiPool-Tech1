@@ -102,3 +102,15 @@ exports.removePointsFromStudent = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.getChampionByTeam = async (req, res) => {
+    try {
+        const { team_id } = req.query;
+        const champion = await Students.getChampionByTeam(team_id);
+        if (!champion)
+            return res.status(404).json({ error: 'Champion not found' });
+        res.json(champion);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

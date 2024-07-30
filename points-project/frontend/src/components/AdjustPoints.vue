@@ -71,7 +71,7 @@ export default {
             if (this.team && this.team.team_id) {
             try {
                 const response = await axios.get('http://localhost:3000/api/students/students_by_team', {
-                params: { team_id: this.team.team_id }
+                    params: { team_id: this.team.team_id }
                 });
                 this.students = response.data;
                 if (this.students.length > 0) {

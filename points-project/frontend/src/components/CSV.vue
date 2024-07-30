@@ -1,7 +1,7 @@
 <template>
     <div class="upload-container">
         <div 
-            class="drop-zone" 
+            :class="{'drop-zone': true, 'file-selected': file}" 
             @dragover.prevent="onDragOver" 
             @drop.prevent="onDrop"
             @click="fileInputClick"
@@ -15,7 +15,8 @@
             style="display: none;" 
             accept=".csv"
         />
-        <button @click="uploadFile" :disabled="!file">Upload</button>
+        <p v-if="file" class="file-name">Selected file: {{ file.name }}</p>
+        <button @click="uploadFile">Upload</button>
     </div>
 </template>
 
@@ -35,9 +36,9 @@ export default {
         onDrop(event) {
             const files = event.dataTransfer.files;
             if (files.length > 0 && this.isCsvFile(files[0])) {
-            this.file = files[0];
+                this.file = files[0];
             } else {
-            alert('Please drop a CSV file.');
+                alert('Please drop a CSV file.');
             }
         },
         fileInputClick() {
@@ -46,9 +47,9 @@ export default {
         onFileChange(event) {
             const files = event.target.files;
             if (files.length > 0 && this.isCsvFile(files[0])) {
-            this.file = files[0];
+                this.file = files[0];
             } else {
-            alert('Please select a CSV file.');
+                alert('Please select a CSV file.');
             }
         },
         isCsvFile(file) {
@@ -62,12 +63,11 @@ export default {
             const formData = new FormData();
             formData.append('file', this.file);
             try {
-                const response = await axios.post('http://localhost:3000/api/csv/upload_csv', formData, {
+                await axios.post('http://localhost:3000/api/csv/upload_csv', formData, {
                     headers: {
                     'Content-Type': 'multipart/form-data'
                     }
                 });
-                console.log('File uploaded successfully', response.data);
                 alert('File uploaded successfully.');
             } catch (error) {
                 console.error('Error uploading file:', error);
@@ -85,6 +85,7 @@ export default {
     text-align: center;
     margin: 20px;
     cursor: pointer;
+    width: 30%;
 }
 
 .drop-zone {
@@ -92,5 +93,11 @@ export default {
     border: 1px solid #ccc;
     background-color: #4d4d60;
     margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.file-name {
+    margin-top: 10px;
+    color: white;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
-    <div class="team-points flex-column">
+    <div class="team-points flex-column" style="width: calc(33.3333%);">
         <span class="title-underscore">Students</span>
         <div class="log">
             <div class="student-orders" v-for="student in students" :key="student.log_id">
                 {{ student.name }} - {{ student.email }} ({{ student.points }} points)
                 <div class="icons-end">
-                    <button @click="changeStudent(student.student_id)" class="icon-button change">
+                    <button @click="openChangeTeamForm(student)" class="icon-button change">
                         <svg-icon type="mdi" :path="changeTeam"></svg-icon>
                     </button>
                     <button @click="removeStudent(student.student_id)" class="icon-button cancel">
@@ -14,6 +14,19 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div v-if="showForm" class="blurbackground"></div>
+    <div v-if="showForm" class="popup">
+        <button class="close-button" @click="showForm = false">&#10005;</button>
+        <form @submit.prevent="submitChange" class="form-flex">
+            <label for="teams">Teams</label>
+            <select v-model="selectedTeamId" required>
+                <option v-for="team in teams" :key="team.team_id" :value="team.team_id">
+                    {{ team.name }} - {{ team.color }}
+                </option>
+            </select>
+            <button type="submit">Change Team</button>
+        </form>
     </div>
 </template>
 
@@ -37,8 +50,12 @@ export default {
     data() {
         return {
             students: [],
+            teams: [],
             cancel: mdiCancel,
             changeTeam: mdiSwapHorizontal,
+            showForm: false,
+            selectedStudent: null,
+            selectedTeamId: null,
         };
     },
     watch: {
@@ -46,6 +63,7 @@ export default {
             immediate: true,
             handler() {
                 this.fetchStudents();
+                this.fetchTeams();
             }
         }
     },
@@ -60,6 +78,14 @@ export default {
                 } catch (error) {
                     console.error('Error fetching students:', error);
                 }
+            }
+        },
+        async fetchTeams() {
+            try {
+                const response = await axios.get('http://localhost:3000/api/teams/starter_teams');
+                this.teams = response.data;
+            } catch (error) {
+                console.error('Error fetching teams:', error);
             }
         },
         removeStudent(studentId) {
@@ -78,8 +104,26 @@ export default {
                 });
             }
         },
-        changeStudent(studentId) {
-            console.log('Changing team for student:', studentId);
+        openChangeTeamForm(student) {
+            this.selectedStudent = student;
+            this.showForm = true;
+        },
+        async submitChange() {
+            if (this.selectedTeamId && this.selectedStudent) {
+                try {
+                    console.log('Student id and team id:', this.selectedStudent.student_id, this.selectedTeamId);
+                    await axios.put('http://localhost:3000/api/students/changeTeam', {
+                        student_id: this.selectedStudent.student_id,
+                        team_id: this.selectedTeamId
+                    });
+                    this.fetchStudents();
+                    this.showForm = false;
+                    alert('Student team changed successfully!');
+                } catch (error) {
+                    console.error('Error changing student team:', error);
+                    alert('Error changing student team.');
+                }
+            }
         }
     }
 };

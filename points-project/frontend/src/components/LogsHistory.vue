@@ -5,9 +5,6 @@
             <p v-for="log in logs" :key="log.log_id">
                 {{ log.name }} {{ log.points > 0 ? 'a gagné ' + log.points + ' points grâce à ' : 'a perdu ' + Math.abs(log.points) + ' points à cause de ' }}{{ log.reason }}
             </p>
-            <p>ef</p>
-            <p>ef</p>
-            <p>ef</p>
         </div>
     </div>
 </template>

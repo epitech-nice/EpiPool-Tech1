@@ -75,8 +75,8 @@ Students.removePoints = async function(student_id, points, reason) {
     return results;
 }
 
-Students.addStudent = async function(name, email, points) {
-    const sql = `INSERT INTO STUDENTS (name, email, points) VALUES ('${name}', '${email}', ${points});`;
+Students.addStudent = async function(team_id, name, email, points) {
+    const sql = `INSERT INTO STUDENTS (team_id, name, email, points) VALUES ('${team_id}', '${name}', '${email}', ${points});`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }
@@ -103,6 +103,12 @@ Students.getChampionByTeam = async function(team_id) {
 
 Students.changeTeam = async function(student_id, team_id) {
     const sql = `UPDATE STUDENTS SET team_id = ${team_id} WHERE student_id = ${student_id};`;
+    const [results, metadata] = await sequelize.query(sql);
+    return results;
+}
+
+Students.getStudentByEmail = async function(email) {
+    const sql = `SELECT * FROM STUDENTS WHERE email = '${email}';`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }

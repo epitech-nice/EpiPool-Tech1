@@ -102,4 +102,15 @@ Points.removePointsFromStudents = async function(team_id, points, reason) {
     }
 };
 
+Points.addNewTeam = async function(team_id) {
+    try {
+        const sql = `INSERT INTO POINTS (team_id, points) VALUES (${team_id}, 0);`;
+        const [results, metadata] = await sequelize.query(sql);
+        return results;
+    } catch (error) {
+        console.error(`Error adding new team ${team_id}:`, error);
+        throw new Error("Could not add new team");
+    }
+};
+
 module.exports = Points;

@@ -17,6 +17,18 @@ const Teams = sequelize.define('Team', {
     }
 });
 
+Teams.getByName = async function(name) {
+    try {
+        const sql = `SELECT * FROM TEAMS WHERE name = '${name}';`;
+        const [results, metadata] = await sequelize.query(sql);
+        console.log("results GET BYNAME", results);
+        return results;
+    } catch (error) {
+        console.error('Error fetching team by name:', error.message);
+        throw new Error('Could not fetch team by name');
+    }
+}
+
 Teams.getStarter = async function() {
     try {
         const sql = "SELECT * FROM TEAMS WHERE team_id < 5;";
@@ -61,25 +73,23 @@ Teams.deleteTeam = async function(team_id) {
 
 Teams.addTeam = async function(name, color) {
     try {
-        const existingTeamSql = `SELECT * FROM TEAMS WHERE name = ?`;
-        const [existingTeams] = await sequelize.query(existingTeamSql, {
-            replacements: [name],
-            type: sequelize.QueryTypes.SELECT,
-        });
-        if (existingTeams.length > 0) {
+        console.log("Adding team:", name, color);
+
+        const existingTeam = await Teams.getByName(name);
+        console.log("existingTeam", existingTeam);
+        if (existingTeam.length > 0) {
             throw new Error('Team with this name already exists');
         }
-        const insertTeamSql = `INSERT INTO TEAMS (name, color) VALUES (?, ?)`;
-        const [results] = await sequelize.query(insertTeamSql, {
-            replacements: [name, color],
-            type: sequelize.QueryTypes.INSERT,
-        });
+
+        const sql = `INSERT INTO TEAMS (name, color) VALUES ('${name}', '${color}');`;
+        const [results, metadata] = await sequelize.query(sql);
+        console.log("results", results);
         return results;
     } catch (error) {
+        console.error("Error adding team:", error.message);
         throw error;
     }
 };
-
 
 Teams.changeTeam = async function(team_id, name, color) {
     const sql = `UPDATE TEAMS SET name = '${name}', color = '${color}' WHERE team_id = ${team_id};`;

@@ -3,8 +3,9 @@ const multer = require('multer');
 const csv = require('csv-parser');
 const fs = require('fs');
 const path = require('path');
-const Team = require('../models/Teams');  // Sequelize model for Team
-const Student = require('../models/Students');  // Sequelize model for Student
+const Team = require('../models/Teams');
+const Student = require('../models/Students');
+const Points = require('../models/Points');
 
 const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
@@ -20,31 +21,24 @@ router.post('/upload_csv', upload.single('file'), async (req, res) => {
             try {
                 for (const record of results) {
                     const { name, email, name_team, color, points } = record;
-                    let team;
-
-                    // Check if the team exists or create it
-                    team = await Team.findOne({ where: { name: name_team } });
-                    if (!team) {
-                        team = await Team.create({ name: name_team, color, points: 0 });
+                    const teamResults = await Team.getByName(name_team);
+                    console.log("team before", teamResults);
+                    if (teamResults.length === 0) {
+                        team_id = await Team.addTeam(name_team, color);
+                        let point = await Points.addNewTeam(team_id);
                     }
-
+                    console.log("team_id", team_id);
                     if (name && email) {
-                        // Handle student entry
-                        let student = await Student.findOne({ where: { email } });
-                        if (student) {
-                            student.points += parseInt(points, 10);
-                            await student.save();
+                        let studentResults = await Student.getStudentByEmail(email);
+                        let student;
+                        if (studentResults.length > 0) {
+                            student = studentResults[0];
+                            await Student.addPoints(student.student_id, points, 'CSV upload');
                         } else {
-                            student = await Student.create({
-                                name,
-                                email,
-                                team_id: team.id,
-                                points: parseInt(points, 10)
-                            });
+                            student = await Student.addStudent(team_id, name, email, points);
                         }
                     } else {
-                        team.points += parseInt(points, 10);
-                        await team.save();
+                        await Points.addPoints(team_id, points, 'CSV upload');
                     }
                 }
                 res.json({ success: true, message: 'CSV processed successfully' });

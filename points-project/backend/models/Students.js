@@ -50,14 +50,9 @@ Students.addPoints = async function(student_id, points, reason) {
     const sql = `UPDATE STUDENTS SET points = points + ${points} WHERE student_id = ${student_id};`;
     const [results, metadata] = await sequelize.query(sql);
     await sequelize.query(`INSERT INTO LOGS (student_id, points, reason) VALUES (${student_id}, ${points}, '${reason}');`);
-    await sequelize.query(`
-        UPDATE POINTS
-        SET points = points + ?
-        WHERE team_id = (SELECT team_id FROM STUDENTS WHERE student_id = ?);
-    `, {
-        replacements: [points, student_id],
-        type: sequelize.QueryTypes.UPDATE
-    });    
+    const [data, meta] = await sequelize.query(`SELECT team_id FROM STUDENTS WHERE student_id = ${student_id};`);
+    team_id = data[0].team_id;  
+    Points.addPointsFromStudents(team_id, points, reason);
     return results;
 }
 
@@ -73,10 +68,10 @@ Students.removePoints = async function(student_id, points, reason) {
     const sql = `UPDATE STUDENTS SET points = points - ${points} WHERE student_id = ${student_id};`;
     const [results, metadata] = await sequelize.query(sql);
     points_log = points * -1;
-    await sequelize.query(`INSERT INTO LOGS (student_id, points, reason) VALUES (${student_id}, ${points_log}, '${reason}');`);
     const [data, meta] = await sequelize.query(`SELECT team_id FROM STUDENTS WHERE student_id = ${student_id};`);
     team_id = data[0].team_id;
-    Points.removePoints(team_id, points, reason);
+    await sequelize.query(`INSERT INTO LOGS (team_id, student_id, points, reason) VALUES (${team_id}, ${student_id}, ${points_log}, '${reason}');`);
+    Points.removePointsFromStudents(team_id, points, reason);
     return results;
 }
 

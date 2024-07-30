@@ -3,6 +3,8 @@ const Teams = require('../models/Teams');
 exports.getStarterTeams = async (req, res) => {
     try {
         const teams = await Teams.getStarter();
+        if (!teams)
+            return res.status(404).json({ error: 'Teams not found' });
         res.json(teams);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -12,6 +14,8 @@ exports.getStarterTeams = async (req, res) => {
 exports.getFactionsTeams = async (req, res) => {
     try {
         const teams = await Teams.getFactions();
+        if (!teams)
+            return res.status(404).json({ error: 'Teams not found' });
         res.json(teams);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -21,6 +25,8 @@ exports.getFactionsTeams = async (req, res) => {
 exports.getAllTeams = async (req, res) => {
     try {
         const teams = await Teams.getAll();
+        if (!teams)
+            return res.status(404).json({ error: 'Teams not found' });
         res.json(teams);
     } catch (error) {
         res.status(500).json({ error: error.message });

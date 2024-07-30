@@ -32,7 +32,34 @@ const swaggerDefinition = {
           required: ['name', 'color'],
         },
       },
-    },
+      schemas: {
+        Log: {
+          type: 'object',
+          properties: {
+            log_id: {
+              type: 'integer',
+              description: 'The auto-generated id of the log entry'
+            },
+            team_id: {
+              type: 'integer',
+              description: 'ID of the team related to the log entry'
+            },
+            student_id: {
+              type: 'integer',
+              description: 'ID of the student related to the log entry'
+            },
+            points: {
+              type: 'integer',
+              description: 'Points involved in the log entry'
+            },
+            reason: {
+              type: 'string',
+              description: 'Reason or description of the log entry'
+            }
+          }
+        }
+      }
+    }
   };
   
   module.exports = swaggerDefinition;

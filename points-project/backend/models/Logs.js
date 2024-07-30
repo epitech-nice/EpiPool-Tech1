@@ -32,13 +32,43 @@ Logs.getAll = async function() {
 }
 
 Logs.getByTeam = async function(team_id) {
-    const sql = `SELECT * FROM LOGS WHERE team_id = ${team_id} ORDER BY log_id DESC LIMIT 5;`;
+    const sql = `SELECT 
+        log_id, 
+        LOGS.team_id, 
+        STUDENTS.student_id, 
+        LOGS.points, 
+        LOGS.reason, 
+        STUDENTS.name, 
+        STUDENTS.email 
+    FROM 
+        LOGS
+    JOIN 
+        STUDENTS 
+    ON 
+        STUDENTS.student_id = LOGS.student_id
+    WHERE 
+        LOGS.team_id = ${team_id}
+    ORDER BY 
+        LOGS.log_id DESC
+    LIMIT 5;`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }
 
 Logs.getByStudent = async function(student_id) {
     const sql = `SELECT * FROM LOGS WHERE student_id = ${student_id};`;
+    const [results, metadata] = await sequelize.query(sql);
+    return results;
+}
+
+Logs.addLog = async function(team_id, student_id, points, event) {
+    const sql = `INSERT INTO LOGS (team_id, student_id, points, event) VALUES (${team_id}, ${student_id}, ${points}, '${event}');`;
+    const [results, metadata] = await sequelize.query(sql);
+    return results;
+}
+
+Logs.deleteLog = async function(log_id) {
+    const sql = `DELETE FROM LOGS WHERE log_id = ${log_id};`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }

@@ -49,9 +49,9 @@ Students.addPoints = async function(student_id, points, reason) {
         throw new Error("Points to add must be a positive number");
     const sql = `UPDATE STUDENTS SET points = points + ${points} WHERE student_id = ${student_id};`;
     const [results, metadata] = await sequelize.query(sql);
-    await sequelize.query(`INSERT INTO LOGS (student_id, points, reason) VALUES (${student_id}, ${points}, '${reason}');`);
     const [data, meta] = await sequelize.query(`SELECT team_id FROM STUDENTS WHERE student_id = ${student_id};`);
     team_id = data[0].team_id;  
+    await sequelize.query(`INSERT INTO LOGS (team_id, student_id, points, reason) VALUES (${team_id}, ${student_id}, ${points}, '${reason}');`);
     Points.addPointsFromStudents(team_id, points, reason);
     return results;
 }

@@ -1,5 +1,3 @@
-// controllers/studentController.js
-
 const Students = require('../models/Students');
 
 exports.getAllStudents = async (req, res) => {
@@ -16,6 +14,18 @@ exports.getStudentsByTeam = async (req, res) => {
         const { team_id } = req.query;
         const students = await Students.getByTeam(team_id);
         res.json(students);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.getStudent = async (req, res) => {
+    try {
+        const { student_id } = req.query;
+        const student = await Students.getStudent(student_id);
+        if (!student)
+            return res.status(404).json({ error: 'Student not found' });
+        res.json(student);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -43,10 +53,26 @@ exports.changeStudent = async (req, res) => {
 
 exports.deleteStudent = async (req, res) => {
     try {
-        const { student_id } = req.body;
-        const student = await Students.deleteStudent(student_id);
-        // TODO: Redistribute the student's points to their team
-        res.json(student);
+        const { student_id } = req.body
+        const student = await Students.getStudent(student_id);
+        if (!student)
+            return res.status(404).json({ error: 'Student not found' });
+        const points = student.points;
+        const team_id = student.team_id;
+        const deleted_student = await Students.deleteStudent(student_id);
+        const students = await Students.getByTeam(team_id);
+        const nb_students_in_team = students.length;
+        if (nb_students_in_team > 0) {
+            const points_to_give = Math.floor(points / nb_students_in_team);
+            const remainder_points = points % nb_students_in_team;
+            await Promise.all(students.map(async (student, index) => {
+                let extra_points = points_to_give;
+                if (index < remainder_points)
+                    extra_points += 1;
+                await Students.addPoints(student.student_id, extra_points);
+            }));
+        }
+        res.json(deleted_student);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -54,9 +80,10 @@ exports.deleteStudent = async (req, res) => {
 
 exports.addPointsToStudent = async (req, res) => {
     try {
-        const { student_id, points } = req.body;
-        const student = await Students.addPoints(student_id, points);
-        // TODO: Handle prorata or add to total number
+        const { student_id, points, reason } = req.body;
+        if (!reason)
+            reason = "PEDAGO";
+        const student = await Students.addPoints(student_id, points, reason);
         res.json(student);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -65,8 +92,10 @@ exports.addPointsToStudent = async (req, res) => {
 
 exports.removePointsFromStudent = async (req, res) => {
     try {
-        const { student_id, points } = req.body;
-        const student = await Students.removePoints(student_id, points);
+        const { student_id, points, reason } = req.body;
+        if (!reason)
+            reason = "PEDAGO";
+        const student = await Students.removePoints(student_id, points, reason);
         // TODO: Adjust the final number of points
         res.json(student);
     } catch (error) {

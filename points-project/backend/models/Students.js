@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Points = require('./Points');
 
 const Students = sequelize.define('Student', {
     team_id: {
@@ -63,11 +64,19 @@ Students.addPoints = async function(student_id, points, reason) {
 Students.removePoints = async function(student_id, points, reason) {
     if (points < 0)
         throw new Error("Points to remove must be a positive number");
-    //TODO: check if enough points to be removed
-    points *= -1;
+    const [datas, met] = await sequelize.query(`SELECT points FROM STUDENTS WHERE student_id = ${student_id};`);
+    current_points = datas[0].points;
+    if (points > current_points) {
+        points_to_rm = points - current_points;
+        points = points - points_to_rm;
+    }
     const sql = `UPDATE STUDENTS SET points = points - ${points} WHERE student_id = ${student_id};`;
     const [results, metadata] = await sequelize.query(sql);
-    await sequelize.query(`INSERT INTO LOGS (student_id, points, reason) VALUES (${student_id}, ${points}, '${reason}');`);
+    points_log = points * -1;
+    await sequelize.query(`INSERT INTO LOGS (student_id, points, reason) VALUES (${student_id}, ${points_log}, '${reason}');`);
+    const [data, meta] = await sequelize.query(`SELECT team_id FROM STUDENTS WHERE student_id = ${student_id};`);
+    team_id = data[0].team_id;
+    Points.removePoints(team_id, points, reason);
     return results;
 }
 

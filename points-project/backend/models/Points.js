@@ -54,12 +54,11 @@ Points.addPoints = async function(team_id, points, reason) {
 
 Points.removePoints = async function(team_id, points, reason) {
     try {
-        if (points < 0) {
-            throw new Error("Points to remove must be a positive number");
-        }
-        const current_points = await sequelize.query(`SELECT points FROM POINTS WHERE team_id = ${team_id};`);
-        if (points > current_points[0][0].points) {
-            throw new Error("Not enough points to remove");
+        const [datas, met] = await sequelize.query(`SELECT points FROM POINTS WHERE team_id = ${team_id};`);
+        current_points = datas[0].points;
+        if (points > current_points) {
+            points_to_rm = points - current_points;
+            points = points - points_to_rm;
         }
         const sql = `UPDATE POINTS SET points = points - ${points} WHERE team_id = ${team_id};`;
         const [results, metadata] = await sequelize.query(sql);

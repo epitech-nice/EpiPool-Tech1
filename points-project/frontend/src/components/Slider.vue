@@ -28,7 +28,7 @@ export default {
     methods: {
         async fetchTeams() {
             try {
-            const response = await axios.get('http://localhost:3000/api/starter_teams');
+            const response = await axios.get('http://localhost:3000/api/teams/starter_teams');
             this.teams = response.data;
             } catch (error) {
             console.error('There was an error fetching the teams!', error);

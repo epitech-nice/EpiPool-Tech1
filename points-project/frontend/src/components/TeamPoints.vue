@@ -34,7 +34,7 @@ export default {
     methods: {
         async fetchPoints(team_id) {
             try {
-                const response = await axios.get('http://localhost:3000/api/points_by_team', {
+                const response = await axios.get('http://localhost:3000/api/points/points_by_team', {
                     params: { team_id: team_id }
                 });
                 this.points = response.data.points;
@@ -51,7 +51,6 @@ export default {
     background-color: #2b2b38;
     border-radius: 10px;
     padding: 20px;
-    width: fit-content;
     color: white;
     text-align: center;
     align-content: center;
@@ -60,19 +59,6 @@ export default {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s;
     justify-content: center;
-}
-
-.team-points:hover {
-    transform: scale(1.05);
-}
-
-h3 {
-    font-size: 2em;
-    padding: 10px;
-    margin: 0;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .w30 {

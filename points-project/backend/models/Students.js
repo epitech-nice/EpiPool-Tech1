@@ -56,6 +56,7 @@ Students.removePoints = async function(student_id, points, reason) {
     if (points < 0)
         throw new Error("Points to remove must be a positive number");
     //TODO: check if enough points to be removed
+    points *= -1;
     const sql = `UPDATE STUDENTS SET points = points - ${points} WHERE student_id = ${student_id};`;
     const [results, metadata] = await sequelize.query(sql);
     await sequelize.query(`INSERT INTO LOGS (student_id, points, reason) VALUES (${student_id}, ${points}, '${reason}');`);

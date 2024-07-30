@@ -74,6 +74,7 @@ Points.removePoints = async function(team_id, points, reason) {
             replacements: [points, team_id],
             type: sequelize.QueryTypes.UPDATE
         });
+        points *= -1;
         await sequelize.query(`INSERT INTO LOGS (team_id, points, reason) VALUES (${team_id}, ${points}, '${reason}');`);
         return { team_id, pointsRemoved: points };
     } catch (error) {

@@ -57,30 +57,16 @@ Points.removePoints = async function(team_id, points, reason) {
         if (points < 0) {
             throw new Error("Points to remove must be a positive number");
         }
-        const pointsSql = `SELECT points FROM POINTS WHERE team_id = ?;`;
-        const [currentPointsRes] = await sequelize.query(pointsSql, {
-            replacements: [team_id],
-            type: sequelize.QueryTypes.SELECT
-        });
-        if (currentPointsRes.length === 0) {
-            throw new Error(`Team with ID ${team_id} not found`);
-        }
-        const currentPoints = currentPointsRes[0].points;
-        if (currentPoints - points < 0) {
-            throw new Error("Insufficient points to remove");
-        }
-        const updateSql = `UPDATE POINTS SET points = points - ? WHERE team_id = ?;`;
-        await sequelize.query(updateSql, {
-            replacements: [points, team_id],
-            type: sequelize.QueryTypes.UPDATE
-        });
+        const sql = `UPDATE POINTS SET points = points - ${points} WHERE team_id = ${team_id};`;
+        const [results, metadata] = await sequelize.query(sql);
         points *= -1;
         await sequelize.query(`INSERT INTO LOGS (team_id, points, reason) VALUES (${team_id}, ${points}, '${reason}');`);
-        return { team_id, pointsRemoved: points };
+        return results;
     } catch (error) {
         console.error(`Error removing points from team ${team_id}:`, error.message);
         throw new Error("Failed to remove points from team");
     }
-}
+};
+
 
 module.exports = Points;

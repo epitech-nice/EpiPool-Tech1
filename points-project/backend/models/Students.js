@@ -49,6 +49,7 @@ Students.addPoints = async function(student_id, points, reason) {
     const sql = `UPDATE STUDENTS SET points = points + ${points} WHERE student_id = ${student_id};`;
     const [results, metadata] = await sequelize.query(sql);
     await sequelize.query(`INSERT INTO LOGS (student_id, points, reason) VALUES (${student_id}, ${points}, '${reason}');`);
+    await sequelize.query(`INSERT INTO POINTS where team_id = (SELECT team_id FROM STUDENTS WHERE student_id = ${student_id}) SET points = points + ${points};`);
     return results;
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Jul 20, 2024 at 10:43 AM
+-- Generation Time: Jul 30, 2024 at 12:12 PM
 -- Server version: 9.0.0
 -- PHP Version: 8.2.8
 
@@ -29,16 +29,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `LOGS` (
   `log_id` int NOT NULL,
-  `team_id` int NOT NULL,
-  `student_id` int NOT NULL,
+  `team_id` int DEFAULT NULL,
+  `student_id` int DEFAULT NULL,
   `points` int NOT NULL,
   `reason` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-ALTER TABLE `LOGS`
-  ADD PRIMARY KEY (`log_id`);
-ALTER TABLE `LOGS`
-  MODIFY `log_id` int NOT NULL AUTO_INCREMENT;
-COMMIT;
 
 -- --------------------------------------------------------
 
@@ -48,9 +43,12 @@ COMMIT;
 
 CREATE TABLE `POINTS` (
   `team_id` int NOT NULL,
-  `points` int NOT NULL,
-  PRIMARY KEY (`team_id`)
+  `points` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `POINTS`
+--
 
 -- --------------------------------------------------------
 
@@ -59,15 +57,16 @@ CREATE TABLE `POINTS` (
 --
 
 CREATE TABLE `STUDENTS` (
-  `student_id` int NOT NULL AUTO_INCREMENT,
   `team_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `points` int NOT NULL,
-  PRIMARY KEY (`student_id`),
-  FOREIGN KEY (`team_id`) REFERENCES `TEAMS` (`team_id`) ON DELETE CASCADE
+  `student_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `STUDENTS`
+--
 -- --------------------------------------------------------
 
 --
@@ -75,32 +74,59 @@ CREATE TABLE `STUDENTS` (
 --
 
 CREATE TABLE `TEAMS` (
-  `team_id` int NOT NULL AUTO_INCREMENT,
+  `team_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `color` varchar(255) NOT NULL,
-  `filename` varchar(255) NOT NULL,
-  PRIMARY KEY (`team_id`)
+  `filename` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `TEAMS`
+--
 
 --
 -- Indexes for dumped tables
 --
--- (Indexes are created automatically with PRIMARY KEY constraints in the tables above)
+
+--
+-- Indexes for table `LOGS`
+--
+ALTER TABLE `LOGS`
+  ADD PRIMARY KEY (`log_id`);
+
+--
+-- Indexes for table `POINTS`
+--
+ALTER TABLE `POINTS`
+  ADD PRIMARY KEY (`team_id`);
+
+--
+-- Indexes for table `STUDENTS`
+--
+ALTER TABLE `STUDENTS`
+  ADD PRIMARY KEY (`student_id`);
+
+--
+-- Indexes for table `TEAMS`
+--
+ALTER TABLE `TEAMS`
+  ADD PRIMARY KEY (`team_id`);
+
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `STUDENTS`
---
-ALTER TABLE `STUDENTS`
-  MODIFY `student_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `LOGS`
 --
 ALTER TABLE `LOGS`
-  MODIFY `log_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `log_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `STUDENTS`
+--
+ALTER TABLE `STUDENTS`
+  MODIFY `student_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `TEAMS`

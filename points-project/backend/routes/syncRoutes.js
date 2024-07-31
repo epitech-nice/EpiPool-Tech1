@@ -13,22 +13,44 @@ require('dotenv').config();
 /**
  * @swagger
  * /api/sync_students:
- *  post:
- *   summary: Sync students from the Intra API
- *  tags: [Sync]
- * responses:
- * 200:
- * description: Students synced successfully
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * success:
- * type: boolean
- * data:
- * type: object
+ *   post:
+ *     summary: Sync students from the Intra API
+ *     tags: [Sync]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               success:
+ *                 type: boolean
+ *               data:
+ *                 type: object
+ *     responses:
+ *       200:
+ *         description: Students synced successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *       500:
+ *         description: Error syncing data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
  */
+
 router.post('/sync_students', async (req, res) => {
     try {
         const requestData = {

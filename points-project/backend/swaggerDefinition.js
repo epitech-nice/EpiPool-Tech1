@@ -95,7 +95,7 @@ const swaggerDefinition = {
           }
         }
       },
-      CsvRecord: {  // Nouveau schéma pour les enregistrements CSV
+      CsvFormart: {
         type: 'object',
         properties: {
           name: {

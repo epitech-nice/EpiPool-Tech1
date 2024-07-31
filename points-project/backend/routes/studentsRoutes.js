@@ -227,28 +227,36 @@ router.get('/getChampionByTeam', studentController.getChampionByTeam);
 /**
  * @swagger
  * /api/changeTeam:
- *  put:
- *   summary: Change a student's team
- *  tags: [Students]
- * requestBody:
- * required: true
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * student_id:
- * type: integer
- * description: The ID of the student to update
- * team_id:
- * type: integer
- * description: The ID of the new team
- * responses:
- * 200:
- * description: Student updated successfully
- * 404:
- * description: Student not found
+ *   put:
+ *     summary: Change a student's team
+ *     tags: [Students]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               student_id:
+ *                 type: integer
+ *                 description: The ID of the student to update
+ *               team_id:
+ *                 type: integer
+ *                 description: The ID of the new team
+ *             required:
+ *               - student_id
+ *               - team_id
+ *     responses:
+ *       200:
+ *         description: Student updated successfully
+ *       404:
+ *         description: Student not found
+ *       400:
+ *         description: Invalid input
+ *       500:
+ *         description: Server error
  */
+
 router.put('/changeTeam', studentController.changeTeam);
 
 module.exports = router;

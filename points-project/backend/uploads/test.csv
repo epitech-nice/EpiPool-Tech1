@@ -1,0 +1,21 @@
+name,email,name_team,color,points
+Alice Johnson,alice.johnson@example.com,Bugs Hunter,Red,50
+Bob Smith,bob.smith@example.com,Game Alchemist,Blue,60
+Charlie Brown,charlie.brown@example.com,Kernel Barbarian,Yellow,70
+Diana Prince,diana.prince@example.com,DevOps Bard,Green,80
+Eve Davis,eve.davis@example.com,Bugs Hunter,Red,55
+Frank Miller,frank.miller@example.com,Game Alchemist,Blue,65
+Grace Lee,grace.lee@example.com,Kernel Barbarian,Yellow,75
+Hannah Clark,hannah.clark@example.com,DevOps Bard,Green,85
+Ivan White,ivan.white@example.com,Bugs Hunter,Red,60
+Judy Adams,judy.adams@example.com,Game Alchemist,Blue,70
+Kirk Thompson,kirk.thompson@example.com,Kernel Barbarian,Yellow,80
+Lara Croft,lara.croft@example.com,DevOps Bard,Green,90
+Mike Jordan,mike.jordan@example.com,Bugs Hunter,Red,65
+Nina Turner,nina.turner@example.com,Game Alchemist,Blue,75
+Oscar Grant,oscar.grant@example.com,Kernel Barbarian,Yellow,85
+Paul Allen,paul.allen@example.com,DevOps Bard,Green,95
+Quinn Taylor,quinn.taylor@example.com,Bugs Hunter,Red,70
+Rachel Green,rachel.green@example.com,Game Alchemist,Blue,80
+Sam Brown,sam.brown@example.com,Kernel Barbarian,Yellow,90
+Tina Fisher,tina.fisher@example.com,DevOps Bard,Green,100

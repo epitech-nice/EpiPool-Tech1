@@ -76,7 +76,6 @@ router.post('/upload_csv', upload.single('file'), async (req, res) => {
                         team_id = await Team.addTeam(name_team, color);
                         let point = await Points.addNewTeam(team_id);
                     }
-                    console.log("team_id", team_id);
                     if (name && email) {
                         let studentResults = await Student.getStudentByEmail(email);
                         let student;

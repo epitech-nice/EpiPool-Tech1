@@ -18,7 +18,7 @@ const upload = multer({ dest: 'uploads/' });
 
 /**
  * @swagger
- * /api/upload_csv:
+ * /api/csv/upload_csv:
  *   post:
  *     summary: Process a CSV file
  *     tags: [CSV]

@@ -1,7 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
-require('dotenv').config();
+require('dotenv').config({ path: '../../.env' });
 
 /**
  * @swagger
@@ -12,7 +12,7 @@ require('dotenv').config();
 
 /**
  * @swagger
- * /api/sync_students:
+ * /api/sync/sync_students:
  *   post:
  *     summary: Sync students from the Intra API
  *     tags: [Sync]
@@ -54,11 +54,11 @@ require('dotenv').config();
 router.post('/sync_students', async (req, res) => {
     try {
         const requestData = {
-            user_token: process.env.USER_TOKEN,
+            user_token: process.env.USER_TOKEN_API_LIONEL,
             year: 2023,
             promotions: ["tek1"]
         };
-        const apiIp = process.env.API_IP;
+        const apiIp = process.env.IP_HUB;
         const apiUrl = `http://${apiIp}/intra/getStudents`;
         const response = await axios.post(apiUrl, requestData);
         res.status(200).json({

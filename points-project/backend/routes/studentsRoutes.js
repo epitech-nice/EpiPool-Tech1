@@ -11,7 +11,7 @@ const studentController = require('../controllers/studentsController');
 
 /**
  * @swagger
- * /api/all_students:
+ * /api/students/all_students:
  *   get:
  *     summary: Retrieve a list of all students
  *     tags: [Students]
@@ -29,7 +29,7 @@ router.get('/all_students', studentController.getAllStudents);
 
 /**
  * @swagger
- * /api/students_by_team:
+ * /api/students/students_by_team:
  *   get:
  *     summary: Retrieve students by team ID
  *     tags: [Students]
@@ -56,7 +56,7 @@ router.get('/students_by_team', studentController.getStudentsByTeam);
 
 /**
  * @swagger
- * /api/add_student:
+ * /api/students/add_student:
  *   post:
  *     summary: Add a new student
  *     tags: [Students]
@@ -86,7 +86,7 @@ router.post('/add_student', studentController.addStudent);
 
 /**
  * @swagger
- * /api/change_student:
+ * /api/students/change_student:
  *   put:
  *     summary: Update a student's details
  *     tags: [Students]
@@ -119,7 +119,7 @@ router.put('/change_student', studentController.changeStudent);
 
 /**
  * @swagger
- * /api/delete_student:
+ * /api/students/delete_student:
  *   delete:
  *     summary: Delete a student
  *     tags: [Students]
@@ -143,7 +143,7 @@ router.delete('/delete_student', studentController.deleteStudent);
 
 /**
  * @swagger
- * /api/add_points_to_student:
+ * /api/students/add_points_to_student:
  *   put:
  *     summary: Add points to a student
  *     tags: [Students]
@@ -172,7 +172,7 @@ router.put('/add_points_to_student', studentController.addPointsToStudent);
 
 /**
  * @swagger
- * /api/remove_points_from_student:
+ * /api/students/remove_points_from_student:
  *   put:
  *     summary: Remove points from a student
  *     tags: [Students]
@@ -201,7 +201,7 @@ router.put('/remove_points_from_student', studentController.removePointsFromStud
 
 /**
  * @swagger
- * /api/getChampionByTeam:
+ * /api/students/getChampionByTeam:
  *   get:
  *     summary: Retrieve the champion of a team
  *     tags: [Students]
@@ -226,7 +226,7 @@ router.get('/getChampionByTeam', studentController.getChampionByTeam);
 
 /**
  * @swagger
- * /api/changeTeam:
+ * /api/students/changeTeam:
  *   put:
  *     summary: Change a student's team
  *     tags: [Students]

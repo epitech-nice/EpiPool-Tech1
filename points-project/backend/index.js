@@ -29,7 +29,7 @@ app.use('/api/students', studentsRoutes);
 app.use('/api/points', pointsRoutes);
 app.use('/api/logs', logsRoutes);
 app.use('/api/csv', csvRoutes);
-app.use('api/sync', syncRoutes);
+app.use('/api/sync', syncRoutes);
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);

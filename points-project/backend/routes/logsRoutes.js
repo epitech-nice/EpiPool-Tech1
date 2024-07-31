@@ -11,7 +11,7 @@ const logsController = require('../controllers/logsController');
 
 /**
  * @swagger
- * /api/logs:
+ * /api/logs/logs:
  *   get:
  *     summary: Retrieve a list of all logs
  *     tags: [Logs]
@@ -29,7 +29,7 @@ router.get('/logs', logsController.getAllLogs);
 
 /**
  * @swagger
- * /api/logs_by_team:
+ * /api/logs/logs_by_team:
  *   get:
  *     summary: Retrieve logs by team ID
  *     tags: [Logs]
@@ -56,7 +56,7 @@ router.get('/logs_by_team', logsController.getLogsByTeam);
 
 /**
  * @swagger
- * /api/logs_by_student:
+ * /api/logs/logs_by_student:
  *   get:
  *     summary: Retrieve logs by student ID
  *     tags: [Logs]
@@ -83,7 +83,7 @@ router.get('/logs_by_student', logsController.getLogsByStudent);
 
 /**
  * @swagger
- * /api/addLogs:
+ * /api/logs/addLogs:
  *   post:
  *     summary: Add a new log entry
  *     tags: [Logs]
@@ -105,7 +105,7 @@ router.post('/addLogs', logsController.addLog);
 
 /**
  * @swagger
- * /api/deleteLogs:
+ * /api/logs/deleteLogs:
  *   delete:
  *     summary: Delete a log entry
  *     tags: [Logs]

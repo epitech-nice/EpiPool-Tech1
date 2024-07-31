@@ -11,7 +11,7 @@ const pointsController = require('../controllers/pointsController');
 
 /**
  * @swagger
- * /api/points:
+ * /api/points/points:
  *   get:
  *     summary: Retrieve a list of all points
  *     tags: [Points]
@@ -29,7 +29,7 @@ router.get('/points', pointsController.getAllPoints);
 
 /**
  * @swagger
- * /api/points_by_team:
+ * /api/points/points_by_team:
  *   get:
  *     summary: Retrieve points by team ID
  *     tags: [Points]
@@ -61,7 +61,7 @@ router.get('/points_by_team', pointsController.getPointsByTeam);
 
 /**
  * @swagger
- * /api/add_points_to_team:
+ * /api/points/add_points_to_team:
  *   put:
  *     summary: Add points to a team
  *     tags: [Points]
@@ -88,7 +88,7 @@ router.put('/add_points_to_team', pointsController.addPointsToTeam);
 
 /**
  * @swagger
- * /api/remove_points_to_team:
+ * /api/points/remove_points_to_team:
  *   put:
  *     summary: Remove points from a team
  *     tags: [Points]

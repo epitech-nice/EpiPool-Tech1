@@ -148,4 +148,13 @@ router.put('/Update', teamController.changeTeam);
  */
 router.delete('/Delete', teamController.deleteTeam);
 
+
+router.get('/GetPoints', teamController.getPoints);
+
+router.get('/GetPointsByTeam', teamController.getPointsByTeam);
+
+router.put('/AddPoints', teamController.addPoints);
+
+router.put('/RemovePoints', teamController.removePoints);
+
 module.exports = router;

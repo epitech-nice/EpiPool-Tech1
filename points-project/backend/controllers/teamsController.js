@@ -63,7 +63,7 @@ exports.changeTeam = async (req, res) => {
 
 exports.deleteTeam = async (req, res) => {
     try {
-        const { team_id } = req.body;
+        const team_id = req.query.id;
         const team = await Teams.deleteTeam(team_id);
         res.json(team);
     } catch (error) {
@@ -75,9 +75,9 @@ exports.deleteTeam = async (req, res) => {
     }
 };
 
-exports.getAllPoints = async (req, res) => {
+exports.getPoints = async (req, res) => {
     try {
-        const teams = await Team.findAll({
+        const teams = await Teams.findAll({
             attributes: ['team_id', 'name', 'points']
         });
         if (!teams.length) {
@@ -91,8 +91,8 @@ exports.getAllPoints = async (req, res) => {
 
 exports.getPointsByTeam = async (req, res) => {
     try {
-        const { team_id } = req.query;
-        const team = await Team.findByPk(team_id, {
+        const { id } = req.query;
+        const team = await Teams.findByPk(id, {
             attributes: ['team_id', 'name', 'points']
         });
         if (!team) {
@@ -104,12 +104,12 @@ exports.getPointsByTeam = async (req, res) => {
     }
 };
 
-exports.addPointsToTeam = async (req, res) => {
+exports.addPoints = async (req, res) => {
     try {
         const { team_id, points, reason } = req.body;
         if (!reason) reason = "PEDAGO";
 
-        const team = await Team.findByPk(team_id);
+        const team = await Teams.findByPk(team_id);
         if (!team) {
             return res.status(404).json({ error: 'Team not found' });
         }
@@ -121,12 +121,12 @@ exports.addPointsToTeam = async (req, res) => {
     }
 };
 
-exports.removePointsFromTeam = async (req, res) => {
+exports.removePoints = async (req, res) => {
     try {
         const { team_id, points, reason } = req.body;
         if (!reason) reason = "PEDAGO";
 
-        const team = await Team.findByPk(team_id);
+        const team = await Teams.findByPk(team_id);
         if (!team) {
             return res.status(404).json({ error: 'Team not found' });
         }

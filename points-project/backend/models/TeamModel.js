@@ -15,13 +15,13 @@ const Team = sequelize.define('Team', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    filename: {
+    image_name: {
         type: DataTypes.STRING,
         allowNull: true,
     },
     points: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         defaultValue: 0
     }
 }, {

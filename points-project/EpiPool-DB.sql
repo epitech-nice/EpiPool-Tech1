@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Sep 15, 2024 at 04:45 PM
+-- Generation Time: Sep 15, 2024 at 04:51 PM
 -- Server version: 9.0.1
 -- PHP Version: 8.2.8
 
@@ -71,8 +71,8 @@ CREATE TABLE `TEAMS` (
   `team_id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `color` varchar(255) NOT NULL,
-  `filename` varchar(255) DEFAULT NULL,
-  `points` int NOT NULL
+  `image_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `points` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------

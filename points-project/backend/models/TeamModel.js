@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Teams = sequelize.define('Team', {
+const Team = sequelize.define('Team', {
     team_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -14,10 +14,22 @@ const Teams = sequelize.define('Team', {
     color: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    filename: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    points: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
     }
+}, {
+    tableName: 'TEAMS',
+    timestamps: false,
 });
 
-Teams.getByName = async function(name) {
+Team.getByName = async function(name) {
     try {
         const sql = `SELECT * FROM TEAMS WHERE name = '${name}';`;
         const [results, metadata] = await sequelize.query(sql);
@@ -29,7 +41,7 @@ Teams.getByName = async function(name) {
     }
 }
 
-Teams.getStarter = async function() {
+Team.getStarter = async function() {
     try {
         const sql = "SELECT * FROM TEAMS WHERE team_id < 5;";
         const [results, metadata] = await sequelize.query(sql);
@@ -40,7 +52,7 @@ Teams.getStarter = async function() {
     }
 }
 
-Teams.getFactions = async function() {
+Team.getFactions = async function() {
     try {
         const sql = "SELECT * FROM TEAMS WHERE team_id > 4;";
         const [results, metadata] = await sequelize.query(sql);
@@ -51,7 +63,7 @@ Teams.getFactions = async function() {
     }
 }
 
-Teams.getAll = async function() {
+Team.getAll = async function() {
     try {
         const sql = "SELECT * FROM TEAMS;";
         const [results, metadata] = await sequelize.query(sql);
@@ -62,7 +74,7 @@ Teams.getAll = async function() {
     }
 }
 
-Teams.deleteTeam = async function(team_id) {
+Team.deleteTeam = async function(team_id) {
     const sql = `DELETE FROM TEAMS WHERE team_id = ${team_id};`;
     const [results, metadata] = await sequelize.query(sql);
     if (metadata.affectedRows === 0) {
@@ -71,11 +83,11 @@ Teams.deleteTeam = async function(team_id) {
     return results;
 }
 
-Teams.addTeam = async function(name, color) {
+Team.addTeam = async function(name, color) {
     try {
         console.log("Adding team:", name, color);
 
-        const existingTeam = await Teams.getByName(name);
+        const existingTeam = await Team.getByName(name);
         console.log("existingTeam", existingTeam);
         if (existingTeam.length > 0) {
             throw new Error('Team with this name already exists');
@@ -91,7 +103,7 @@ Teams.addTeam = async function(name, color) {
     }
 };
 
-Teams.changeTeam = async function(team_id, name, color) {
+Team.changeTeam = async function(team_id, name, color) {
     const sql = `UPDATE TEAMS SET name = '${name}', color = '${color}' WHERE team_id = ${team_id};`;
     const [results, metadata] = await sequelize.query(sql);
     if (metadata.affectedRows === 0) {
@@ -100,4 +112,4 @@ Teams.changeTeam = async function(team_id, name, color) {
     return results;
 }
 
-module.exports = Teams;
+module.exports = Team;

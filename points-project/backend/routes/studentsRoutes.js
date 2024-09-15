@@ -11,7 +11,7 @@ const studentController = require('../controllers/studentsController');
 
 /**
  * @swagger
- * /api/students/all_students:
+ * /api/students/:
  *   get:
  *     summary: Retrieve a list of all students
  *     tags: [Students]
@@ -25,11 +25,11 @@ const studentController = require('../controllers/studentsController');
  *               items:
  *                 $ref: '#/components/schemas/Student'
  */
-router.get('/all_students', studentController.getAllStudents);
+router.get('/', studentController.getAllStudents);
 
 /**
  * @swagger
- * /api/students/students_by_team:
+ * /api/students/ByTeam:
  *   get:
  *     summary: Retrieve students by team ID
  *     tags: [Students]
@@ -52,11 +52,11 @@ router.get('/all_students', studentController.getAllStudents);
  *       404:
  *         description: Students not found
  */
-router.get('/students_by_team', studentController.getStudentsByTeam);
+router.get('/ByTeam', studentController.getStudentsByTeam);
 
 /**
  * @swagger
- * /api/students/add_student:
+ * /api/students/Create:
  *   post:
  *     summary: Add a new student
  *     tags: [Students]
@@ -82,11 +82,11 @@ router.get('/students_by_team', studentController.getStudentsByTeam);
  *       400:
  *         description: Invalid input
  */
-router.post('/add_student', studentController.addStudent);
+router.post('/Create', studentController.addStudent);
 
 /**
  * @swagger
- * /api/students/change_student:
+ * /api/students/Update:
  *   put:
  *     summary: Update a student's details
  *     tags: [Students]
@@ -115,11 +115,11 @@ router.post('/add_student', studentController.addStudent);
  *       404:
  *         description: Student not found
  */
-router.put('/change_student', studentController.changeStudent);
+router.put('/Update', studentController.changeStudent);
 
 /**
  * @swagger
- * /api/students/delete_student:
+ * /api/students/Delete:
  *   delete:
  *     summary: Delete a student
  *     tags: [Students]
@@ -139,11 +139,11 @@ router.put('/change_student', studentController.changeStudent);
  *       404:
  *         description: Student not found
  */
-router.delete('/delete_student', studentController.deleteStudent);
+router.delete('/Delete', studentController.deleteStudent);
 
 /**
  * @swagger
- * /api/students/add_points_to_student:
+ * /api/students/AddPoints:
  *   put:
  *     summary: Add points to a student
  *     tags: [Students]
@@ -168,11 +168,11 @@ router.delete('/delete_student', studentController.deleteStudent);
  *       404:
  *         description: Student not found
  */
-router.put('/add_points_to_student', studentController.addPointsToStudent);
+router.put('/AddPoints', studentController.addPointsToStudent);
 
 /**
  * @swagger
- * /api/students/remove_points_from_student:
+ * /api/students/RemovePoints:
  *   put:
  *     summary: Remove points from a student
  *     tags: [Students]
@@ -197,7 +197,7 @@ router.put('/add_points_to_student', studentController.addPointsToStudent);
  *       404:
  *         description: Student not found
  */
-router.put('/remove_points_from_student', studentController.removePointsFromStudent);
+router.put('/RemovePoints', studentController.removePointsFromStudent);
 
 /**
  * @swagger

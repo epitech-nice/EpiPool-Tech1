@@ -1,6 +1,6 @@
 const express = require('express');
-const axios = require('axios');
 const router = express.Router();
+const { syncStudentsFromIntra } = require('../controllers/syncController');
 require('dotenv').config({ path: '../../.env' });
 
 /**
@@ -12,7 +12,7 @@ require('dotenv').config({ path: '../../.env' });
 
 /**
  * @swagger
- * /api/sync/sync_students:
+ * /api/sync/Students:
  *   post:
  *     summary: Sync students from the Intra API
  *     tags: [Sync]
@@ -51,24 +51,6 @@ require('dotenv').config({ path: '../../.env' });
  *                   type: string
  */
 
-router.post('/sync_students', async (req, res) => {
-    try {
-        const requestData = {
-            user_token: process.env.USER_TOKEN_API_LIONEL,
-            year: 2023,
-            promotions: ["tek1"]
-        };
-        const apiIp = process.env.IP_HUB;
-        const apiUrl = `http://${apiIp}/intra/getStudents`;
-        const response = await axios.post(apiUrl, requestData);
-        res.status(200).json({
-            success: true,
-            data: response.data
-        });
-    } catch (error) {
-        console.error('Error syncing data:', error);
-        res.status(500).json({ success: false, message: 'Error syncing data' });
-    }
-});
+router.post('/Students', syncStudentsFromIntra);
 
 module.exports = router;

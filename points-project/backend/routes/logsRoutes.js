@@ -11,7 +11,7 @@ const logsController = require('../controllers/logsController');
 
 /**
  * @swagger
- * /api/logs/logs:
+ * /api/logs/:
  *   get:
  *     summary: Retrieve a list of all logs
  *     tags: [Logs]
@@ -25,11 +25,11 @@ const logsController = require('../controllers/logsController');
  *               items:
  *                 $ref: '#/components/schemas/Log'
  */
-router.get('/logs', logsController.getAllLogs);
+router.get('/', logsController.getAllLogs);
 
 /**
  * @swagger
- * /api/logs/logs_by_team:
+ * /api/logs/ByTeam:
  *   get:
  *     summary: Retrieve logs by team ID
  *     tags: [Logs]
@@ -52,11 +52,11 @@ router.get('/logs', logsController.getAllLogs);
  *       404:
  *         description: Logs not found
  */
-router.get('/logs_by_team', logsController.getLogsByTeam);
+router.get('/ByTeam', logsController.getLogsByTeam);
 
 /**
  * @swagger
- * /api/logs/logs_by_student:
+ * /api/logs/Bystudent:
  *   get:
  *     summary: Retrieve logs by student ID
  *     tags: [Logs]
@@ -79,11 +79,11 @@ router.get('/logs_by_team', logsController.getLogsByTeam);
  *       404:
  *         description: Logs not found
  */
-router.get('/logs_by_student', logsController.getLogsByStudent);
+router.get('/ByStudent', logsController.getLogsByStudent);
 
 /**
  * @swagger
- * /api/logs/addLogs:
+ * /api/logs/Create:
  *   post:
  *     summary: Add a new log entry
  *     tags: [Logs]
@@ -101,11 +101,11 @@ router.get('/logs_by_student', logsController.getLogsByStudent);
  *       401:
  *         description: Unauthorized
  */
-router.post('/addLogs', logsController.addLog);
+router.post('/Create', logsController.addLog);
 
 /**
  * @swagger
- * /api/logs/deleteLogs:
+ * /api/logs/Delete:
  *   delete:
  *     summary: Delete a log entry
  *     tags: [Logs]
@@ -129,6 +129,6 @@ router.post('/addLogs', logsController.addLog);
  *       404:
  *         description: Log entry not found
  */
-router.delete('/deleteLogs', logsController.deleteLog);
+router.delete('/Delete', logsController.deleteLog);
 
 module.exports = router;

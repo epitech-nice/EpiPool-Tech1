@@ -11,7 +11,7 @@ const teamController = require('../controllers/teamsController');
 
 /**
  * @swagger
- * /api/teams/starter_teams:
+ * /api/teams/Base:
  *   get:
  *     summary: Retrieve a list of starter teams
  *     tags: [Teams]
@@ -25,11 +25,11 @@ const teamController = require('../controllers/teamsController');
  *               items:
  *                 $ref: '#/components/schemas/Team'
  */
-router.get('/starter_teams', teamController.getStarterTeams);
+router.get('/Base', teamController.getStarterTeams);
 
 /**
  * @swagger
- * /api/teams/factions_teams:
+ * /api/teams/Factions:
  *   get:
  *     summary: Retrieve a list of faction teams
  *     tags: [Teams]
@@ -43,11 +43,11 @@ router.get('/starter_teams', teamController.getStarterTeams);
  *               items:
  *                 $ref: '#/components/schemas/Team'
  */
-router.get('/factions_teams', teamController.getFactionsTeams);
+router.get('/Factions', teamController.getFactionsTeams);
 
 /**
  * @swagger
- * /api/teams/all_teams:
+ * /api/teams/:
  *   get:
  *     summary: Retrieve a list of all teams
  *     tags: [Teams]
@@ -61,11 +61,11 @@ router.get('/factions_teams', teamController.getFactionsTeams);
  *               items:
  *                 $ref: '#/components/schemas/Team'
  */
-router.get('/all_teams', teamController.getAllTeams);
+router.get('/', teamController.getAllTeams);
 
 /**
  * @swagger
- * /api/teams/add_team:
+ * /api/teams/Create:
  *   post:
  *     summary: Add a new team
  *     tags: [Teams]
@@ -88,11 +88,11 @@ router.get('/all_teams', teamController.getAllTeams);
  *       400:
  *         description: Invalid input
  */
-router.post('/add_team', teamController.addTeam);
+router.post('/Create', teamController.addTeam);
 
 /**
  * @swagger
- * /api/teams/change_team:
+ * /api/teams/Update:
  *   put:
  *     summary: Update an existing team
  *     tags: [Teams]
@@ -120,11 +120,11 @@ router.post('/add_team', teamController.addTeam);
  *       400:
  *         description: Invalid input
  */
-router.put('/change_team', teamController.changeTeam);
+router.put('/Update', teamController.changeTeam);
 
 /**
  * @swagger
- * /api/teams/delete_team:
+ * /api/teams/Delete:
  *   delete:
  *     summary: Delete a team
  *     tags: [Teams]
@@ -146,6 +146,6 @@ router.put('/change_team', teamController.changeTeam);
  *       400:
  *         description: Invalid input
  */
-router.delete('/delete_team', teamController.deleteTeam);
+router.delete('/Delete', teamController.deleteTeam);
 
 module.exports = router;

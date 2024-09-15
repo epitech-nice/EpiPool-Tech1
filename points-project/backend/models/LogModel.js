@@ -22,7 +22,10 @@ const Logs = sequelize.define('Log', {
     event:{
         type: DataTypes.STRING,
         allowNull: false
-    },
+    }
+}, {
+    tableName: 'LOGS',
+    timestamps: true
 });
 
 Logs.getAll = async function() {

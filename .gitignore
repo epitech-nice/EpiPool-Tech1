@@ -1,5 +1,7 @@
-points-project/frontend/node_modules/
+frontend/node_modules/
 
-points-project/backend/node_modules/
+backend/node_modules/
 
-points-project/.env
+.env
+
+.vscode/

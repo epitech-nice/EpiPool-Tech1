@@ -9,9 +9,9 @@
     --secondaryAccent: #00C853;
     --highlight: #FF6D00;
     
-    --buttonPrimary: #3A7AFE;
+    --buttonPrimary: #0044ff;
     --buttonSecondary: #333333;
-    --buttonHover: #2962FF;
+    --buttonHover: #3A7AFE;
     
     --success: #00C853;
     --error: #FF5252;
@@ -26,6 +26,7 @@ body {
     background-color: var(--primaryBg);
     color: var(--primaryText);
     font-family: 'Arial', sans-serif;
+    margin: 0;
 }
 
 /* Global styling */

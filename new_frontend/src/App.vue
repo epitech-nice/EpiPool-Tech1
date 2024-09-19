@@ -1,18 +1,42 @@
 <template>
+  <SidebardNav v-if="showSidebarAndTitle" />
   <div id="app">
-    <EpitechTitle />
-    <router-view />
+    <div :class="{'spaceLeft': showSidebarAndTitle}">
+      <EpitechTitle v-if="showSidebarAndTitle" />
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
-import EpitechTitle from './components/admin/EpitechTitle.vue'
+import { useRoute } from 'vue-router'
+import EpitechTitle from './components/EpitechTitle.vue'
+import SidebardNav from './components/SidebardNav.vue'
 
 export default {
   name: 'App',
   components: {
-    EpitechTitle
+    EpitechTitle,
+    SidebardNav
+  },
+  data() {
+    return {
+      showSidebarAndTitle: false
+    }
+  },
+  methods: {
+    getPosition() {
+      const route = useRoute()
+      this.showSidebarAndTitle = route.name !== 'login'
+    }
   }
 }
-
 </script>
+
+<style>
+
+.spaceLeft {
+  margin-left: 75px;
+}
+
+</style>

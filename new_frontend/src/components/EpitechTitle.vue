@@ -11,7 +11,10 @@
     color: white;
     text-align: center;
     padding: 5px;
-    border-radius: 10px;
+    height: fit-content;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 </style>

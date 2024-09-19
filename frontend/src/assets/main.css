@@ -1,0 +1,42 @@
+/* root style */
+:root {
+    --primaryBg: #0f0f17;
+    --secondaryBg: #26272D;
+    --primaryText: #E0E0E0;
+    --secondaryText: #A0A0A0;
+    
+    --primaryAccent: #3A7AFE;
+    --secondaryAccent: #00C853;
+    --highlight: #FF6D00;
+    
+    --buttonPrimary: #3A7AFE;
+    --buttonSecondary: #333333;
+    --buttonHover: #2962FF;
+    
+    --success: #00C853;
+    --error: #FF5252;
+    --warning: #FFAB40;
+    
+    --shadowLight: rgba(0, 0, 0, 0.6);
+    --border: #2C2C2C;
+}
+
+/* Body styling */
+body {
+    background-color: var(--primaryBg);
+    color: var(--primaryText);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Global styling */
+h1 {
+    font-family: "Bookman", "URW Bookman L", serif
+}
+
+/* Media queries */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 16px;
+    }
+    
+}

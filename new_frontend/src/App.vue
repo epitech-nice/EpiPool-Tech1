@@ -12,6 +12,8 @@
 import { useRoute } from 'vue-router'
 import EpitechTitle from './components/EpitechTitle.vue'
 import SidebardNav from './components/SidebardNav.vue'
+import { watch } from 'vue'
+import { useTeamStore } from './store/teamStore';
 
 export default {
   name: 'App',
@@ -19,16 +21,32 @@ export default {
     EpitechTitle,
     SidebardNav
   },
+  setup() {
+    const teamStore = useTeamStore();
+    return {
+      selectedTeam: teamStore.getSelectedTeam,
+    };
+  },
   data() {
     return {
       showSidebarAndTitle: false
     }
   },
   methods: {
-    getPosition() {
-      const route = useRoute()
+    updateSidebarAndTitle(route) {
       this.showSidebarAndTitle = route.name !== 'login'
     }
+  },
+  mounted() {
+    const route = useRoute()
+    this.updateSidebarAndTitle(route)
+
+    watch(route, (newRoute) => {
+      this.updateSidebarAndTitle(newRoute)
+    })
+
+    const teamStore = useTeamStore();
+    console.log('Selected Team:', teamStore.getSelectedTeam);
   }
 }
 </script>

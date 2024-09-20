@@ -1,5 +1,5 @@
 <template>
-    <div v-for="team in teams" :key="team.id" :class="['leftHover', { active: selectedTeam === team.id }]" @click="selectTeam(team.id)">
+    <div v-for="team in teams" :key="team.team_id" :class="['leftHover', { active: selectedTeam === team.team_id }]" @click="selectTeam(team.team_id)">
         <span class="round" :style="{ backgroundColor: team.color }"></span>
     </div>
     <div>
@@ -12,21 +12,30 @@
 
 <script>
 import axios from 'axios';
+import { useTeamStore } from '@/store/teamStore';
 
 export default {
     name: 'TeamBubble',
     data() {
         return {
-            teams: [
-                {id: 2, name: 'Team 2', color: 'red'},
-                {id: 1, name: 'Team 1', color: 'blue'},
-            ],
+            teams: [],
             selectedTeam: null,
+        };
+    },
+    setup() {
+        const teamStore = useTeamStore();
+        return {
+            teamStore,
         };
     },
     methods: {
         getTeams() {
-            axios.get('http://localhost:3000/api/teams')
+            const token = localStorage.getItem('token');
+            axios.get('http://localhost:3000/api/teams', {
+                headers: {
+                    'x-auth-token': `${token}`
+                }
+            })
             .then(response => {
                 this.teams = response.data;
             })
@@ -35,7 +44,9 @@ export default {
             });
         },
         selectTeam(teamId) {
+            console.log('Selected Team:', teamId);
             this.selectedTeam = teamId;
+            this.teamStore.setSelectedTeam(teamId);
         }
     },
     mounted() {

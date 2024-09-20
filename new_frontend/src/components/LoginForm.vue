@@ -2,37 +2,74 @@
     <div class="main">  	
 		<input type="checkbox" id="chk" aria-hidden="true">
 
-			<div class="signup">
-				<form>
-					<label for="chk" aria-hidden="true">Sign up</label>
-					<input type="text" name="txt" placeholder="User name" required>
-					<input type="email" name="email" placeholder="Email" required>
-					<input type="password" name="pswd" placeholder="Password" required>
-					<button type="submit">Sign up</button>
-				</form>
-			</div>
+		<div class="signup">
+			<form @submit.prevent="submitSignUp">
+				<label for="chk" aria-hidden="true">Sign up</label>
+				<input type="text" v-model="name" id="nameSign" placeholder="User name" required>
+				<input type="email" v-model="email" id="emailSign" placeholder="Email" required>
+				<input type="password" v-model="password" id="passSign" placeholder="Password" required>
+				<button type="submit">Sign up</button>
+			</form>
+		</div>
 
-			<div class="login">
-				<form>
-					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="Email" required>
-					<input type="password" name="pswd" placeholder="Password" required>
-					<button>Login</button>
-				</form>
-			</div>
+		<div class="login">
+			<form @submit.prevent="submitLogin">
+				<label for="chk" aria-hidden="true">Login</label>
+				<input type="email" v-model="emailLogin" id="emailLogin" placeholder="Email" required>
+				<input type="password" v-model="passwordLogin" id="passLogin" placeholder="Password" required>
+				<button type="submit">Login</button>
+			</form>
+		</div>
 	</div>
 </template>
 
 <script>
+import axios from 'axios';
 
 
+export default {
+	data() {
+		return {
+			email: '',
+			password: '',
+			name: '',
+			emailLogin: '',
+			passwordLogin: ''
+		}
+	},
+	methods: {
+		submitSignUp() {
+			axios.post('http://localhost:3000/api/register', {
+				name: this.name,
+				email: this.email,
+				password: this.password
+			}).then(response => {
+				localStorage.setItem('token', response.data.token);
+				this.$router.push('/dashboard');
+			}).catch(err => {
+				console.log(err);
+			})
+		},
+		submitLogin() {
+			axios.post('http://localhost:3000/api/login', {
+				email: this.emailLogin,
+				password: this.passwordLogin
+			}).then(response => {
+				localStorage.setItem('token', response.data.token);
+				this.$router.push('/dashboard');
+			}).catch(err => {
+				console.log(err);
+			})
+		}
+	}
+}
 
 </script>
 
 <style scoped>
 
 .main{
-	width: 350px;
+	width: 415px;
 	height: 500px;
 	background: red;
 	overflow: hidden;
@@ -48,7 +85,7 @@
 	width:100%;
 	height: 100%;
 }
-label{
+label {
 	color: #fff;
 	font-size: 2.3em;
 	justify-content: center;
@@ -58,14 +95,14 @@ label{
 	cursor: pointer;
 	transition: .5s ease-in-out;
 }
-input{
+input {
 	width: 60%;
 	height: 10px;
 	background: #e0dede;
 	justify-content: center;
 	display: flex;
 	margin: 20px auto;
-	padding: 12px;
+	padding: 17px;
 	border: none;
 	outline: none;
 	border-radius: 5px;

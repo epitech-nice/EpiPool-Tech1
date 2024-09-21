@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useTeamStore = defineStore('teamStore', {
     state: () => ({
-        selectedTeam: localStorage.getItem('selectedTeam') || null,
+        selectedTeam: null,
     }),
     actions: {
         setSelectedTeam(teamId) {

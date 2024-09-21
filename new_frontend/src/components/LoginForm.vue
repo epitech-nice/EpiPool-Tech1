@@ -39,28 +39,34 @@ export default {
 	},
 	methods: {
 		submitSignUp() {
-			axios.post('http://localhost:3000/api/register', {
-				name: this.name,
-				email: this.email,
-				password: this.password
-			}).then(response => {
-				localStorage.setItem('token', response.data.token);
-				this.$router.push('/dashboard');
-			}).catch(err => {
-				console.log(err);
-			})
-		},
-		submitLogin() {
-			axios.post('http://localhost:3000/api/login', {
-				email: this.emailLogin,
-				password: this.passwordLogin
-			}).then(response => {
-				localStorage.setItem('token', response.data.token);
-				this.$router.push('/dashboard');
-			}).catch(err => {
-				console.log(err);
-			})
-		}
+            axios.post('http://localhost:3000/api/register', {
+                name: this.name,
+                email: this.email,
+                password: this.password
+            }).then(response => {
+                const token = response.data.token;
+                localStorage.setItem('token', token);
+                const expirationTime = new Date().getTime() + 60 * 60 * 1000;
+                localStorage.setItem('tokenExpiration', expirationTime);
+                this.$router.push('/dashboard');
+            }).catch(err => {
+                console.log(err);
+            });
+        },
+        submitLogin() {
+            axios.post('http://localhost:3000/api/login', {
+                email: this.emailLogin,
+                password: this.passwordLogin
+            }).then(response => {
+                const token = response.data.token;
+                localStorage.setItem('token', token);
+                const expirationTime = new Date().getTime() + 60 * 60 * 1000;
+                localStorage.setItem('tokenExpiration', expirationTime);
+                this.$router.push('/dashboard');
+            }).catch(err => {
+                console.log(err);
+            });
+        }
 	}
 }
 

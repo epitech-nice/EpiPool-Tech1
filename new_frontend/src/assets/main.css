@@ -21,6 +21,11 @@
     --border: #2C2C2C;
 }
 
+p {
+    margin: 0;
+    font-family: "Bookman", "URW Bookman L", serif
+}
+
 /* Body styling */
 body {
     background-color: var(--primaryBg);
@@ -32,6 +37,28 @@ body {
 /* Global styling */
 h1 {
     font-family: "Bookman", "URW Bookman L", serif
+}
+
+.Card {
+    background-color: var(--secondaryBg);
+    color: var(--primaryText);
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--shadowLight);
+    padding: 20px;
+    margin: 5px;
+    width: 100%;
+}
+
+.fit {
+    width: fit-content;
+    text-wrap: nowrap;
+}
+
+.Title {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
 }
 
 /* Media queries */

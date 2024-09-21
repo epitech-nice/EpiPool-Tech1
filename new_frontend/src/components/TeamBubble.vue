@@ -44,7 +44,6 @@ export default {
             });
         },
         selectTeam(teamId) {
-            console.log('Selected Team:', teamId);
             this.selectedTeam = teamId;
             this.teamStore.setSelectedTeam(teamId);
         }

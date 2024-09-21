@@ -2,7 +2,6 @@
   <SidebardNav v-if="showSidebarAndTitle" />
   <div id="app">
     <div :class="{'spaceLeft': showSidebarAndTitle}">
-      <EpitechTitle v-if="showSidebarAndTitle" />
       <router-view />
     </div>
   </div>
@@ -10,7 +9,6 @@
 
 <script>
 import { useRoute } from 'vue-router'
-import EpitechTitle from './components/EpitechTitle.vue'
 import SidebardNav from './components/SidebardNav.vue'
 import { watch } from 'vue'
 import { useTeamStore } from './store/teamStore';
@@ -18,7 +16,6 @@ import { useTeamStore } from './store/teamStore';
 export default {
   name: 'App',
   components: {
-    EpitechTitle,
     SidebardNav
   },
   setup() {
@@ -44,9 +41,6 @@ export default {
     watch(route, (newRoute) => {
       this.updateSidebarAndTitle(newRoute)
     })
-
-    const teamStore = useTeamStore();
-    console.log('Selected Team:', teamStore.getSelectedTeam);
   }
 }
 </script>

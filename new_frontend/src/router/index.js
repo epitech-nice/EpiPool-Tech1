@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth';
 
 const routes = [
   {
@@ -8,8 +9,15 @@ const routes = [
   },
   {
     path: '/dashboard',
-    name: 'dashboard',
-    component: () => import('../views/DashboardView.vue')
+    component: () => import('@/views/DashboardView.vue'),
+    beforeEnter: (to, from, next) => {
+      const authStore = useAuthStore();
+      if (!authStore.isAuthenticated) {
+        next('/login');
+      } else {
+        next();
+      }
+    },
   },
   {
     path: '/',
@@ -21,13 +29,5 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 });
-
-router.beforeEach((to, from, next) => {
-  if (to.name !== 'login' && !localStorage.getItem('token')) {
-    next({ name: 'login' })
-  } else {
-    next()
-  }
-})
 
 export default router

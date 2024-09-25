@@ -5,17 +5,22 @@
     <div>
         <span class="round AddBtn"><i class="fa-solid fa-plus"></i></span>
     </div>
-    <div>
+    <RemoveTeamForm :teams="teams" @team-removed="removeTeam" />
+    <!-- <div>
         <span class="round AddBtn"><i class="fa-solid fa-minus"></i></span>
-    </div>
+    </div> -->
 </template>
 
 <script>
-import axios from 'axios';
-import { useTeamStore } from '@/store/teamStore';
+import axios from '@/utils/axios';
+import { useTeamStore } from '@/stores/teamStore';
+import RemoveTeamForm from './RemoveTeam.vue';
 
 export default {
     name: 'TeamBubble',
+    components: {
+        RemoveTeamForm,
+    },
     data() {
         return {
             teams: [],
@@ -30,16 +35,9 @@ export default {
     },
     methods: {
         getTeams() {
-            const token = localStorage.getItem('token');
-            axios.get('http://localhost:3000/api/teams', {
-                headers: {
-                    'x-auth-token': `${token}`
-                }
-            })
-            .then(response => {
+            axios.get('teams').then(response => {
                 this.teams = response.data;
-            })
-            .catch(error => {
+            }).catch(error => {
                 console.log(error);
             });
         },

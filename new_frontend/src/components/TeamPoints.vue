@@ -6,10 +6,9 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { useTeamStore } from '@/store/teamStore';
+import axios from '@/utils/axios';
+import { useTeamStore } from '@/stores/teamStore';
 import { computed } from 'vue';
-import { getToken } from '@/utils/token';
 
 export default {
     name: 'TeamPoints',
@@ -36,15 +35,10 @@ export default {
     },
     methods: {
         fetchTeamPoints(teamId) {
-            if (!teamId) return;
-            
-            const token = getToken();
-            axios.get(`http://localhost:3000/api/teams/GetPointsByTeam?id=${teamId}`, {
-                headers: {
-                    'x-auth-token': `${token}`
-                }
-            })
-            .then(response => {
+            if (!teamId)
+                return;
+
+            axios.get(`teams/GetPointsByTeam?id=${teamId}`).then(response => {
                 this.teamPoints = response.data.points;
             })
             .catch(error => {

@@ -1,5 +1,4 @@
 <template>
-  <SidebardNav v-if="showSidebarAndTitle" />
   <div id="app">
     <div :class="{'spaceLeft': showSidebarAndTitle}">
       <router-view />
@@ -9,15 +8,11 @@
 
 <script>
 import { useRoute } from 'vue-router'
-import SidebardNav from './components/SidebardNav.vue'
 import { watch } from 'vue'
-import { useTeamStore } from './store/teamStore';
+import { useTeamStore } from './stores/teamStore';
 
 export default {
   name: 'App',
-  components: {
-    SidebardNav
-  },
   setup() {
     const teamStore = useTeamStore();
     return {

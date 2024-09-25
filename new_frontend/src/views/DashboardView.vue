@@ -1,4 +1,5 @@
 <template>
+    <SidebardNav />
     <div class="SideFlex">
         <TeamPoints />
         <TeamName />
@@ -8,12 +9,14 @@
 <script>
 import TeamPoints from '@/components/TeamPoints.vue';
 import TeamName from '@/components/TeamName.vue';
+import SidebardNav from '@/components/SidebardNav.vue'
 
 export default {
     name: 'DashboardView',
     components: {
         TeamPoints,
-        TeamName
+        TeamName,
+        SidebardNav
     }
 }
 </script>

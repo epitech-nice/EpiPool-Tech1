@@ -58,6 +58,7 @@ export default {
 					email: this.emailLogin,
 					password: this.passwordLogin
 				});
+				console.log(response);
 				const token = response.data.token;
 				const authStore = useAuthStore();
 				authStore.setToken(token);

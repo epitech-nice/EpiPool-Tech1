@@ -35,8 +35,9 @@ exports.getAllTeams = async (req, res) => {
 
 exports.addTeam = async (req, res) => {
     try {
-        const { name, color } = req.body;
-        const result = await Teams.addTeam(name, color);
+        const { name, color, points } = req.body;
+        if (!points) points = 0;
+        const result = await Teams.addTeam(name, color, points);
         res.json({ message: 'Team added successfully', result });
     } catch (error) {
         if (error.message === 'Team with this name already exists') {

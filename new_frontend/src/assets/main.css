@@ -61,6 +61,22 @@ h1 {
     text-align: center;
 }
 
+.simpleBtn {
+    background-color: var(--buttonPrimary);
+    color: var(--primaryText);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold
+}
+
+.simpleBtn:hover {
+    background-color: var(--buttonHover);
+}
+
 /* Media queries */
 @media screen and (max-width: 768px) {
     h1 {

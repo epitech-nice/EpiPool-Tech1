@@ -12,8 +12,5 @@ export const useTeamStore = defineStore('teamStore', {
     },
     getters: {
         getSelectedTeam: (state) => state.selectedTeam,
-    },
-    persist: {
-        storage: sessionStorage,
-    },
+    }
 });

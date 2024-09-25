@@ -2,24 +2,21 @@
     <div v-for="team in teams" :key="team.team_id" :class="['leftHover', { active: selectedTeam === team.team_id }]" @click="selectTeam(team.team_id)">
         <span class="round" :style="{ backgroundColor: team.color }"></span>
     </div>
-    <div>
-        <span class="round AddBtn"><i class="fa-solid fa-plus"></i></span>
-    </div>
-    <RemoveTeamForm :teams="teams" @team-removed="removeTeam" />
-    <!-- <div>
-        <span class="round AddBtn"><i class="fa-solid fa-minus"></i></span>
-    </div> -->
+    <AddTeamForm :teams="teams" @update="update" />
+    <RemoveTeamForm :teams="teams" @update="update"/>
 </template>
 
 <script>
 import axios from '@/utils/axios';
 import { useTeamStore } from '@/stores/teamStore';
 import RemoveTeamForm from './RemoveTeam.vue';
+import AddTeamForm from './AddTeam.vue';
 
 export default {
     name: 'TeamBubble',
     components: {
         RemoveTeamForm,
+        AddTeamForm
     },
     data() {
         return {
@@ -44,7 +41,11 @@ export default {
         selectTeam(teamId) {
             this.selectedTeam = teamId;
             this.teamStore.setSelectedTeam(teamId);
-        }
+        },
+        update() {
+            this.getTeams();
+            this.teamStore.setSelectedTeam(null);
+        },
     },
     mounted() {
         this.getTeams();

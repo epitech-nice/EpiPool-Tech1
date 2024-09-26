@@ -24,10 +24,16 @@ export default {
     components: {
         BlurForm
     },
+    props: {
+        teamId: {
+            type: Number,
+            default: null
+        }
+    },
     data() {
         return {
             showAddForm: false,
-            formData: { name: '', email: '', points: 0 }
+            formData: { name: '', email: '', points: 0, team_id: this.teamId }
         };
     },
     methods: {

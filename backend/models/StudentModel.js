@@ -36,7 +36,7 @@ const Students = sequelize.define('Student', {
 });
 
 Students.getAll = async function() {
-    const sql = "SELECT * FROM STUDENTS;";
+    const sql = "SELECT STUDENTS.*, TEAMS.name as team_name FROM STUDENTS LEFT JOIN TEAMS ON TEAMS.team_id = STUDENTS.team_id;";
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }
@@ -84,8 +84,8 @@ Students.removePoints = async function(student_id, points, reason) {
     return results;
 }
 
-Students.addStudent = async function(name, email, points) {
-    const sql = `INSERT INTO STUDENTS (team_id, name, email, points) VALUES ('${name}', '${email}', ${points});`;
+Students.addStudent = async function(name, email, points, team_id = null) {
+    const sql = `INSERT INTO STUDENTS (name, email, points, team_id) VALUES ('${name}', '${email}', ${points}, ${team_id});`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }

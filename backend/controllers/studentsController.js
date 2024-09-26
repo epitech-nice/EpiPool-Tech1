@@ -33,8 +33,8 @@ exports.getStudent = async (req, res) => {
 
 exports.addStudent = async (req, res) => {
     try {
-        const { name, email, points } = req.body;
-        const student = await Students.addStudent(name, email, points);
+        const { name, email, points, team_id } = req.body;
+        const student = await Students.addStudent(name, email, points, team_id);
         res.json(student);
     } catch (error) {
         res.status(500).json({ error: error.message });

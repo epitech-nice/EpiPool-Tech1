@@ -9,7 +9,21 @@ const routes = [
   },
   {
     path: '/dashboard',
+    name: 'dashboard',
     component: () => import('@/views/DashboardView.vue'),
+    beforeEnter: (to, from, next) => {
+      const authStore = useAuthStore();
+      if (!authStore.isAuthenticated) {
+        next('/login');
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: '/students',
+    name: 'students',
+    component: () => import('@/views/StudentsView.vue'),
     beforeEnter: (to, from, next) => {
       const authStore = useAuthStore();
       if (!authStore.isAuthenticated) {

@@ -5,13 +5,14 @@
                 <h1>Students</h1>
                 <div class="flexSB">
                     <AddStudent @update="update" :teamId="this.selectedTeam" />
-                    <RouterLink to="/students" class="simpleBtn">View all</RouterLink>
+                    <RouterLink to="/dashboard" class="simpleBtn">Back</RouterLink>
                 </div>
             </div>
             <div class="students-header">
                 <p>Name</p>
                 <p>Email</p>
                 <p>Points</p>
+                <p>Team</p>
                 <p>Actions</p>
             </div>
             <div class="students-body">
@@ -19,6 +20,7 @@
                     <p>{{ student.name }}</p>
                     <p>{{ student.email }}</p>
                     <p>{{ student.points }}</p>
+                    <p>{{ student.team_name ? student.team_name : 'None' }}</p>
                     <div class="flexIcon">
                         <EditStudent :student="student" @update="update" />
                         <DeleteStudent :student="student" @update="update" />
@@ -27,12 +29,9 @@
                 </div>
             </div>
         </div>
-        <div v-else-if="!selectedTeam" class="Card loadingtext">
-            <p>Please select a team ...</p>
-        </div>
         <div v-else class="Card">
             <div class="flexSB">
-                <p>No students in this team</p>
+                <p>No students</p>
                 <AddStudent @update="update" :teamId="this.selectedTeam" />
                 <RouterLink to="/students" class="simpleBtn">View all</RouterLink>
             </div>
@@ -42,10 +41,10 @@
 
 <script>
 import axios from '@/utils/axios'
-import EditStudent from './EditStudent.vue';
-import DeleteStudent from './DeleteStudent.vue';
-import AddStudent from './AddStudent.vue';
-import ChangeTeamStudent from './ChangeTeamStudent.vue';
+import EditStudent from '@/components/EditStudent.vue';
+import DeleteStudent from '@/components/DeleteStudent.vue';
+import AddStudent from '@/components/AddStudent.vue';
+import ChangeTeamStudent from '@/components/ChangeTeamStudent.vue';
 import { useTeamStore } from '@/stores/teamStore';
 import { computed } from 'vue';
 
@@ -74,24 +73,26 @@ export default {
     watch: {
         selectedTeam: {
             immediate: true,
-            handler(newTeamId) {
-                this.fetchStudents(newTeamId);
+            handler() {
+                this.fetchStudents();
             }
         }
     },
     methods: {
-        async fetchStudents(teamId) {
-            if (!teamId)
-                return;
-            const response = await axios.get(`students/ByTeam?team_id=${teamId}`)
+        async fetchStudents() {
+            const response = await axios.get(`students`)
             this.students = response.data
         },
         async update() {
-            this.fetchStudents(this.selectedTeam);
+            this.fetchStudents();
         }
+    },
+    mounted() {
+        this.fetchStudents();
     }
 }
 </script>
+
 
 <style>
 
@@ -112,7 +113,7 @@ export default {
 .students-header,
 .student-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     padding: 10px 0;
     color: var(--primaryText);
     text-align: center;
@@ -134,7 +135,7 @@ export default {
 }
 
 .students-body {
-    max-height: 250px;
+    /* max-height: 250px; */
     overflow-y: auto;
     padding-right: 5px;
     border-top: 1px solid;

@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     updateSidebarAndTitle(route) {
-      this.showSidebarAndTitle = route.name !== 'login'
+      this.showSidebarAndTitle = route.name === 'dashboard'
     }
   },
   mounted() {

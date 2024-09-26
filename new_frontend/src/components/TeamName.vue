@@ -1,7 +1,7 @@
 <template>
     <div class="Card Title">
         <p v-if="teamName !== null">{{ teamName }}</p>
-        <p v-else>Please select a team ...</p>
+        <p v-else class="loadingtext">Please select a team ...</p>
     </div>
 </template>
 

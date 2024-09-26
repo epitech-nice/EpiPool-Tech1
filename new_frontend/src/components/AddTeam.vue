@@ -56,35 +56,4 @@ export default {
 </script>
 
 <style scoped>
-
-.divForm {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-input {
-    padding: 10px;
-    border: none;
-    border-bottom: 2px solid #ccc;
-    border-radius: 0;
-    font-size: 16px;
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
-    background-color: var(--secondaryBg);
-    outline: none;
-    color: var(--primaryText);
-}
-
-input:focus {
-    border-bottom-color: var(--buttonPrimary);
-}
-
-input::placeholder {
-    color: var(--secondaryText);
-    font-style: italic;
-}
-
 </style>

@@ -39,13 +39,32 @@ h1 {
     font-family: "Bookman", "URW Bookman L", serif
 }
 
+.warning {
+    color: var(--warning);
+}
+
+.error {
+    color: var(--error);
+}
+
+.miniCard {
+    background-color: var(--primaryBg);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.miniCard:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+    transition: transform 0.3s ease-in-out;
+}
+
 .Card {
     background-color: var(--secondaryBg);
     color: var(--primaryText);
     border-radius: 10px;
     box-shadow: 0 0 10px var(--shadowLight);
     padding: 20px;
-    margin: 5px;
     width: 100%;
 }
 
@@ -75,6 +94,64 @@ h1 {
 
 .simpleBtn:hover {
     background-color: var(--highlight);
+}
+
+.loadingtext {
+    animation: shining 3s infinite;
+}
+
+.flexSB {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@keyframes shining {
+    0% {
+        color: var(--primaryText);
+    }
+    25% {
+        color: var(--secondaryText);
+    }
+    50% {
+        color: var(--primaryText);
+    }
+    75% {
+        color: var(--secondaryText);
+    }
+    100% {
+        color: var(--primaryText);
+    }
+}
+
+input {
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 0;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    background-color: var(--secondaryBg);
+    outline: none;
+    color: var(--primaryText);
+}
+
+input:focus {
+    border-bottom-color: var(--buttonPrimary);
+}
+
+input::placeholder {
+    color: var(--secondaryText);
+    font-style: italic;
+}
+
+.divForm {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 /* Media queries */

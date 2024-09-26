@@ -53,7 +53,7 @@ exports.changeStudent = async (req, res) => {
 
 exports.deleteStudent = async (req, res) => {
     try {
-        const { student_id } = req.body
+        const { student_id } = req.query;
         const [student, meta] = await Students.getStudent(student_id)
         if (!student)
             return res.status(404).json({ error: 'Student not found' });

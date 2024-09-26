@@ -4,7 +4,7 @@
             <form @submit.prevent="onSubmit" style="text-align: center;">
                 <slot></slot>
                 <div class="flexSB">
-                    <button type="button" class="simpleBtn" @click="closeForm">Annuler</button>
+                    <button type="button" class="simpleBtn" @click="closeForm">Cancel</button>
                     <button type="submit" class="simpleBtn">{{ submitText }}</button>
                 </div>
             </form>

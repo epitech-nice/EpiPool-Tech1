@@ -5,16 +5,19 @@ const Team = require('./TeamModel');
 const Students = sequelize.define('Student', {
     team_id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+        allowNull: true,
+        defaultValue: null
     },
     name: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(255),
         allowNull: false
     },
     email: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        validate: {
+            isEmail: true
+        }
     },
     points: {
         type: DataTypes.INTEGER,
@@ -22,8 +25,14 @@ const Students = sequelize.define('Student', {
     },
     student_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        primaryKey: true
     }
+}, {
+    tableName: 'STUDENTS',
+    timestamps: false,
+    charset: 'utf8mb4',
+    collate: 'utf8mb4_0900_ai_ci'
 });
 
 Students.getAll = async function() {
@@ -52,7 +61,7 @@ Students.addPoints = async function(student_id, points, reason) {
     const [data, meta] = await sequelize.query(`SELECT team_id FROM STUDENTS WHERE student_id = ${student_id};`);
     team_id = data[0].team_id;  
     await sequelize.query(`INSERT INTO LOGS (team_id, student_id, points, reason) VALUES (${team_id}, ${student_id}, ${points}, '${reason}');`);
-    Points.addPointsFromStudents(team_id, points, reason);
+    Team.addPoints(team_id, points, reason);
     return results;
 }
 
@@ -71,7 +80,7 @@ Students.removePoints = async function(student_id, points, reason) {
     const [data, meta] = await sequelize.query(`SELECT team_id FROM STUDENTS WHERE student_id = ${student_id};`);
     team_id = data[0].team_id;
     await sequelize.query(`INSERT INTO LOGS (team_id, student_id, points, reason) VALUES (${team_id}, ${student_id}, ${points_log}, '${reason}');`);
-    Points.removePointsFromStudents(team_id, points, reason);
+    Team.removePoints(team_id, points, reason);
     return results;
 }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Sep 15, 2024 at 04:51 PM
+-- Generation Time: Sep 26, 2024 at 06:18 PM
 -- Server version: 9.0.1
 -- PHP Version: 8.2.8
 
@@ -39,22 +39,11 @@ CREATE TABLE `LOGS` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `POINTS`
---
-
-CREATE TABLE `POINTS` (
-  `team_id` int NOT NULL,
-  `points` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `STUDENTS`
 --
 
 CREATE TABLE `STUDENTS` (
-  `team_id` int NOT NULL,
+  `team_id` int DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `points` int NOT NULL,
@@ -99,12 +88,6 @@ CREATE TABLE `USERS` (
 --
 ALTER TABLE `LOGS`
   ADD PRIMARY KEY (`log_id`);
-
---
--- Indexes for table `POINTS`
---
-ALTER TABLE `POINTS`
-  ADD PRIMARY KEY (`team_id`);
 
 --
 -- Indexes for table `STUDENTS`

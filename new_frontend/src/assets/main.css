@@ -74,7 +74,7 @@ h1 {
 }
 
 .simpleBtn:hover {
-    background-color: var(--buttonHover);
+    background-color: var(--highlight);
 }
 
 /* Media queries */

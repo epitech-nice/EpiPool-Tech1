@@ -46,4 +46,28 @@ export default {
 </script>
 
 <style scoped>
+
+select {
+    padding: 15px;
+    background-color: var(--secondaryBg);
+    border: none;
+    cursor: pointer;
+    margin-bottom: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+select option {
+    background-color: var(--secondaryBg);
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+}
+
+select:focus {
+    outline: none;
+}
+
 </style>

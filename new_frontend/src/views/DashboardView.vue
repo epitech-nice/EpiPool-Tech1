@@ -4,11 +4,12 @@
         <TeamPoints />
         <TeamName />
     </div>
+    
 </template>
 
 <script>
-import TeamPoints from '@/components/TeamPoints.vue';
-import TeamName from '@/components/TeamName.vue';
+import TeamPoints from '@/components/TeamPoints.vue'
+import TeamName from '@/components/TeamName.vue'
 import SidebardNav from '@/components/SidebardNav.vue'
 
 export default {

@@ -83,7 +83,7 @@ Team.deleteTeam = async function(team_id) {
     return results;
 }
 
-Team.addTeam = async function(name, color) {
+Team.addTeam = async function(name, color, points = 0) {
     try {
         console.log("Adding team:", name, color);
 
@@ -93,7 +93,7 @@ Team.addTeam = async function(name, color) {
             throw new Error('Team with this name already exists');
         }
 
-        const sql = `INSERT INTO TEAMS (name, color) VALUES ('${name}', '${color}');`;
+        const sql = `INSERT INTO TEAMS (name, color, points) VALUES ('${name}', '${color}', '${points}');`;
         const [results, metadata] = await sequelize.query(sql);
         console.log("results", results);
         return results;

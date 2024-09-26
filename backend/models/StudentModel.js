@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Team = require('./TeamModel');
+const TeamController = require('../controllers/teamsController');
 
 const Students = sequelize.define('Student', {
     team_id: {

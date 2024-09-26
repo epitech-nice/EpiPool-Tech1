@@ -1,11 +1,15 @@
 <template>
     <SidebardNav />
     <div class="SideFlex">
-        <TeamPoints />
-        <TeamName />
+        <TeamPoints :key="teamPointsKey" />
+        <TeamName :key="teamPointsKey"/>
     </div>
     <div class="HalfFlex">
-        <StudentsTeam />
+        <StudentsTeam :key="teamPointsKey"/>
+    </div>
+    <div class="HalfFlex">
+        <AddPoints @update="handleUpdate" />
+        <RemovePoints @update="handleUpdate" />
     </div>
 </template>
 
@@ -14,6 +18,8 @@ import TeamPoints from '@/components/TeamPoints.vue'
 import TeamName from '@/components/TeamName.vue'
 import SidebardNav from '@/components/SidebardNav.vue'
 import StudentsTeam from '@/components/StudentsTeam.vue';
+import AddPoints from '@/components/AddPoints.vue';
+import RemovePoints from '@/components/RemovePoints.vue';
 
 export default {
     name: 'DashboardView',
@@ -21,7 +27,19 @@ export default {
         TeamPoints,
         TeamName,
         SidebardNav,
-        StudentsTeam
+        StudentsTeam,
+        AddPoints,
+        RemovePoints
+    },
+    data() {
+        return {
+            teamPointsKey: 0
+        };
+    },
+    methods: {
+        handleUpdate() {
+            this.teamPointsKey++;
+        }
     }
 }
 </script>

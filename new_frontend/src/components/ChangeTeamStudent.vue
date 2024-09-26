@@ -43,17 +43,18 @@ export default {
             selectedTeamId: null
         };
     },
+    emits: ['update'],
     methods: {
         closeForm() {
             this.showChangeTeamForm = false;
         },
         async fetchTeams() {
-        try {
-            const response = await axios.get('teams');
-            this.teams = response.data;
-        } catch (error) {
-            console.error('Error fetching teams:', error);
-        }
+            try {
+                const response = await axios.get('teams');
+                this.teams = response.data;
+            } catch (error) {
+                console.error('Error fetching teams:', error);
+            }
         },
         async changeTeam() {
             try {

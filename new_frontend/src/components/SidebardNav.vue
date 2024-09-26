@@ -27,7 +27,8 @@ export default {
     width: fit-content;
     height: 100%;
     background-color: var(--secondaryBg);
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     color: white;   
 }
 

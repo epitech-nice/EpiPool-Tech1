@@ -17,7 +17,7 @@
 
 <script>
 import axios from '@/utils/axios';
-import BlurForm from './BlurForm.vue';
+import BlurForm from '@/components/BlurForm.vue';
 
 export default {
     name: 'AddStudent',

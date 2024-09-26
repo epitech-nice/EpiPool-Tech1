@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import BlurForm from './BlurForm.vue';
+import BlurForm from '@/components/BlurForm.vue';
 import axios from '@/utils/axios';
 
 export default {

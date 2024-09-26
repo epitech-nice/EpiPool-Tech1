@@ -1,6 +1,7 @@
 <template>
     <div v-for="team in teams" :key="team.team_id" :class="['leftHover', { active: selectedTeam === team.team_id }]" @click="selectTeam(team.team_id)">
         <span class="round" :style="{ backgroundColor: team.color }"></span>
+        <span class="tooltip">{{ team.name }} - {{ team.points }} points</span>
     </div>
     <AddTeamForm :teams="teams" @update="update" />
     <RemoveTeamForm :teams="teams" @update="update"/>
@@ -120,6 +121,34 @@ export default {
     background-color: white;
     left: 0;
     height: 80%;
+}
+
+.tooltip {
+    position: fixed;
+    left: 0;
+    white-space: nowrap;
+    background-color: var(--primaryBg);
+    color: white;
+    font-size: 20px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.leftHover:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    left: 70px;
+}
+
+.leftHover {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 </style>

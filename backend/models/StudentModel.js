@@ -84,8 +84,8 @@ Students.removePoints = async function(student_id, points, reason) {
     return results;
 }
 
-Students.addStudent = async function(team_id, name, email, points) {
-    const sql = `INSERT INTO STUDENTS (team_id, name, email, points) VALUES ('${team_id}', '${name}', '${email}', ${points});`;
+Students.addStudent = async function(name, email, points) {
+    const sql = `INSERT INTO STUDENTS (team_id, name, email, points) VALUES ('${name}', '${email}', ${points});`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }

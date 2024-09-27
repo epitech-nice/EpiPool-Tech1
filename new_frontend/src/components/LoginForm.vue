@@ -3,21 +3,23 @@
 		<input type="checkbox" id="chk" aria-hidden="true">
 
 		<div class="signup">
-			<form @submit.prevent="submitSignUp">
+			<form @submit.prevent="submitSignUp" style="padding-right: 15px; padding-left: 15px; text-align: center;">
 				<label for="chk" aria-hidden="true">Sign up</label>
 				<input type="text" v-model="name" id="nameSign" placeholder="User name" required>
 				<input type="email" v-model="email" id="emailSign" placeholder="Email" required>
 				<input type="password" v-model="password" id="passSign" placeholder="Password" required>
-				<button type="submit">Sign up</button>
+				<button type="submit" class="simpleBtn" style="margin-top: 25px;">Sign up</button>
 			</form>
 		</div>
 
 		<div class="login">
 			<form @submit.prevent="submitLogin">
-				<label for="chk" aria-hidden="true">Login</label>
-				<input type="email" v-model="emailLogin" id="emailLogin" placeholder="Email" required>
-				<input type="password" v-model="passwordLogin" id="passLogin" placeholder="Password" required>
-				<button type="submit">Login</button>
+				<div class="divForm">
+					<label for="chk" aria-hidden="true">Login</label>
+					<input type="email" v-model="emailLogin" id="emailLogin" placeholder="Email" required>
+					<input type="password" v-model="passwordLogin" id="passLogin" placeholder="Password" required>
+					<button type="submit" class="simpleBtn">Login</button>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -100,38 +102,6 @@ label {
 	cursor: pointer;
 	transition: .5s ease-in-out;
 }
-input {
-	width: 60%;
-	height: 10px;
-	background: #e0dede;
-	justify-content: center;
-	display: flex;
-	margin: 20px auto;
-	padding: 17px;
-	border: none;
-	outline: none;
-	border-radius: 5px;
-}
-button{
-	width: 60%;
-	height: 40px;
-	margin: 10px auto;
-	justify-content: center;
-	display: block;
-	color: #fff;
-	background: var(--buttonPrimary);
-	font-size: 1em;
-	font-weight: bold;
-	margin-top: 30px;
-	outline: none;
-	border: none;
-	border-radius: 5px;
-	transition: .2s ease-in;
-	cursor: pointer;
-}
-button:hover{
-	background: var(--buttonHover);
-}
 .login{
 	height: 460px;
 	background: #eee;
@@ -145,7 +115,7 @@ button:hover{
 }
 
 #chk:checked ~ .login{
-	transform: translateY(-500px);
+	transform: translateY(-450px);
 }
 #chk:checked ~ .login label{
 	transform: scale(1);	

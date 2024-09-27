@@ -51,7 +51,7 @@ exports.addLog = async (req, res) => {
 
 exports.deleteLog = async (req, res) => {
     try {
-        const { log_id } = req.body;
+        const { log_id } = req.query;
         const log = await Logs.deleteLog(log_id);
         if (!log)
             return res.status(404).json({ error: 'Log not found' });

@@ -2,10 +2,11 @@
     <SidebardNav />
     <div class="SideFlex">
         <TeamPoints :key="teamPointsKey" />
-        <TeamName :key="teamPointsKey"/>
+        <TeamName :key="teamPointsKey" />
     </div>
     <div class="HalfFlex">
-        <StudentsTeam :key="teamPointsKey"/>
+        <StudentsTeam :key="teamPointsKey" />
+        <LogsAction :key="teamPointsKey" />
     </div>
     <div class="HalfFlex">
         <AddPoints @update="handleUpdate" />
@@ -18,6 +19,7 @@ import TeamPoints from '@/components/TeamPoints.vue'
 import TeamName from '@/components/TeamName.vue'
 import SidebardNav from '@/components/SidebardNav.vue'
 import StudentsTeam from '@/components/StudentsTeam.vue';
+import LogsAction from '@/components/LogsAction.vue';
 import AddPoints from '@/components/AddPoints.vue';
 import RemovePoints from '@/components/RemovePoints.vue';
 
@@ -28,6 +30,7 @@ export default {
         TeamName,
         SidebardNav,
         StudentsTeam,
+        LogsAction,
         AddPoints,
         RemovePoints
     },

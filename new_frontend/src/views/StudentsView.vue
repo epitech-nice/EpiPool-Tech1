@@ -33,7 +33,7 @@
             <div class="flexSB">
                 <p>No students</p>
                 <AddStudent @update="update" :teamId="this.selectedTeam" />
-                <RouterLink to="/students" class="simpleBtn">View all</RouterLink>
+                <RouterLink to="/dashboard" class="simpleBtn">Back</RouterLink>
             </div>
         </div>
     </div>

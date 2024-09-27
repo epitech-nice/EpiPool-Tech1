@@ -29,31 +29,22 @@ const Logs = sequelize.define('Log', {
 });
 
 Logs.getAll = async function() {
-    const sql = "SELECT * FROM LOGS;";
+    const sql = `SELECT LOGS.*, STUDENTS.name AS student_name, STUDENTS.email, TEAMS.name AS team_name
+                FROM LOGS
+                LEFT JOIN STUDENTS ON STUDENTS.student_id = LOGS.student_id
+                LEFT JOIN TEAMS ON TEAMS.team_id = LOGS.team_id
+                ORDER BY LOGS.log_id DESC;`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }
 
 Logs.getByTeam = async function(team_id) {
-    const sql = `SELECT 
-        log_id, 
-        LOGS.team_id, 
-        STUDENTS.student_id, 
-        LOGS.points, 
-        LOGS.reason, 
-        STUDENTS.name, 
-        STUDENTS.email 
-    FROM 
-        LOGS
-    JOIN 
-        STUDENTS 
-    ON 
-        STUDENTS.student_id = LOGS.student_id
-    WHERE 
-        LOGS.team_id = ${team_id}
-    ORDER BY 
-        LOGS.log_id DESC
-    LIMIT 5;`;
+    const sql = `SELECT LOGS.*, STUDENTS.name AS student_name, STUDENTS.email, TEAMS.name AS team_name
+                FROM LOGS
+                LEFT JOIN STUDENTS ON STUDENTS.student_id = LOGS.student_id
+                LEFT JOIN TEAMS ON TEAMS.team_id = LOGS.team_id
+                WHERE LOGS.team_id = ${team_id}
+                ORDER BY LOGS.log_id DESC;`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }

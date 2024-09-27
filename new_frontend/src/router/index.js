@@ -34,6 +34,19 @@ const routes = [
     },
   },
   {
+    path: '/logs',
+    name: 'logs',
+    component: () => import('@/views/LogsView.vue'),
+    beforeEnter: (to, from, next) => {
+      const authStore = useAuthStore();
+      if (!authStore.isAuthenticated) {
+        next('/login');
+      } else {
+        next();
+      }
+    },
+  },
+  {
     path: '/',
     redirect: '/dashboard'
   }

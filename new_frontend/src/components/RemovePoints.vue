@@ -1,7 +1,7 @@
 <template>
     <div v-if="this.selectedTeam">
-        <div class="simpleBtn" @click="showRemoveForm = true">
-            <i class="fa-solid fa-minus"></i> Remove Points
+        <div class="littleCard errorbg" @click="showRemoveForm = true">
+            <i class="fa-solid fa-minus"></i>
         </div>
         
         <BlurForm v-if="showRemoveForm" :showForm="showRemoveForm" submitText="Remove Points" @close="closeForm" @submit="submitPoints">
@@ -28,9 +28,6 @@
             </div>
 
         </BlurForm>
-    </div>
-    <div v-else class="Card loadingtext">
-        <p>Please select a team ... </p>
     </div>
 </template>
 

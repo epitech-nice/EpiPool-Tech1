@@ -1,5 +1,5 @@
 <template>
-    <div class="Card fit Title">
+    <div class="Card fit Title successbg">
         <p v-if="teamPoints !== null">{{ teamPoints }} points</p>
         <p v-else class="loadingtext">Please select a team ...</p>
     </div>

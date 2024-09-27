@@ -2,15 +2,13 @@
     <SidebardNav />
     <div class="SideFlex">
         <TeamPoints :key="teamPointsKey" />
+        <AddPoints @update="handleUpdate" />
+        <RemovePoints @update="handleUpdate" />
         <TeamName :key="teamPointsKey" />
     </div>
     <div class="HalfFlex">
         <StudentsTeam :key="teamPointsKey" />
         <LogsAction :key="teamPointsKey" />
-    </div>
-    <div class="HalfFlex">
-        <AddPoints @update="handleUpdate" />
-        <RemovePoints @update="handleUpdate" />
     </div>
 </template>
 
@@ -52,6 +50,7 @@ export default {
 .SideFlex {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     gap: 10px;
     padding-top: 10px;
     padding-right: 10px;

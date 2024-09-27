@@ -48,7 +48,19 @@ h1 {
 }
 
 .blue {
-    color: var(--primaryAccent);
+    color: var(--buttonPrimary);
+}
+
+.errorbg {
+    background-color: var(--error);
+}
+
+.bluebg {
+    background-color: var(--primaryAccent);
+}
+
+.successbg {
+    background-color: var(--success) !important;
 }
 
 .miniCard {
@@ -70,6 +82,32 @@ h1 {
     box-shadow: 0 0 10px var(--shadowLight);
     padding: 20px;
     width: 100%;
+}
+
+.littleCard {
+    height: 80px;
+    font-size: 24px;
+    padding: 0px 15px 0px 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.littleCard:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.littleCard i {
+    transition: transform 0.3s ease;
+}
+
+.littleCard:hover i {
+    transform: rotate(360deg);
 }
 
 .fit {

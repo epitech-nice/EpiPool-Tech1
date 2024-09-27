@@ -1,7 +1,7 @@
 <template>
     <div v-if="this.selectedTeam">
-        <div class="simpleBtn" @click="showAddForm = true">
-            <i class="fa-solid fa-plus"></i> Add Points
+        <div class="bluebg littleCard" @click="showAddForm = true">
+            <i class="fa-solid fa-plus"></i>
         </div>
         
         <BlurForm v-if="showAddForm" :showForm="showAddForm" submitText="Add Points" @close="closeForm" @submit="submitPoints">

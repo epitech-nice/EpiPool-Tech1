@@ -33,7 +33,6 @@ Team.getByName = async function(name) {
     try {
         const sql = `SELECT * FROM TEAMS WHERE name = '${name}';`;
         const [results, metadata] = await sequelize.query(sql);
-        console.log("results GET BYNAME", results);
         return results;
     } catch (error) {
         console.error('Error fetching team by name:', error.message);
@@ -111,5 +110,33 @@ Team.changeTeam = async function(team_id, name, color) {
     }
     return results;
 }
+
+Team.updatePoints = async function(team_id, points, reason, operation = 'add') {
+    try {
+        const [data] = await sequelize.query(`SELECT points FROM TEAMS WHERE team_id = :team_id`, {
+            replacements: { team_id }
+        });
+
+        if (!data[0]) {
+            throw new Error("Team not found");
+        }
+
+        let current_points = data[0].points;
+
+        let new_points = operation === 'add' ? current_points + points : current_points - points;
+        new_points = new_points < 0 ? 0 : new_points;
+
+        const updateSql = `UPDATE TEAMS SET points = :new_points WHERE team_id = :team_id;`;
+        await sequelize.query(updateSql, {
+            replacements: { new_points, team_id }
+        });
+
+        console.log(`${points} points ${operation === 'add' ? 'added to' : 'removed from'} team with ID: ${team_id} for reason: ${reason}`);
+        return { success: true, new_points };
+    } catch (error) {
+        console.error("Error updating team points:", error.message);
+        throw error;
+    }
+};
 
 module.exports = Team;

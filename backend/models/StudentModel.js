@@ -75,7 +75,6 @@ Students.addPoints = async function(student_id, points, reason) {
     await sequelize.query(insertLogSql, {
         replacements: { team_id, student_id, points, reason }
     });
-    // Update team points
     const team = await Team.findByPk(team_id);
     if (!team) {
         throw new Error("Team not found");
@@ -112,6 +111,8 @@ Students.removePoints = async function(student_id, points, reason) {
 }
 
 Students.addStudent = async function(name, email, points, team_id = null) {
+    if (points < 0)
+        points = 0;
     const sql = `INSERT INTO STUDENTS (name, email, points, team_id) VALUES ('${name}', '${email}', ${points}, ${team_id});`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
@@ -149,7 +150,43 @@ Students.getStudentByEmail = async function(email) {
     return results;
 }
 
-module.exports = Students;
+Students.updatePoints = async function(student_id, points, reason, operation = 'add') {
+    try {
+        const [data] = await sequelize.query(`SELECT points, team_id FROM STUDENTS WHERE student_id = :student_id`, {
+            replacements: { student_id }
+        });
 
-//get Students API LIONEL
-//qd on init //soit csv //soit db + //trucs de test
+        if (!data[0]) {
+            throw new Error("Student not found");
+        }
+
+        let current_points = data[0].points;
+        const team_id = data[0].team_id;
+
+        let new_points = operation === 'add' ? current_points + points : current_points - points;
+        new_points = new_points < 0 ? 0 : new_points;
+
+        const updateSql = `UPDATE STUDENTS SET points = :new_points WHERE student_id = :student_id;`;
+        await sequelize.query(updateSql, {
+            replacements: { new_points, student_id }
+        });
+
+        const points_log = operation === 'add' ? points : -points;
+        const insertLogSql = `INSERT INTO LOGS (team_id, student_id, points, reason) VALUES (:team_id, :student_id, :points_log, :reason);`;
+        await sequelize.query(insertLogSql, {
+            replacements: { team_id, student_id, points_log, reason }
+        });
+
+        if (team_id) {
+            console.log("points_log", points_log);
+            await Team.updatePoints(team_id, points_log, reason, operation);
+        }
+
+        return { success: true, new_points };
+    } catch (error) {
+        console.error("Error updating student points:", error.message);
+        throw error;
+    }
+};
+
+module.exports = Students;

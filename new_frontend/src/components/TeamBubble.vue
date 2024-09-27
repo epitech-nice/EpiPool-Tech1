@@ -1,6 +1,6 @@
 <template>
     <div v-for="team in teams" :key="team.team_id" :class="['leftHover', { active: selectedTeam === team.team_id }]" @click="selectTeam(team.team_id)">
-        <span class="round" :style="{ backgroundColor: team.color }"></span>
+        <span class="round" style="background-image: url(../../public/pictures/ours.jpg)"></span>
         <span class="tooltip">{{ team.name }} - {{ team.points }} points</span>
     </div>
     <AddTeamForm :teams="teams" @update="update" />

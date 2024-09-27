@@ -1,4 +1,5 @@
 const Teams = require('../models/TeamModel');
+const Logs = require('../models/LogModel');
 
 exports.getStarterTeams = async (req, res) => {
     try {
@@ -108,14 +109,14 @@ exports.getPointsByTeam = async (req, res) => {
 exports.addPoints = async (req, res) => {
     try {
         const { team_id, points, reason } = req.body;
-        if (!reason) reason = "PEDAGO";
-
+        const getReason = reason || "PEDAGO";
         const team = await Teams.findByPk(team_id);
         if (!team) {
             return res.status(404).json({ error: 'Team not found' });
         }
         team.points += parseInt(points);
         await team.save();
+        Logs.addLog(team_id, null, points, getReason);
         res.json({ success: true, message: `Added ${points} points to team ${team.name}`, reason });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -136,7 +137,7 @@ exports.removePoints = async (req, res) => {
         }
         team.points = Math.max(0, team.points - parseInt(points));
         await team.save();
-
+        Logs.addLog(team_id, null, -points, reason);
         res.json({ success: true, message: `Removed ${points} points from team ${team.name}`, reason });
     } catch (error) {
         res.status(500).json({ error: error.message });

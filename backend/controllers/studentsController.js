@@ -81,11 +81,11 @@ exports.deleteStudent = async (req, res) => {
 exports.addPointsToStudent = async (req, res) => {
     try {
         const { student_id, points, reason } = req.body;
-        if (!reason)
-            reason = "PEDAGO";
-        const student = await Students.addPoints(student_id, points, reason);
-        res.json(student);
+        const setReason = reason || "PEDAGO";
+        const result = await Students.addPoints(student_id, points, setReason);
+        res.json(result);
     } catch (error) {
+        console.error("Error adding points:", error);
         res.status(500).json({ error: error.message });
     }
 };

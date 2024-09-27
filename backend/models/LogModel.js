@@ -19,7 +19,7 @@ const Logs = sequelize.define('Log', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    event:{
+    reason:{
         type: DataTypes.STRING,
         allowNull: false
     }
@@ -65,7 +65,7 @@ Logs.getByStudent = async function(student_id) {
 }
 
 Logs.addLog = async function(team_id, student_id, points, event) {
-    const sql = `INSERT INTO LOGS (team_id, student_id, points, event) VALUES (${team_id}, ${student_id}, ${points}, '${event}');`;
+    const sql = `INSERT INTO LOGS (team_id, student_id, points, reason) VALUES (${team_id}, ${student_id}, ${points}, '${event}');`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }

@@ -1,5 +1,7 @@
 const Teams = require('../models/TeamModel');
 const Logs = require('../models/LogModel');
+const Student = require('../models/StudentModel');
+const { isRandomTeamUsed, setRandomTeamUsed } = require('../models/ConfigModel');
 
 exports.getStarterTeams = async (req, res) => {
     try {
@@ -141,5 +143,43 @@ exports.removePoints = async (req, res) => {
         res.json({ success: true, message: `Removed ${points} points from team ${team.name}`, reason });
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+};
+
+exports.randomTeam = async (req, res) => {
+    try {
+        const isUsed = await isRandomTeamUsed();
+        
+        if (!isUsed) {
+            const studentsWithoutTeam = await Student.findAll({ where: { team_id: null } });
+            if (studentsWithoutTeam.length === 0) {
+                return res.status(404).json({ error: 'No students without teams found' });
+            }
+
+            const teams = await Teams.findAll();
+            if (teams.length === 0) {
+                return res.status(404).json({ error: 'No teams found' });
+            }
+
+            let teamIndex = 0;
+            const totalTeams = teams.length;
+
+            for (const student of studentsWithoutTeam) {
+                const team = teams[teamIndex];
+                student.team_id = team.team_id;
+                await student.save();
+
+                teamIndex = (teamIndex + 1) % totalTeams;
+            }
+
+            await setRandomTeamUsed();
+
+            res.json({ success: true, message: 'Students assigned to teams evenly' });
+        } else {
+            return res.status(403).json({ error: 'This route has already been accessed once' });
+        }
+    } catch (error) {
+        console.error('Error assigning students to teams:', error.message);
+        res.status(500).json({ error: 'Error assigning students to teams' });
     }
 };

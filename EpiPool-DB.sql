@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Sep 27, 2024 at 05:13 PM
+-- Generation Time: Sep 27, 2024 at 07:45 PM
 -- Server version: 9.0.1
 -- PHP Version: 8.2.8
 
@@ -36,8 +36,7 @@ CREATE TABLE `CONFIG` (
 --
 
 INSERT INTO `CONFIG` (`random_config`) VALUES
-(0),
-(0);
+(1);
 
 -- --------------------------------------------------------
 

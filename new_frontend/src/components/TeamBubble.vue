@@ -36,7 +36,6 @@ export default {
         getTeams() {
             axios.get('teams').then(response => {
                 this.teams = response.data;
-                console.log(this.teams);
             }).catch(error => {
                 console.log(error);
             });

@@ -38,6 +38,7 @@
 import axios from '@/utils/axios';
 import BlurForm from './BlurForm.vue';
 import { useTeamStore } from '@/stores/teamStore';
+import { useNotification } from '@/utils/NotificationService';
 import { computed } from 'vue';
 
 export default {
@@ -84,23 +85,26 @@ export default {
         },
         async submitPoints() {
             try {
+                const { show } = useNotification();
                 if (this.addTo === 'student') {
-                    await axios.put('students/AddPoints', {
+                    const response = await axios.put('students/AddPoints', {
                         student_id: this.formData.student_id,
                         points: this.formData.points,
                         reason: this.formData.reason,
                     });
+                    show(response.data.message, 'success');
                 } else {
-                    await axios.put('teams/AddPoints', {
+                    const response = await axios.put('teams/AddPoints', {
                         team_id: this.selectedTeam,
                         points: this.formData.points,
                         reason: this.formData.reason,
                     });
+                    show(response.data.message, 'success');
                 }
                 this.$emit('update');
                 this.closeForm();
             } catch (error) {
-                console.error('Error adding points:', error);
+                show(response.data.error, 'error');
             }
         },
         onAddToChange() {

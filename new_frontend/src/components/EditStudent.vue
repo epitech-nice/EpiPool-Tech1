@@ -17,6 +17,7 @@
 <script>
 import axios from '@/utils/axios';
 import BlurForm from '@/components/BlurForm.vue';
+import { useNotification } from '@/utils/NotificationService';
 
 export default {
     name: 'EditStudent',
@@ -40,9 +41,15 @@ export default {
             this.showEditForm = false;
         },
         async editStudent() {
-            await axios.put(`students/Update`, this.formData)
-            this.$emit('update');
-            this.closeForm();
+            const { show } = useNotification();
+            try {
+                await axios.put(`students/Update`, this.formData)
+                this.$emit('update');
+                this.closeForm();
+                show('Student edited successfully', 'success');
+            } catch (error) {
+                show('Error editing student', 'error');
+            }
         }
     }
 };

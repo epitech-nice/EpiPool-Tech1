@@ -36,6 +36,7 @@
 <script>
 import axios from '@/utils/axios';
 import DeleteLog from '@/components/DeleteLog.vue';
+import { useNotification } from '@/utils/NotificationService';
 
 export default {
     name: 'LogsView',
@@ -52,11 +53,12 @@ export default {
     },
     methods: {
         async fetchLogs() {
+            const { show } = useNotification();
             try {
                 const response = await axios.get(`logs`);
                 this.logs = response.data;
             } catch (error) {
-                console.error("Error fetching logs:", error);
+                show('An error occured.', 'error')
             }
         },
         async update() {
@@ -67,6 +69,13 @@ export default {
 </script>
 
 <style scoped>
+.flexIcon {
+    display: flex;
+    align-content: center;
+    gap: 10px;
+    justify-content: center;
+}
+
 .logs-container {
     display: flex;
     flex-direction: column;

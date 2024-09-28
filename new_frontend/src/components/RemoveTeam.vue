@@ -13,6 +13,7 @@
 <script>
 import BlurForm from '@/components/BlurForm.vue';
 import axios from '@/utils/axios';
+import { useNotification } from '@/utils/NotificationService';
 
 export default {
     name: 'RemoveTeamForm',
@@ -33,13 +34,16 @@ export default {
             this.showForm = !this.showForm;
         },
         async removeTeam() {
-            await axios.delete(`teams/Delete?id=${this.selectedTeamId}`)
-            .catch(error => {
-                console.log(error);
-            });
-            this.selectedTeamId = null;
-            this.showForm = false;
-            this.$emit('update');
+            const { show } = useNotification();
+            try {
+                await axios.delete(`teams/Delete?id=${this.selectedTeamId}`)
+                this.selectedTeamId = null;
+                this.showForm = false;
+                this.$emit('update');
+                show('Team successfully deleted', 'success')
+            } catch(error) {
+                show('An Error occured.', 'error')
+            }
         }
     }
 }

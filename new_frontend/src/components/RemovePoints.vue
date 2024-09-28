@@ -35,6 +35,7 @@
 import axios from '@/utils/axios';
 import BlurForm from './BlurForm.vue';
 import { useTeamStore } from '@/stores/teamStore';
+import { useNotification } from '@/utils/NotificationService';
 import { computed } from 'vue';
 
 export default {
@@ -80,24 +81,27 @@ export default {
             };
         },
         async submitPoints() {
+            const { show } = useNotification();
             try {
                 if (this.removeFrom === 'student') {
-                    await axios.put('students/RemovePoints', {
+                    const response = await axios.put('students/RemovePoints', {
                         student_id: this.formData.student_id,
                         points: this.formData.points,
                         reason: this.formData.reason,
                     });
+                    show(response.data.message, 'success');
                 } else {
-                    await axios.put('teams/RemovePoints', {
+                    const response = await axios.put('teams/RemovePoints', {
                         team_id: this.selectedTeam,
                         points: this.formData.points,
                         reason: this.formData.reason,
                     });
+                    show(response.data.message, 'success');
                 }
                 this.$emit('update');
                 this.closeForm();
             } catch (error) {
-                console.error('Error removing points:', error);
+                show(response.data.error, 'error');
             }
         },
         onRemoveFromChange() {

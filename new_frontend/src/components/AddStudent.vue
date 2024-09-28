@@ -18,6 +18,7 @@
 <script>
 import axios from '@/utils/axios';
 import BlurForm from '@/components/BlurForm.vue';
+import { useNotification } from '@/utils/NotificationService';
 
 export default {
     name: 'AddStudent',
@@ -41,9 +42,15 @@ export default {
             this.showAddForm = false;
         },
         async addStudent() {
-            await axios.post('students/Create', this.formData);
-            this.$emit('update');
-            this.closeForm();
+            const { show } = useNotification();
+            try {
+                const response = await axios.post('students/Create', this.formData);
+                this.$emit('update');
+                this.closeForm();
+                show(response.data.message, 'success');
+            } catch (error) {
+                show('An error occurred', 'error');
+            }
         }
     }
 };

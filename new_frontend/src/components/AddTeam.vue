@@ -34,6 +34,7 @@ import BlurForm from '@/components/BlurForm.vue';
 import axios from '@/utils/axios';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
+import { useNotification } from '@/utils/NotificationService';
 
 export default {
     name: 'AddTeamForm',
@@ -80,6 +81,7 @@ export default {
             }
         },
         cropImage() {
+            const { show } = useNotification();
             if (this.cropper) {
                 const croppedCanvas = this.cropper.getCroppedCanvas({
                     width: 100,
@@ -87,21 +89,25 @@ export default {
                     imageSmoothingQuality: 'high'
                 });
                 this.croppedImageUrl = croppedCanvas.toDataURL('image/png');
+                show('Image cropped properly !', 'info')
                 this.cropper.destroy();
             }
         },
         async addTeam() {
-            await axios.post(`teams/Create`, {
-                name: this.name,
-                color: this.color,
-                points: this.points,
-                image_name: this.croppedImageUrl
-            })
-            .catch(error => {
-                console.log(error);
-            });
-            this.resetForm();
-            this.$emit('update');
+            const { show } = useNotification();
+            try {
+                const response = await axios.post(`teams/Create`, {
+                    name: this.name,
+                    color: this.color,
+                    points: this.points,
+                    image_name: this.croppedImageUrl
+                })
+                show(response.data.message, 'success');
+                this.resetForm();
+                this.$emit('update');
+            } catch (error) {
+                show(error.response.data.error, 'error');
+            }
         },
         resetForm() {
             this.showForm = false;

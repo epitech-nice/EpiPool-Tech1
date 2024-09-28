@@ -18,6 +18,7 @@
 <script>
 import axios from '@/utils/axios';
 import BlurForm from '@/components/BlurForm.vue';
+import { useNotification } from '@/utils/NotificationService';
 
 export default {
     name: 'DeleteStudent',
@@ -40,9 +41,15 @@ export default {
             this.showDeleteForm = false;
         },
         async deleteStudent() {
-            await axios.delete(`students/Delete?student_id=${this.student.student_id}`);
-            this.$emit('update');
-            this.closeForm();
+            const {show} = useNotification();
+            try {
+                await axios.delete(`students/Delete?student_id=${this.student.student_id}`);
+                this.$emit('update');
+                this.closeForm();
+                show('Student deleted successfully', 'success');
+            } catch (error) {
+                show('Error deleting student', 'error');
+            }
         }
     }
 };

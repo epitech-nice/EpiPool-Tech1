@@ -41,22 +41,26 @@ export default {
     padding: 1em;
     border-radius: 5px;
     color: #fff;
+    font-size: 18px;
     cursor: pointer;
     opacity: 1;
     transform: translateY(0);
     transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 25;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .notification.success {
-    background-color: #4caf50;
+    background-color: var(--success);
 }
 
 .notification.error {
-    background-color: #f44336;
+    background-color: var(--error);
 }
 
 .notification.info {
-    background-color: #2196f3;
+    background-color: var(--highlight);
 }
 
 .fade-enter-active,

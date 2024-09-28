@@ -35,7 +35,7 @@ exports.addStudent = async (req, res) => {
     try {
         const { name, email, points, team_id } = req.body;
         const student = await Students.addStudent(name, email, points, team_id);
-        res.json(student);
+        res.json({success: true, message: `Student ${name} added to team ${team_id}`});
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -83,7 +83,7 @@ exports.addPointsToStudent = async (req, res) => {
         const { student_id, points, reason } = req.body;
         const setReason = reason || "PEDAGO";
         const result = await Students.addPoints(student_id, points, setReason);
-        res.json(result);
+        res.json({ success: true, message: `Added ${points} points, because of "${reason}"` });
     } catch (error) {
         console.error("Error adding points:", error);
         res.status(500).json({ error: error.message });
@@ -97,7 +97,7 @@ exports.removePointsFromStudent = async (req, res) => {
             reason = "PEDAGO";
         const student = await Students.removePoints(student_id, points, reason);
         // TODO: Adjust the final number of points
-        res.json(student);
+        res.json({ success: true, message: `Removed ${points} points, because of "${reason}"` });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -119,7 +119,7 @@ exports.changeTeam = async (req, res) => {
     try {
         const { student_id, team_id } = req.body;
         const student = await Students.changeTeam(student_id, team_id);
-        res.json(student);
+        res.json({success: true, message: `The student changed team !`});
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

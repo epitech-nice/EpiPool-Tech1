@@ -14,7 +14,7 @@
     --buttonHover: #3A7AFE;
     
     --success: #00C853;
-    --error: #FF5252;
+    --error: red;
     --warning: #FFAB40;
     
     --shadowLight: rgba(0, 0, 0, 0.6);
@@ -224,5 +224,4 @@ select:focus {
     h1 {
         font-size: 16px;
     }
-    
 }

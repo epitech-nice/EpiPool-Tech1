@@ -2,7 +2,7 @@
     <div class="logs-container">
         <div v-if="logs.length > 0" class="logs-table">
             <div class="flexSB">
-                <h1>Logs Actions</h1>
+                <h1>Logs</h1>
                 <div class="flexSB">
                     <RouterLink to="/logs" class="simpleBtn">View all</RouterLink>
                 </div>
@@ -72,9 +72,13 @@ export default {
     },
     methods: {
         async fetchLogs(teamId) {
-            if (!teamId) return;
-            const response = await axios.get(`logs/ByTeam?team_id=${teamId}`);
-            this.logs = response.data;
+            try {
+                if (!teamId) return;
+                const response = await axios.get(`logs/ByTeam?team_id=${teamId}`);
+                this.logs = response.data;
+            } catch(error) {
+                console.log(error.response.data.msg)
+            }
         },
         async update() {
             this.fetchLogs(this.selectedTeam);
@@ -84,6 +88,12 @@ export default {
 </script>
 
 <style scoped>
+.flexIcon {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
 .logs-container {
     display: flex;
     justify-content: center;

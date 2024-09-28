@@ -24,6 +24,7 @@
 <script>
 import axios from '@/utils/axios';
 import BlurForm from '@/components/BlurForm.vue';
+import { useNotification } from '@/utils/NotificationService';
 
 export default {
     name: 'ChangeTeamStudent',
@@ -57,16 +58,18 @@ export default {
             }
         },
         async changeTeam() {
+            const { show } = useNotification();
             try {
                 const payload = {
                     student_id: this.student.student_id,
                     team_id: this.selectedTeamId
                 };
-                await axios.put('students/changeTeam', payload);
+                const response = await axios.put('students/changeTeam', payload);
+                show(response.data.message, 'success');
                 this.$emit('update');
                 this.closeForm();
             } catch (error) {
-                console.error('Error changing team:', error);
+                show('An error occured', 'error');
             }
         }
     },

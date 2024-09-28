@@ -66,12 +66,24 @@ Team.getAll = async function() {
     try {
         const sql = "SELECT * FROM TEAMS;";
         const [results, metadata] = await sequelize.query(sql);
-        return results;
+
+        const teamsWithImageBase64 = results.map(team => {
+            const imageBlob = team.image_name;
+            const imageBase64 = imageBlob ? `data:image/png;base64,${imageBlob.toString('base64')}` : null;
+            return {
+                ...team,
+                image_name: imageBase64
+            };
+        });
+
+        return teamsWithImageBase64;
+
     } catch (error) {
         console.error('Error fetching all teams:', error.message);
         throw new Error('Could not fetch all teams');
     }
 }
+
 
 Team.deleteTeam = async function(team_id) {
     const sql = `DELETE FROM TEAMS WHERE team_id = ${team_id};`;
@@ -82,19 +94,16 @@ Team.deleteTeam = async function(team_id) {
     return results;
 }
 
-Team.addTeam = async function(name, color, points = 0) {
+Team.addTeam = async function(name, color, points = 0, image_name = null) {
     try {
-        console.log("Adding team:", name, color);
-
         const existingTeam = await Team.getByName(name);
-        console.log("existingTeam", existingTeam);
+
         if (existingTeam.length > 0) {
             throw new Error('Team with this name already exists');
         }
 
-        const sql = `INSERT INTO TEAMS (name, color, points) VALUES ('${name}', '${color}', '${points}');`;
+        const sql = `INSERT INTO TEAMS (name, color, points, image_name) VALUES ('${name}', '${color}', '${points}', '${image_name}');`;
         const [results, metadata] = await sequelize.query(sql);
-        console.log("results", results);
         return results;
     } catch (error) {
         console.error("Error adding team:", error.message);

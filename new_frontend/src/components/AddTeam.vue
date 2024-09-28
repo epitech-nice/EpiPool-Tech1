@@ -95,7 +95,7 @@ export default {
                 name: this.name,
                 color: this.color,
                 points: this.points,
-                image: this.croppedImageUrl
+                image_name: this.croppedImageUrl
             })
             .catch(error => {
                 console.log(error);

@@ -1,8 +1,9 @@
 <template>
     <div v-for="team in teams" :key="team.team_id" :class="['leftHover', { active: selectedTeam === team.team_id }]" @click="selectTeam(team.team_id)">
-        <span class="round" style="background-image: url(../../public/pictures/ours.jpg)"></span>
+        <img class="round" :src="team.image_name"> <!-- image_name contient maintenant une image en base64 -->
         <span class="tooltip">{{ team.name }} - {{ team.points }} points</span>
     </div>
+
     <AddTeamForm :teams="teams" @update="update" />
     <RemoveTeamForm :teams="teams" @update="update"/>
 </template>
@@ -35,6 +36,7 @@ export default {
         getTeams() {
             axios.get('teams').then(response => {
                 this.teams = response.data;
+                console.log(this.teams);
             }).catch(error => {
                 console.log(error);
             });

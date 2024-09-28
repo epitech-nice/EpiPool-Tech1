@@ -28,6 +28,7 @@
 <script>
 import axios from '@/utils/axios';
 import { useAuthStore } from '@/stores/auth';
+import { useNotification } from '../utils/NotificationService';
 
 export default {
 	data() {
@@ -55,18 +56,19 @@ export default {
             });
         },
         async submitLogin() {
+			const { show } = useNotification();
             try {
 				const response = await axios.post('login', {
 					email: this.emailLogin,
 					password: this.passwordLogin
 				});
-				console.log(response);
 				const token = response.data.token;
 				const authStore = useAuthStore();
 				authStore.setToken(token);
 				this.$router.push('/dashboard');
+				show('Connected !', 'success');
 			} catch (err) {
-				console.log('Erreur lors de la connexion :', err);
+				show(err.response.data.msg, 'error');
 			}
         }
 	}

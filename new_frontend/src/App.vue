@@ -3,6 +3,7 @@
     <div :class="{'spaceLeft': showSidebarAndTitle}">
       <router-view />
     </div>
+    <Notification ref="notification" />
   </div>
 </template>
 
@@ -10,9 +11,14 @@
 import { useRoute } from 'vue-router'
 import { watch } from 'vue'
 import { useTeamStore } from './stores/teamStore';
+import Notification from './components/NotifComp.vue';
+import { useNotification } from './utils/NotificationService';
 
 export default {
   name: 'App',
+  components: {
+    Notification
+  },
   setup() {
     const teamStore = useTeamStore();
     return {
@@ -36,6 +42,8 @@ export default {
     watch(route, (newRoute) => {
       this.updateSidebarAndTitle(newRoute)
     })
+    const { setNotificationComponent } = useNotification();
+    setNotificationComponent(this.$refs.notification);
   }
 }
 </script>

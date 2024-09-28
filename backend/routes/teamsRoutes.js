@@ -157,4 +157,6 @@ router.put('/AddPoints', teamController.addPoints);
 
 router.put('/RemovePoints', teamController.removePoints);
 
+router.get('/RandomTeam', teamController.randomTeam);
+
 module.exports = router;

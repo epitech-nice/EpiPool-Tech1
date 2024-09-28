@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const User = require('../models/UserModel');
+const { setIdUser, setUserName } = require('../services/StorageService');
 
 exports.register = async (req, res) => {
     const { email, password, name } = req.body;
@@ -48,7 +49,8 @@ exports.login = async (req, res) => {
         }
         const payload = { userId: user.id };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-
+        setUserName(user.name);
+        setIdUser(user.id);
         res.json({ token });
     } catch (error) {
         console.error(error.message);
@@ -58,4 +60,26 @@ exports.login = async (req, res) => {
 
 exports.logout = (req, res) => {
     res.json({ msg: 'Logged out successfully' });
+    setUserName(null);
+    setIdUser(null);
 };
+
+exports.update = async (req, res) => {
+    const { email, password, name } = req.body;
+
+    try {
+        const user = await User.findByPk(req.user.id);
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        await user.update({ email, password: hashedPassword, name });
+        setUserName(name);
+        setIdUser(user.id);
+        res.json({ msg: 'User updated successfully' });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server error');
+    }
+}

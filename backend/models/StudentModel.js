@@ -178,7 +178,6 @@ Students.updatePoints = async function(student_id, points, reason, operation = '
         });
 
         if (team_id) {
-            console.log("points_log", points_log);
             await Team.updatePoints(team_id, points_log, reason, operation);
         }
 

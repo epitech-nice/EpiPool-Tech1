@@ -69,7 +69,7 @@ Team.getAll = async function() {
 
         const teamsWithImageBase64 = results.map(team => {
             const imageBlob = team.image_name;
-            const imageBase64 = imageBlob ? `data:image/png;base64,${imageBlob.toString('base64')}` : null;
+            const imageBase64 = imageBlob ? `data:image/png;base64,${Buffer.from(imageBlob).toString('base64')}` : null;
             return {
                 ...team,
                 image_name: imageBase64
@@ -94,16 +94,28 @@ Team.deleteTeam = async function(team_id) {
     return results;
 }
 
-Team.addTeam = async function(name, color, points = 0, image_name = null) {
+Team.addTeam = async function(name, color, points = 0, image_base64 = null) {
     try {
         const existingTeam = await Team.getByName(name);
-
         if (existingTeam.length > 0) {
             throw new Error('Team with this name already exists');
         }
 
-        const sql = `INSERT INTO TEAMS (name, color, points, image_name) VALUES ('${name}', '${color}', '${points}', '${image_name}');`;
-        const [results, metadata] = await sequelize.query(sql);
+        let imageBuffer = null;
+        if (image_base64) {
+            const base64String = image_base64.replace(/^data:image\/\w+;base64,/, "");
+            imageBuffer = Buffer.from(base64String, 'base64');
+        }
+
+        const sql = `INSERT INTO TEAMS (name, color, points, image_name) VALUES (:name, :color, :points, :image_name);`;
+        const [results, metadata] = await sequelize.query(sql, {
+            replacements: {
+                name: name,
+                color: color,
+                points: points,
+                image_name: imageBuffer
+            }
+        });
         return results;
     } catch (error) {
         console.error("Error adding team:", error.message);

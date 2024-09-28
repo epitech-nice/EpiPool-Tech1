@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Sep 27, 2024 at 07:45 PM
+-- Generation Time: Sep 28, 2024 at 08:16 AM
 -- Server version: 9.0.1
 -- PHP Version: 8.2.8
 
@@ -50,7 +50,8 @@ CREATE TABLE `LOGS` (
   `student_id` int DEFAULT NULL,
   `points` int NOT NULL,
   `reason` varchar(255) NOT NULL,
-  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -167,6 +168,23 @@ CREATE TABLE `USERS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
+-- Dumping data for table `USERS`
+--
+
+INSERT INTO `USERS` (`id`, `email`, `password`, `name`, `createdAt`, `updatedAt`) VALUES
+(2, 'eric1.deschodt@epitech.eu', '$2a$10$SrdMWb2B4oxeJGuBWqF8jOjcsN4CbrP3JeMEUYFytefA31WfNeoH.', 'Eric', '2024-09-28 06:59:44', '2024-09-28 06:59:44'),
+(3, 'darius1.morel@epitech.eu', '$2a$10$qILGzksUzzlFva6xQNOh/.c5MA7ixrvjsWMFxOgh5sy7EaSdkiFyG', 'Darius', '2024-09-28 07:01:03', '2024-09-28 07:01:03'),
+(4, 'renaud1.juliani@epitech.eu', '$2a$10$nwGtbmZiV8Qm/rgb0bXPMOReP8OSxZkoVZGOtJk23oBItflilHjvq', 'Renaud', '2024-09-28 07:02:04', '2024-09-28 07:02:04'),
+(5, 'romaric1.moy@epitech.eu', '$2a$10$Tt.UW8UPp4wrGu5C.VYw.eTAuxkQ/fCzNkdpvnt7ofBYphOQYb5ny', 'Romaric', '2024-09-28 07:02:48', '2024-09-28 07:02:48'),
+(6, 'enzo1.pascallon@epitech.eu', '$2a$10$nJKCjIPW1XM6F6u9xN3TMO/m4dLE173B3D8t6tdRYe9IedO2ipe/6', 'Enzo', '2024-09-28 07:03:27', '2024-09-28 07:03:27'),
+(7, 'leonard1.oursel@epitech.eu', '$2a$10$yujnJuv0w1V7uW9aloSf3OwuUhtOTptybb2LtrRgOYbgPgqvplzim', 'Leonard', '2024-09-28 07:04:12', '2024-09-28 07:04:12'),
+(8, 'nathan1.tirolf@epitech.eu', '$2a$10$GC1FTjiEQAiBylEW6V9SHepRxcW5ZklEIsCI9tEFjTtIEp/LzBD4K', 'Nathan', '2024-09-28 07:04:49', '2024-09-28 07:04:49'),
+(9, 'daniil1.stepanov@epitech.eu', '$2a$10$DcdsQXuzl989IsSfdPg0S.coZRFfUvbysIi85T8Zf5sBYy/u50n8q', 'Dan', '2024-09-28 07:05:17', '2024-09-28 07:05:17'),
+(10, 'kyliann1.pouchin@epitech.eu', '$2a$10$cR5mcxMQdQog8m5.NtjKEeNistkI.RDFvgBBqM6zWTgl6kA4lHdP6', 'Kyliann', '2024-09-28 07:05:44', '2024-09-28 07:05:44'),
+(11, 'mathis1.gheri@epitech.eu', '$2a$10$1yqFqw7Izf5K4kwuhs245Or9hjNsx51cSSxp4kmlvMfOro9Ggs9u6', 'Mathis', '2024-09-28 07:06:26', '2024-09-28 07:06:26'),
+(12, 'camille1.ricardon@epitech.eu', '$2a$10$CJQ552N6ewVm.rowsXWVaed5WHqL4YtkIhBcY0uVCV65XwJI69np2', 'Camille', '2024-09-28 07:07:04', '2024-09-28 07:07:04');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -221,7 +239,7 @@ ALTER TABLE `TEAMS`
 -- AUTO_INCREMENT for table `USERS`
 --
 ALTER TABLE `USERS`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

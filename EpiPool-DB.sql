@@ -53,41 +53,6 @@ CREATE TABLE `LOGS` (
   `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `LOGS`
---
-
-INSERT INTO `LOGS` (`log_id`, `team_id`, `student_id`, `points`, `reason`, `createdAt`) VALUES
-(1, 4, 3, 0, 'CSV upload', '2024-09-27 15:18:11'),
-(2, 4, 1, 0, 'CSV upload', '2024-09-27 15:18:11'),
-(3, 4, 4, 0, 'CSV upload', '2024-09-27 15:18:11'),
-(4, 4, 2, 0, 'CSV upload', '2024-09-27 15:18:11'),
-(5, 4, 4, 0, 'CSV upload', '2024-09-27 15:23:52'),
-(6, 4, 1, 0, 'CSV upload', '2024-09-27 15:23:52'),
-(7, 4, 3, 0, 'CSV upload', '2024-09-27 15:23:52'),
-(8, 4, 2, 0, 'CSV upload', '2024-09-27 15:23:52'),
-(9, 4, 3, 0, 'CSV upload', '2024-09-27 15:29:03'),
-(10, 4, 2, 0, 'CSV upload', '2024-09-27 15:29:03'),
-(11, 4, 4, 0, 'CSV upload', '2024-09-27 15:29:03'),
-(12, 4, 1, 0, 'CSV upload', '2024-09-27 15:29:03'),
-(13, 1, 1, 10, 'CSV upload', '2024-09-27 16:06:08'),
-(14, 2, 2, 10, 'CSV upload', '2024-09-27 16:06:08'),
-(15, 1, 1, 10, 'CSV upload', '2024-09-27 16:13:02'),
-(16, 2, 2, 10, 'CSV upload', '2024-09-27 16:13:02'),
-(17, 3, 3, 10, 'CSV upload', '2024-09-27 16:13:02'),
-(18, 4, 4, 10, 'CSV upload', '2024-09-27 16:13:02'),
-(19, 3, 5, 10, 'CSV upload', '2024-09-27 16:13:02'),
-(20, 1, 1, 10, 'CSV upload', '2024-09-27 16:18:58'),
-(21, 2, 2, 10, 'CSV upload', '2024-09-27 16:18:58'),
-(22, 3, 3, 10, 'CSV upload', '2024-09-27 16:18:58'),
-(23, 4, 4, 10, 'CSV upload', '2024-09-27 16:18:58'),
-(24, 3, 5, 10, 'CSV upload', '2024-09-27 16:18:58'),
-(25, 1, 1, 10, 'CSV upload', '2024-09-27 16:29:00'),
-(26, 2, 2, 10, 'CSV upload', '2024-09-27 16:29:00'),
-(27, 3, 3, -10, 'CSV upload', '2024-09-27 16:29:01'),
-(28, 4, 4, 10, 'CSV upload', '2024-09-27 16:29:01'),
-(29, 3, 5, 10, 'CSV upload', '2024-09-27 16:29:01');
-
 -- --------------------------------------------------------
 
 --
@@ -200,13 +165,6 @@ CREATE TABLE `USERS` (
   `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `USERS`
---
-
-INSERT INTO `USERS` (`id`, `email`, `password`, `name`, `createdAt`, `updatedAt`) VALUES
-(1, 'potat@potat.com', '$2a$10$4mtXGh35nuEXgumWBC.PT.4vR.pXJXWJqeMvh7/BIwlb3YE4dhExu', 'potat', '2024-09-27 15:15:58', '2024-09-27 15:15:58');
 
 --
 -- Indexes for dumped tables

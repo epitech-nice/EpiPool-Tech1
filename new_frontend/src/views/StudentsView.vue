@@ -3,6 +3,7 @@
         <div v-if="students.length > 0" class="students-table">
             <div class="flexSB">
                 <h1>Students</h1>
+                <p>There is a total of {{ students.length }} students</p>
                 <div class="flexSB">
                     <AddStudent @update="update" :teamId="this.selectedTeam" />
                     <RouterLink to="/dashboard" class="simpleBtn">Back</RouterLink>

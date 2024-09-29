@@ -49,6 +49,11 @@ const routes = [
   {
     path: '/',
     redirect: '/dashboard'
+  },
+  {
+    path: '/visualize',
+    name: 'visualize',
+    component: () => import('@/views/VisualizeView.vue'),
   }
 ];
 

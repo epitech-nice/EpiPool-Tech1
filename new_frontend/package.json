@@ -11,8 +11,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@lottiefiles/dotlottie-vue": "^0.4.15",
     "axios": "^1.7.7",
     "cropperjs": "^1.6.2",
+    "gsap": "^3.12.5",
     "pinia": "^2.2.2",
     "pinia-plugin-persistedstate": "^4.0.2",
     "vue": "^3.4.29",

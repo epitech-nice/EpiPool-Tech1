@@ -43,10 +43,10 @@ export default {
         async deleteStudent() {
             const {show} = useNotification();
             try {
-                await axios.delete(`students/Delete?student_id=${this.student.student_id}`);
+                const response = await axios.delete(`students/Delete?student_id=${this.student.student_id}`);
                 this.$emit('update');
                 this.closeForm();
-                show('Student deleted successfully', 'success');
+                show(response.data.message, 'success');
             } catch (error) {
                 show('Error deleting student', 'error');
             }

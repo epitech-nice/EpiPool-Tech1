@@ -45,7 +45,7 @@ import EditStudent from '@/components/EditStudent.vue';
 import DeleteStudent from '@/components/DeleteStudent.vue';
 import AddStudent from '@/components/AddStudent.vue';
 import ChangeTeamStudent from '@/components/ChangeTeamStudent.vue';
-import { notif } from '@/utils/NotificationService'
+import { useNotification } from '@/utils/NotificationService'
 import { useTeamStore } from '@/stores/teamStore';
 import { computed } from 'vue';
 
@@ -81,7 +81,7 @@ export default {
     },
     methods: {
         async fetchStudents() {
-            const { show } = notif();
+            const { show } = useNotification();
             try {
                 const response = await axios.get(`students`)
                 this.students = response.data

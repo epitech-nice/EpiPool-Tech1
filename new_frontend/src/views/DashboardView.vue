@@ -10,6 +10,10 @@
         <StudentsTeam :key="teamPointsKey" />
         <LogsAction :key="teamPointsKey" />
     </div>
+    <div class="SideFlex">
+        <UploadCSV :key="teamPointsKey" @update="handleUpdate" />
+        <RandomizeTeam :key="teamPointsKey" @update="handleUpdate" />
+    </div>
 </template>
 
 <script>
@@ -20,6 +24,8 @@ import StudentsTeam from '@/components/StudentsTeam.vue';
 import LogsAction from '@/components/LogsAction.vue';
 import AddPoints from '@/components/AddPoints.vue';
 import RemovePoints from '@/components/RemovePoints.vue';
+import UploadCSV from '@/components/UploadCSV.vue';
+import RandomizeTeam from '@/components/RandomizeTeam.vue';
 
 export default {
     name: 'DashboardView',
@@ -30,7 +36,9 @@ export default {
         StudentsTeam,
         LogsAction,
         AddPoints,
-        RemovePoints
+        RemovePoints,
+        UploadCSV,
+        RandomizeTeam
     },
     data() {
         return {
@@ -50,7 +58,6 @@ export default {
 .SideFlex {
     display: flex;
     justify-content: space-around;
-    align-items: center;
     gap: 10px;
     padding-top: 10px;
     padding-right: 10px;

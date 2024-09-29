@@ -36,7 +36,7 @@ CREATE TABLE `CONFIG` (
 --
 
 INSERT INTO `CONFIG` (`random_config`) VALUES
-(1);
+(0);
 
 -- --------------------------------------------------------
 

@@ -219,6 +219,35 @@ select:focus {
     gap: 15px;
 }
 
+input[type="file"] {
+    cursor: pointer;
+}
+
+input::file-selector-button {
+    background-color: var(--primaryBg);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+input::file-selector-button:hover {
+    background-color: var(--buttonPrimary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+input::file-selector-button:active {
+    background-color: #1c5a7e;
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 /* Media queries */
 @media screen and (max-width: 768px) {
     h1 {

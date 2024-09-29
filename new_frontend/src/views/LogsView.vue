@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div v-else class="Card">
+        <div v-else class="Card flexSB">
             <p>No logs available.</p>
             <RouterLink to="/dashboard" class="simpleBtn">Back</RouterLink>
         </div>
@@ -69,6 +69,13 @@ export default {
 </script>
 
 <style scoped>
+
+.flexSB {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .flexIcon {
     display: flex;
     align-content: center;
@@ -78,7 +85,6 @@ export default {
 
 .logs-container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     flex-grow: 1;
 }

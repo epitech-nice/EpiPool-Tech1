@@ -84,8 +84,8 @@ export default {
             };
         },
         async submitPoints() {
+            const { show } = useNotification();
             try {
-                const { show } = useNotification();
                 if (this.addTo === 'student') {
                     const response = await axios.put('students/AddPoints', {
                         student_id: this.formData.student_id,
@@ -104,7 +104,7 @@ export default {
                 this.$emit('update');
                 this.closeForm();
             } catch (error) {
-                show(response.data.error, 'error');
+                show(error.data.error, 'error');
             }
         },
         onAddToChange() {

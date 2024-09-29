@@ -30,6 +30,7 @@ app.use('/api/students', authMiddleware, studentsRoutes);
 app.use('/api/logs', authMiddleware, logsRoutes);
 app.use('/api/csv', authMiddleware, csvRoutes);
 app.use('/api/sync', authMiddleware, syncRoutes);
+app.use('/api/poolPosition', authMiddleware, require('./routes/positionRoutes'));
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);

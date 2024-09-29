@@ -54,25 +54,31 @@ exports.changeStudent = async (req, res) => {
 exports.deleteStudent = async (req, res) => {
     try {
         const { student_id } = req.query;
-        const [student, meta] = await Students.getStudent(student_id)
+
+        const student = await Students.findByPk(student_id);
         if (!student)
             return res.status(404).json({ error: 'Student not found' });
-        const points = student.points;
-        const team_id = student.team_id;
-        const deleted_student = await Students.deleteStudent(student_id);
-        const students = await Students.getByTeam(team_id);
-        const nb_students_in_team = students.length
+
+        const { points, team_id } = student;
+
+        const deleted_student = await Students.destroy({ where: { student_id } });
+
+        const students = await Students.findAll({ where: { team_id } });
+        const nb_students_in_team = students.length;
         if (nb_students_in_team > 0) {
             const points_to_give = Math.floor(points / nb_students_in_team);
             const remainder_points = points % nb_students_in_team;
+
             await Promise.all(students.map(async (student, index) => {
                 let extra_points = points_to_give;
-                if (index < remainder_points)
-                    extra_points += 1;
-                await Students.addPoints(student.student_id, extra_points);
+                if (index < remainder_points) extra_points += 1;
+                await Students.update(
+                    { points: student.points + extra_points },
+                    { where: { student_id: student.student_id } }
+                );
             }));
         }
-        res.json(deleted_student);
+        res.json({ message: 'Student deleted successfully', deleted_student });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

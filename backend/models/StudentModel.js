@@ -125,12 +125,14 @@ Students.changeStudent = async function(student_id, name, email, points) {
 }
 
 Students.deleteStudent = async function(student_id) {
-    const sql = `DELETE FROM STUDENTS WHERE student_id = ${student_id};`;
-    const [results, metadata] = await sequelize.query(sql);
+    const sql = `DELETE FROM STUDENTS WHERE student_id = :student_id;`;
+    const [results, metadata] = await sequelize.query(sql, {
+        replacements: { student_id },
+    });
     if (metadata.affectedRows === 0)
         throw new Error("Student not found");
     return results;
-}
+};
 
 Students.getChampionByTeam = async function(team_id) {
     const sql = `SELECT * FROM STUDENTS WHERE team_id = ${team_id} ORDER BY points DESC LIMIT 1;`;

@@ -66,9 +66,8 @@ exports.logout = (req, res) => {
 
 exports.update = async (req, res) => {
     const { email, password, name } = req.body;
-
     try {
-        const user = await User.findByPk(req.user.id);
+        const user = await User.findByPk(req.user);
         if (!user) {
             return res.status(404).json({ msg: 'User not found' });
         }

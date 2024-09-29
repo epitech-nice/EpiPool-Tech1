@@ -68,16 +68,25 @@ exports.changeTeam = async (req, res) => {
 exports.deleteTeam = async (req, res) => {
     try {
         const team_id = req.query.id;
-        const team = await Teams.deleteTeam(team_id);
-        res.json(team);
-    } catch (error) {
-        if (error.message === 'Team not found') {
-            res.status(404).json({ error: 'Team not found' });
-        } else {
-            res.status(500).json({ error: error.message });
+
+        const team = await Teams.findByPk(team_id);
+        if (!team) {
+            return res.status(404).json({ error: 'Team not found' });
         }
+
+        await Student.update(
+            { team_id: null },
+            { where: { team_id: team_id } }
+        );
+
+        await team.destroy();
+
+        res.json({ message: 'Team deleted and students updated' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
+
 
 exports.getPoints = async (req, res) => {
     try {

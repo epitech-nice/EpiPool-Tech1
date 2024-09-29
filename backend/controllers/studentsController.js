@@ -55,7 +55,8 @@ exports.deleteStudent = async (req, res) => {
     try {
         const { student_id } = req.query;
 
-        const student = await Students.findByPk(student_id);
+        const [student, meta] = await Students.getStudent(student_id)
+
         if (!student)
             return res.status(404).json({ error: 'Student not found' });
 
@@ -87,8 +88,9 @@ exports.deleteStudent = async (req, res) => {
 exports.addPointsToStudent = async (req, res) => {
     try {
         const { student_id, points, reason } = req.body;
+        const user_id = req.user;
         const setReason = reason || "PEDAGO";
-        const result = await Students.addPoints(student_id, points, setReason);
+        const result = await Students.addPoints(student_id, points, setReason, user_id);
         res.json({ success: true, message: `Added ${points} points, because of "${reason}"` });
     } catch (error) {
         console.error("Error adding points:", error);
@@ -101,7 +103,8 @@ exports.removePointsFromStudent = async (req, res) => {
         const { student_id, points, reason } = req.body;
         if (!reason)
             reason = "PEDAGO";
-        const student = await Students.removePoints(student_id, points, reason);
+        const user_id = req.user;
+        const student = await Students.removePoints(student_id, points, reason, user_id);
         // TODO: Adjust the final number of points
         res.json({ success: true, message: `Removed ${points} points, because of "${reason}"` });
     } catch (error) {

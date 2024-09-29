@@ -38,11 +38,15 @@ exports.getLogsByStudent = async (req, res) => {
 exports.addLog = async (req, res) => {
     try {
         const { team_id, student_id, points, event } = req.body;
+        const user_id = req.user;
+
         if (!team_id && !student_id)
             return res.status(400).json({ error: 'team_id or student_id are required' });
+
         if (!event)
             event = "Pedago";
-        const log = await Logs.addLog(team_id, student_id, points, event);
+
+        const log = await Logs.addLog(team_id, student_id, points, event, user_id);
         res.json(log);
     } catch (error) {
         res.status(500).json({ error: error.message });

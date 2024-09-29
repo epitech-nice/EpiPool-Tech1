@@ -1,16 +1,12 @@
 <template>
     <SpiderSvg />
-    <div class="leftBotCorner">
-        <FireSvg />
-    </div>
     <div class="bottomContainer">
+        <FireSvg />
         <div v-for="team in teams" :key="team.team_id" class="container">
             <h1>{{ team.name }}</h1>
             <p>{{ team.team_id }}</p>
             <p>{{ team.points }}</p>
         </div>
-    </div>
-    <div class="rightBotCorner">
         <FireSvg />
     </div>
 </template>

@@ -31,13 +31,6 @@ CREATE TABLE `CONFIG` (
   `random_config` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `CONFIG`
---
-
-INSERT INTO `CONFIG` (`random_config`) VALUES
-(1);
-
 -- --------------------------------------------------------
 
 --

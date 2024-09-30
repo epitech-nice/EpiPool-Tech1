@@ -16,10 +16,6 @@ const Team = sequelize.define('Team', {
         allowNull: false
     },
     image_name: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    image_data: {
         type: DataTypes.BLOB('long'),
         allowNull: true,
     },
@@ -139,13 +135,13 @@ Team.changeTeam = async function(team_id, name, color, image_base64 = null) {
             imageBuffer = Buffer.from(base64String, 'base64');
         }
 
-        const sql = `UPDATE TEAMS SET name = :name, color = :color, image_data = :image_data WHERE team_id = :team_id;`;
+        const sql = `UPDATE TEAMS SET name = :name, color = :color, image_name = :image_name WHERE team_id = :team_id;`;
         const [results, metadata] = await sequelize.query(sql, {
             replacements: {
                 name: name,
                 color: color,
-                image_data: imageBuffer,
-                team_id: team_id
+                image_name: imageBuffer,
+                team_id: team_id,
             }
         });
 

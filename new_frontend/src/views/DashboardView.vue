@@ -13,6 +13,7 @@
     <div class="SideFlex">
         <UploadCSV :key="teamPointsKey" @update="handleUpdate" />
         <RandomizeTeam :key="teamPointsKey" @update="handleUpdate" />
+        <RandomPlacement :key="teamPointsKey" />
     </div>
 </template>
 
@@ -26,6 +27,7 @@ import AddPoints from '@/components/AddPoints.vue';
 import RemovePoints from '@/components/RemovePoints.vue';
 import UploadCSV from '@/components/UploadCSV.vue';
 import RandomizeTeam from '@/components/RandomizeTeam.vue';
+import RandomPlacement from '@/components/RandomPlacement.vue';
 
 export default {
     name: 'DashboardView',
@@ -38,7 +40,8 @@ export default {
         AddPoints,
         RemovePoints,
         UploadCSV,
-        RandomizeTeam
+        RandomizeTeam,
+        RandomPlacement
     },
     data() {
         return {

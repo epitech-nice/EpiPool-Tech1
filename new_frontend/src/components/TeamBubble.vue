@@ -1,11 +1,12 @@
 <template>
-    <div v-for="team in teams" :key="team.team_id" :class="['leftHover', { active: selectedTeam === team.team_id }]" @click="selectTeam(team.team_id)">
-        <img class="round" :src="team.image_name"> <!-- image_name contient maintenant une image en base64 -->
+    <div v-for="team in teams" :key="team.team_id" :class="['leftHover', { active: selectedTeam && selectedTeam.team_id === team.team_id }]" @click="selectTeam(team)">
+        <img class="round" :src="team.image_name">
         <span class="tooltip">{{ team.name }} - {{ team.points }} points</span>
     </div>
 
     <AddTeamForm :teams="teams" @update="update" />
     <RemoveTeamForm :teams="teams" @update="update"/>
+    <EditTeamForm v-if="selectedTeam" :team="selectedTeam" @update="update"/>
 </template>
 
 <script>
@@ -13,12 +14,14 @@ import axios from '@/utils/axios';
 import { useTeamStore } from '@/stores/teamStore';
 import RemoveTeamForm from './RemoveTeam.vue';
 import AddTeamForm from './AddTeam.vue';
+import EditTeamForm from './EditTeam.vue';
 
 export default {
     name: 'TeamBubble',
     components: {
         RemoveTeamForm,
-        AddTeamForm
+        AddTeamForm,
+        EditTeamForm
     },
     data() {
         return {
@@ -40,13 +43,12 @@ export default {
                 console.log(error);
             });
         },
-        selectTeam(teamId) {
-            this.selectedTeam = teamId;
-            this.teamStore.setSelectedTeam(teamId);
+        selectTeam(team) {
+            this.selectedTeam = team;
+            this.teamStore.setSelectedTeam(team.team_id);
         },
         update() {
             this.getTeams();
-            this.teamStore.setSelectedTeam(null);
         },
     },
     mounted() {

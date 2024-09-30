@@ -38,9 +38,9 @@ exports.getAllTeams = async (req, res) => {
 
 exports.addTeam = async (req, res) => {
     try {
-        const { name, color, points, image_name} = req.body;
+        const { team_id, name, color, image_name} = req.body;
 
-        const result = await Teams.addTeam(name, color, points, image_name);
+        const result = await Teams.addTeam(team_id, name, color, image_name);
         res.json({ message: `Team ${name} created successfully !`, result });
     } catch (error) {
         if (error.message === 'Team with this name already exists') {
@@ -53,9 +53,9 @@ exports.addTeam = async (req, res) => {
 
 exports.changeTeam = async (req, res) => {
     try {
-        const { team_id, name, color } = req.body;
-        const team = await Teams.changeTeam(team_id, name, color);
-        res.json(team);
+        const { team_id, name, color, image_name} = req.body;
+        const team = await Teams.changeTeam(team_id, name, color, image_name);
+        res.json({message: `Team ${name} updated successfully !`, team});
     } catch (error) {
         if (error.message === 'Team not found') {
             res.status(404).json({ error: 'Team not found' });

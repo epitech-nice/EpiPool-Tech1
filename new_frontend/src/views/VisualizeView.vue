@@ -4,7 +4,6 @@
         <FireSvg />
         <div v-for="team in teams" :key="team.team_id" class="container">
             <h1>{{ team.name }}</h1>
-            <p>{{ team.team_id }}</p>
             <p>{{ team.points }}</p>
         </div>
         <FireSvg />
@@ -29,7 +28,7 @@ export default {
     },
     methods: {
         getTeams() {
-            axios.get('teams').then((response) => {
+            axios.get('teamPoints').then((response) => {
                 this.teams = response.data;
             });
         },

@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const User = require('../models/UserModel');
+const Team = require('../models/TeamModel');
 const { setIdUser, setUserName } = require('../services/StorageService');
 
 exports.register = async (req, res) => {
@@ -77,6 +78,19 @@ exports.update = async (req, res) => {
         setUserName(name);
         setIdUser(user.id);
         res.json({ msg: 'User updated successfully' });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server error');
+    }
+}
+
+exports.getPoints = async (req, res) => {
+    try {
+        const teams = await Team.findAll();
+        const teamPoints = teams.map(team => {
+            return { name: team.name, points: team.points };
+        });
+        res.json(teamPoints);
     } catch (error) {
         console.error(error.message);
         res.status(500).send('Server error');

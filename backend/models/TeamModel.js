@@ -19,6 +19,10 @@ const Team = sequelize.define('Team', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    image_data: {
+        type: DataTypes.BLOB('long'),
+        allowNull: true,
+    },
     points: {
         type: DataTypes.INTEGER,
         allowNull: true,
@@ -28,6 +32,9 @@ const Team = sequelize.define('Team', {
     tableName: 'TEAMS',
     timestamps: false,
 });
+
+module.exports = Team;
+
 
 Team.getByName = async function(name) {
     try {
@@ -123,14 +130,35 @@ Team.addTeam = async function(name, color, points = 0, image_base64 = null) {
     }
 };
 
-Team.changeTeam = async function(team_id, name, color) {
-    const sql = `UPDATE TEAMS SET name = '${name}', color = '${color}' WHERE team_id = ${team_id};`;
-    const [results, metadata] = await sequelize.query(sql);
-    if (metadata.affectedRows === 0) {
-        throw new Error('Team not found');
+Team.changeTeam = async function(team_id, name, color, image_base64 = null) {
+    try {
+        let imageBuffer = null;
+
+        if (image_base64) {
+            const base64String = image_base64.replace(/^data:image\/\w+;base64,/, "");
+            imageBuffer = Buffer.from(base64String, 'base64');
+        }
+
+        const sql = `UPDATE TEAMS SET name = :name, color = :color, image_data = :image_data WHERE team_id = :team_id;`;
+        const [results, metadata] = await sequelize.query(sql, {
+            replacements: {
+                name: name,
+                color: color,
+                image_data: imageBuffer,
+                team_id: team_id
+            }
+        });
+
+        if (metadata.affectedRows === 0) {
+            throw new Error('Team not found');
+        }
+
+        return results;
+    } catch (error) {
+        console.error("Error updating team:", error.message);
+        throw error;
     }
-    return results;
-}
+};
 
 Team.updatePoints = async function(team_id, points, reason, operation = 'add') {
     try {

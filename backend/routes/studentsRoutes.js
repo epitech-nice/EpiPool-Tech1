@@ -256,9 +256,26 @@ router.get('/getChampionByTeam', studentController.getChampionByTeam);
  *       500:
  *         description: Server error
  */
-
 router.put('/changeTeam', studentController.changeTeam);
 
+/**
+ * @swagger
+ * /api/students/getStudentPositions:
+ *   get:
+ *     summary: Retrieve all students and their positions
+ *     tags: [Students]
+ *     responses:
+ *       200:
+ *         description: A list of students and their positions
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Student'
+ *       404:
+ *         description: Students not found
+ */
 router.get('/getStudentPositions', studentController.getStudentPositions);
 
 module.exports = router;

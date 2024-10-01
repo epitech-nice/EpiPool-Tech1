@@ -8,7 +8,6 @@ const studentsRoutes = require('./routes/studentsRoutes');
 const logsRoutes = require('./routes/logsRoutes');
 const csvRoutes = require('./routes/csvRoutes');
 const authRoutes = require('./routes/authRoutes');
-const syncRoutes = require('./routes/syncRoutes');
 const authMiddleware = require('./middleware/auth.js');
 
 const app = express();
@@ -29,8 +28,7 @@ app.use('/api/teams', authMiddleware, teamsRoutes);
 app.use('/api/students', authMiddleware, studentsRoutes);
 app.use('/api/logs', authMiddleware, logsRoutes);
 app.use('/api/csv', authMiddleware, csvRoutes);
-app.use('/api/sync', authMiddleware, syncRoutes);
-app.use('/api/poolPosition', authMiddleware, require('./routes/positionRoutes'));
+app.use('/api/poolPosition', authMiddleware, require('./routes/randomPosRoutes.js'));
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);

@@ -28,6 +28,14 @@ const swaggerDefinition = {
             type: 'string',
             description: 'The color associated with the team',
           },
+          image_name: {
+            type: 'blob',
+            description: 'The image associated with the team',
+          },
+          points: {
+            type: 'integer',
+            description: 'The total points associated with the team',
+          },
         },
         required: ['name', 'color'],
       },
@@ -53,7 +61,11 @@ const swaggerDefinition = {
           reason: {
             type: 'string',
             description: 'Reason or description of the log entry'
-          }
+          },
+          user_id: {
+            type: 'integer',
+            description: 'ID of the user who created the log entry'
+          },
         }
       },
       Student: {
@@ -78,22 +90,17 @@ const swaggerDefinition = {
           points: {
             type: 'integer',
             description: 'Points associated with the student'
+          },
+          position: {
+            type: 'integer',
+            description: 'Position of the student in the pool room'
+          },
+          student_id: {
+            type: 'integer',
+            description: 'The auto-generated id of the student'
           }
         },
         required: ['name', 'email', 'points']
-      },
-      Points: {
-        type: 'object',
-        properties: {
-          team_id: {
-            type: 'integer',
-            description: 'The ID of the team'
-          },
-          points: {
-            type: 'integer',
-            description: 'The total points associated with the team'
-          }
-        }
       },
       CsvFormart: {
         type: 'object',
@@ -110,14 +117,14 @@ const swaggerDefinition = {
             type: 'string',
             description: 'The name of the team'
           },
-          color: {
-            type: 'string',
-            description: 'The color associated with the team'
-          },
           points: {
             type: 'integer',
             description: 'The points to be allocated'
-          }
+          },
+          reason: {
+            type: 'string',
+            description: 'The reason for the allocation of points'
+          },
         },
         required: ['name_team', 'color', 'points']
       }

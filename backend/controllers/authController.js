@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const User = require('../models/UserModel');
 const Team = require('../models/TeamModel');
+const Students = require('../models/StudentModel');
 const { setIdUser, setUserName } = require('../services/StorageService');
 
 exports.register = async (req, res) => {
@@ -96,3 +97,14 @@ exports.getPoints = async (req, res) => {
         res.status(500).send('Server error');
     }
 }
+
+exports.getChampion = async (req, res) => {
+    try {
+        const champion = await Students.getChampionByTeam();
+        if (!champion)
+            return res.status(404).json({ error: 'Champion not found' });
+        res.json(champion);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

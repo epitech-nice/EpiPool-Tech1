@@ -148,7 +148,7 @@ exports.removePoints = async (req, res) => {
         }
         team.points = Math.max(0, team.points - parseInt(points));
         await team.save();
-        Logs.addLog(team_id, null, -points, reason);
+        Logs.addLog(team_id, null, -points, reason, null);
         res.json({ success: true, message: `Removed ${points} points from team ${team.name}`, reason });
     } catch (error) {
         res.status(500).json({ error: error.message });

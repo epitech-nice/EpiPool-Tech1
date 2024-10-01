@@ -1,6 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator');
-const { register, login, logout, update, getPoints } = require('../controllers/authController');
+const { register, login, logout, update, getPoints, getChampion } = require('../controllers/authController');
 const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
@@ -14,7 +14,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/auth/register:
+ * /api/register:
  *   post:
  *     summary: Register a new user
  *     tags: [Auth]
@@ -45,7 +45,7 @@ const router = express.Router();
  *         description: Invalid input
  */
 ///////////////////////*For Security reason comment this route*///////////////////////
-/*router.post(
+router.post(
   '/register',
   [
     check('email', 'Please include a valid email').isEmail(),
@@ -53,11 +53,11 @@ const router = express.Router();
     check('name', 'Name is required').not().isEmpty(),
   ],
   register
-);*/
+);
 
 /**
  * @swagger
- * /api/auth/login:
+ * /api/login:
  *   post:
  *     summary: Login a user
  *     tags: [Auth]
@@ -94,7 +94,7 @@ router.post(
 
 /**
  * @swagger
- * /api/auth/update:
+ * /api/update:
  *   put:
  *     summary: Update a user's details
  *     tags: [Auth]
@@ -126,7 +126,7 @@ router.put('/update', authMiddleware, update);
 
 /**
  * @swagger
- * /api/auth/logout:
+ * /api/logout:
  *   post:
  *     summary: Logout a user
  *     tags: [Auth]
@@ -140,7 +140,7 @@ router.post('/logout', authMiddleware, logout);
 
 /**
  * @swagger
- * /api/auth/teamPoints:
+ * /api/teamPoints:
  *   get:
  *     summary: Retrieve points for the user's team
  *     tags: [Auth]
@@ -151,5 +151,30 @@ router.post('/logout', authMiddleware, logout);
  *         description: Team not found
  */
 router.get('/teamPoints', getPoints);
+
+/**
+ * @swagger
+ * /api/getChampionByTeam:
+ *   get:
+ *     summary: Retrieve the champion of a team
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: query
+ *         name: team_id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID of the team to retrieve the champion for
+ *     responses:
+ *       200:
+ *         description: The champion of the specified team
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Student'
+ *       404:
+ *         description: Champion not found
+ */
+router.get('/getChampionByTeam', getChampion);
 
 module.exports = router;

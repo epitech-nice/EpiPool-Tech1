@@ -146,8 +146,8 @@ Students.addStudent = async function(name, email, points, team_id = null) {
     return results;
 }
 
-Students.changeStudent = async function(student_id, name, email, points) {
-    const sql = `UPDATE STUDENTS SET name = '${name}', email = '${email}', points = ${points} WHERE student_id = ${student_id};`;
+Students.changeStudent = async function(student_id, name, email) {
+    const sql = `UPDATE STUDENTS SET name = '${name}', email = '${email}' WHERE student_id = ${student_id};`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }

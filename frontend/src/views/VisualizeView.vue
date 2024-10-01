@@ -83,7 +83,7 @@ export default {
         this.interval = setInterval(() => {
             this.fetchTeams();
             this.fetchChampions();
-        }, 6000);
+        }, 60000);
     },
     beforeUnmount() {
         clearInterval(this.interval);

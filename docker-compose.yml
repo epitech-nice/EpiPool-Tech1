@@ -19,8 +19,6 @@ services:
     container_name: phpmyadmin
     environment:
       PMA_HOST: mysql
-      PMA_USER: ${MYSQL_USER}
-      PMA_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "8081:80"
     depends_on:
@@ -37,31 +35,25 @@ services:
     environment:
       - NODE_ENV=development
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE={$MYSQL_DATABASE}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - PMA_HOST=${PMA_HOST}
-      - PMA_USER=${PMA_USER}
-      - PMA_PASSWORD=${PMA_PASSWORD}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
       - DB_HOST=${DB_HOST}
       - DB_DIALECT=${DB_DIALECT}
-      - IP_HUB=${IP_HUB}
       - JWT_SECRET=${JWT_SECRET}
       - POSITION_AVAILABLE=${POSITION_AVAILABLE}
     depends_on:
       - mysql
 
-  new_frontend:
+  frontend:
     build:
-      context: ./new_frontend
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
     volumes:
-      - ./new_frontend:/usr/src/app
+      - ./frontend:/usr/src/app
     environment:
       - NODE_ENV=development
     depends_on:

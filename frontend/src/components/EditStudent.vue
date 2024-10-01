@@ -8,7 +8,6 @@
             <div class="divForm">
                 <input type="text" required v-model="formData.name" placeholder="Name" />
                 <input type="email" required v-model="formData.email" placeholder="Email" />
-                <input type="number" required v-model="formData.points" placeholder="Points" />
             </div>
         </BlurForm>
     </div>

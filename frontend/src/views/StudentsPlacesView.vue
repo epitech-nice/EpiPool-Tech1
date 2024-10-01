@@ -2,7 +2,11 @@
     <div class="room">
         <div class="flexSB">
             <h1>Disposition des Tables</h1>
-            <button class="simpleBtn" @click="randomize">Refresh</button>
+            <div class="flexSB">
+                <button class="simpleBtn" @click="exportToCSV">Export CSV</button>
+                <button class="simpleBtn" @click="randomize">Refresh</button>
+                <router-link to="/dashboard" class="simpleBtn" style="text-decoration: none;">Back</router-link>
+            </div>
         </div>
         <div class="Flex">
             <div v-for="(table, tableIndex) in tables" :key="tableIndex" class="table">
@@ -70,6 +74,25 @@ export default {
         getSeatNumber(tableIndex, studentIndex) {
             return tableIndex * this.seatsPerTable + studentIndex + 1;
         },
+        exportToCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Student Name,Seat Number\n";
+
+            this.tables.forEach((table, tableIndex) => {
+                table.students.forEach((student, studentIndex) => {
+                    const seatNumber = this.getSeatNumber(tableIndex, studentIndex).toString().padStart(2, '0');
+                    csvContent += `${student.name},${seatNumber}\n`;
+                });
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "student_positions.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     },
     mounted() {
         this.fetchPoolPosition();

@@ -52,7 +52,7 @@ export default {
                 authStore.setToken(token);
                 this.$router.push('/dashboard');
             }).catch(err => {
-                console.log();
+                console.log(err);
             });
         },
         async submitLogin() {

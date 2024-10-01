@@ -43,8 +43,8 @@ exports.addStudent = async (req, res) => {
 
 exports.changeStudent = async (req, res) => {
     try {
-        const { student_id, name, email, points } = req.body;
-        const student = await Students.changeStudent(student_id, name, email, points);
+        const { student_id, name, email } = req.body;
+        const student = await Students.changeStudent(student_id, name, email);
         res.json(student);
     } catch (error) {
         res.status(500).json({ error: error.message });

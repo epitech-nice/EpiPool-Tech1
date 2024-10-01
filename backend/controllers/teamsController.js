@@ -127,7 +127,7 @@ exports.addPoints = async (req, res) => {
         }
         team.points += parseInt(points);
         await team.save();
-        Logs.addLog(team_id, null, points, getReason);
+        Logs.addLog(team_id, null, points, getReason, null);
         res.json({ success: true, message: `Added ${points} points to team ${team.name}`, reason });
     } catch (error) {
         res.status(500).json({ error: error.message });

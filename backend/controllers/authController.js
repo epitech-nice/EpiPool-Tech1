@@ -88,7 +88,7 @@ exports.getPoints = async (req, res) => {
     try {
         const teams = await Team.findAll();
         const teamPoints = teams.map(team => {
-            return { name: team.name, points: team.points };
+            return { team_id: team.team_id, name: team.name, points: team.points };
         });
         res.json(teamPoints);
     } catch (error) {

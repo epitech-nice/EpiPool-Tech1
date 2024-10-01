@@ -2,14 +2,14 @@
     <div class="room">
         <div class="flexSB">
             <h1>Disposition des Tables</h1>
-            <button class="simpleBtn" @click="fetchPoolPosition">Refresh</button>
+            <button class="simpleBtn" @click="randomize">Refresh</button>
         </div>
         <div class="Flex">
-            <div v-for="(table, index) in tables" :key="index" class="table">
-                <h2>Table {{ table.tableNumber }}</h2>
+            <div v-for="(table, tableIndex) in tables" :key="tableIndex" class="table">
+                <h2>Table {{ tableIndex + 1 }}</h2>
                 <ul>
-                    <li v-for="(student, studentIndex) in table.students" :key="studentIndex">
-                        <strong>{{ getSeatNumber(index, studentIndex) }}:</strong> {{ student }}
+                    <li v-for="(student, studentIndex) in table.students" :key="student.student_id">
+                        <strong>{{ getSeatNumber(tableIndex, studentIndex) }}:</strong> {{ student.name }}
                     </li>
                 </ul>
             </div>
@@ -23,45 +23,61 @@ import axios from '@/utils/axios';
 export default {
     data() {
         return {
+            students: [],
             tables: [],
+            seatsPerTable: 4
         };
-    },
-    mounted() {
-        this.fetchPoolPosition();
     },
     methods: {
         async fetchPoolPosition() {
             try {
-                const rep = await axios.get('poolPosition');
-                this.tables = await this.parseOutput(rep.data.output);
+                const response = await axios.get('students/getStudentPositions');
+                this.students = response.data.students;
+                this.organizeTables();
             } catch (error) {
                 console.error(error);
             }
         },
-        getSeatNumber(tableIndex, studentIndex) {
-            const seatNumber = tableIndex * 4 + studentIndex + 1;
-            return seatNumber.toString().padStart(2, '0');
+        async randomize() {
+            try {
+                await axios.get('poolPosition');
+                this.fetchPoolPosition();
+            } catch (error) {
+                console.error(error);
+            }
         },
-        async parseOutput(output) {
-            const lines = output.split('\n');
+        organizeTables() {
             const tables = [];
+            let currentTable = [];
 
-            lines.forEach((line) => {
-                const tableMatch = line.match(/Table (\d+): \[(.+)\]/);
-                if (tableMatch) {
-                    const tableNumber = tableMatch[1];
-                    const students = tableMatch[2].split(', ').map(student => student.replace(/['"]+/g, ''));
-                    tables.push({ tableNumber, students });
+            this.students.sort((a, b) => a.position - b.position);
+
+            this.students.forEach((student, index) => {
+                currentTable.push(student);
+
+                if (currentTable.length === this.seatsPerTable) {
+                    tables.push({ students: currentTable });
+                    currentTable = [];
                 }
             });
 
-            return tables;
-        }
-    }
+            if (currentTable.length > 0) {
+                tables.push({ students: currentTable });
+            }
+
+            this.tables = tables;
+        },
+        getSeatNumber(tableIndex, studentIndex) {
+            return tableIndex * this.seatsPerTable + studentIndex + 1;
+        },
+    },
+    mounted() {
+        this.fetchPoolPosition();
+    },
 };
 </script>
 
-<style>
+<style scoped>
 .room {
     padding: 20px;
 }

@@ -162,8 +162,34 @@ Students.deleteStudent = async function(student_id) {
     return results;
 };
 
-Students.getChampionByTeam = async function(team_id) {
-    const sql = `SELECT * FROM STUDENTS WHERE team_id = ${team_id} ORDER BY points DESC LIMIT 1;`;
+Students.getChampionByTeam = async function() {
+    const sql = `WITH RankedStudents AS (
+                    SELECT
+                        s.student_id,
+                        s.name,
+                        s.email,
+                        s.points,
+                        s.team_id,
+                        t.name AS team_name,
+                        ROW_NUMBER() OVER (PARTITION BY s.team_id ORDER BY s.points DESC) AS potato
+                    FROM
+                        STUDENTS s
+                    JOIN
+                        TEAMS t ON s.team_id = t.team_id
+                )
+                SELECT
+                    student_id,
+                    name,
+                    email,
+                    points,
+                    team_id,
+                    team_name
+                FROM
+                    RankedStudents
+                WHERE
+                    potato <= 3
+                ORDER BY
+                    team_id, potato;`;
     const [results, metadata] = await sequelize.query(sql);
     return results;
 }

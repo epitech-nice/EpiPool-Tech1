@@ -42,18 +42,18 @@ export default {
 	},
 	methods: {
 		submitSignUp() {
-            // axios.post('register', {
-            //     name: this.name,
-            //     email: this.email,
-            //     password: this.password
-            // }).then(response => {
-            //     const token = response.data.token;
-            //     const authStore = useAuthStore();
-            //     authStore.setToken(token);
-            //     this.$router.push('/dashboard');
-            // }).catch(err => {
-            //     console.log();
-            // });
+            axios.post('register', {
+                name: this.name,
+                email: this.email,
+                password: this.password
+            }).then(response => {
+                const token = response.data.token;
+                const authStore = useAuthStore();
+                authStore.setToken(token);
+                this.$router.push('/dashboard');
+            }).catch(err => {
+                console.log();
+            });
         },
         async submitLogin() {
 			const { show } = useNotification();

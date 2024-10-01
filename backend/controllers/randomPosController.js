@@ -1,8 +1,9 @@
 const Student = require('../models/StudentModel');
+require('dotenv').config();
 
-function generateRandomPositions(totalStudents) {
+function generateRandomPositions(maxPosition) {
     const positions = [];
-    for (let i = 1; i <= totalStudents; i++) {
+    for (let i = 1; i <= maxPosition; i++) {
         positions.push(i);
     }
     for (let i = positions.length - 1; i > 0; i--) {
@@ -17,16 +18,22 @@ exports.randomPositions = async (req, res) => {
         const students = await Student.findAll();
         const totalStudents = students.length;
 
-        if (totalStudents === 0) {
-            return res.status(404).json({ message: 'Students not found' });
+        const maxPosition = parseInt(process.env.POSITION_AVAILABLE, 10);
+        
+        if (isNaN(maxPosition) || maxPosition <= 0) {
+            return res.status(400).json({ message: 'Invalid POSITION_AVAILABLE value' });
         }
 
-        const randomPositions = generateRandomPositions(totalStudents);
+        if (totalStudents === 0) {
+            return res.status(404).json({ message: 'No students found' });
+        }
+
+        const randomPositions = generateRandomPositions(maxPosition);
         const updatedStudents = [];
 
         for (let i = 0; i < totalStudents; i++) {
             const student = students[i];
-            const randomPosition = randomPositions[i];
+            const randomPosition = randomPositions[i % maxPosition];
             
             await Student.update(
                 { position: randomPosition },

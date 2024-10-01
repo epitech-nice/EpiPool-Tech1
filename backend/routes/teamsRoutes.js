@@ -148,15 +148,119 @@ router.put('/Update', teamController.changeTeam);
  */
 router.delete('/Delete', teamController.deleteTeam);
 
-
+/**
+ * @swagger
+ * /api/teams/GetPoints:
+ *   get:
+ *     summary: Retrieve points of all teams
+ *     tags: [Teams]
+ *     responses:
+ *       200:
+ *         description: A list of teams and their points
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/TeamPoints'
+ */
 router.get('/GetPoints', teamController.getPoints);
 
+/**
+ * @swagger
+ * /api/teams/GetPointsByTeam:
+ *   get:
+ *     summary: Retrieve points of a specific team
+ *     tags: [Teams]
+ *     parameters:
+ *       - in: query
+ *         name: team_id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID of the team to retrieve points for
+ *     responses:
+ *       200:
+ *         description: Team points retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TeamPoints'
+ *       404:
+ *         description: Team not found
+ */
 router.get('/GetPointsByTeam', teamController.getPointsByTeam);
 
+/**
+ * @swagger
+ * /api/teams/AddPoints:
+ *   put:
+ *     summary: Add points to a team
+ *     tags: [Teams]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               team_id:
+ *                 type: integer
+ *                 description: The ID of the team to add points to
+ *               points:
+ *                 type: integer
+ *                 description: The number of points to add
+ *     responses:
+ *       200:
+ *         description: Points added successfully
+ *       400:
+ *         description: Invalid input
+ *       404:
+ *         description: Team not found
+ */
 router.put('/AddPoints', teamController.addPoints);
 
+/**
+ * @swagger
+ * /api/teams/RemovePoints:
+ *   put:
+ *     summary: Remove points from a team
+ *     tags: [Teams]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               team_id:
+ *                 type: integer
+ *                 description: The ID of the team to remove points from
+ *               points:
+ *                 type: integer
+ *                 description: The number of points to remove
+ *     responses:
+ *       200:
+ *         description: Points removed successfully
+ *       400:
+ *         description: Invalid input
+ *       404:
+ *         description: Team not found
+ */
 router.put('/RemovePoints', teamController.removePoints);
 
+/**
+ * @swagger
+ * /api/teams/RandomTeam:
+ *   get:
+ *     summary: Assign students randomly to teams
+ *     tags: [Teams]
+ *     responses:
+ *       200:
+ *         description: Students randomly assigned to teams
+ *       500:
+ *         description: Error while assigning teams
+ */
 router.get('/RandomTeam', teamController.randomTeam);
 
 module.exports = router;

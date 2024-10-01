@@ -48,9 +48,9 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_HOST=${DB_HOST}
       - DB_DIALECT=${DB_DIALECT}
-      - USER_TOKEN_API_LIONEL=${USER_TOKEN_API_LIONEL}
       - IP_HUB=${IP_HUB}
       - JWT_SECRET=${JWT_SECRET}
+      - POSITION_AVAILABLE=${POSITION_AVAILABLE}
     depends_on:
       - mysql
 

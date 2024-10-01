@@ -23,6 +23,11 @@ const Students = sequelize.define('Student', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    position: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: null
+    },
     student_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -180,11 +185,9 @@ Students.updatePoints = async function(student_id, points, reason, operation = '
         const [data] = await sequelize.query(`SELECT points, team_id FROM STUDENTS WHERE student_id = :student_id`, {
             replacements: { student_id }
         });
-
         if (!data[0]) {
             throw new Error("Student not found");
         }
-
         let current_points = data[0].points;
         const team_id = data[0].team_id;
 

@@ -259,4 +259,6 @@ router.get('/getChampionByTeam', studentController.getChampionByTeam);
 
 router.put('/changeTeam', studentController.changeTeam);
 
+router.get('/getStudentPositions', studentController.getStudentPositions);
+
 module.exports = router;

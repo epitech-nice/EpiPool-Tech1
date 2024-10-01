@@ -133,3 +133,22 @@ exports.changeTeam = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+exports.getStudentPositions = async (req, res) => {
+    try {
+        const students = await Students.findAll({
+            attributes: ['student_id', 'name', 'position']
+        });
+
+        if (students.length === 0) {
+            return res.status(404).json({ message: 'No students found' });
+        }
+        return res.status(200).json({
+            message: 'Student positions retrieved successfully',
+            students: students
+        });
+    } catch (error) {
+        console.error(`Error retrieving student positions: ${error.message}`);
+        return res.status(500).json({ error: 'Error retrieving student positions' });
+    }
+};

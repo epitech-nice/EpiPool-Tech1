@@ -65,6 +65,7 @@ CREATE TABLE `STUDENTS` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `points` int NOT NULL,
+  `position` int DEFAULT NULL,
   `student_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

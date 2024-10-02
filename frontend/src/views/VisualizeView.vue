@@ -33,7 +33,7 @@ export default {
     },
     methods: {
         async fetchChampions() {
-            const response = await axios.get('students/getChampionByTeam');
+            const response = await axios.get('/getChampionByTeam');
             this.champions = response.data;
         },
         async fetchTeams() {
@@ -168,7 +168,7 @@ export default {
     text-align: center;
     margin-top: 10px;
     font-family: 'Uncial Antiqua', cursive;
-    font-size: 2.5em;
+    font-size: 2em;
     text-shadow: 0px 0px 8px rgba(255, 215, 0, 0.7);
 }
 
@@ -177,7 +177,7 @@ export default {
     z-index: 5;
     position: relative;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.3em;
     margin-top: 10px;
     display: inline-block;
     padding: 5px 15px;

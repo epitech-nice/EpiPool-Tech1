@@ -68,7 +68,7 @@ exports.uploadCSV = (req, res) => {
     const results = [];
 
     fs.createReadStream(filePath)
-        .pipe(csv())
+        .pipe(csv({ separator: ';' }))
         .on('data', (data) => results.push(data))
         .on('end', async () => {
             try {

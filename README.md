@@ -40,21 +40,17 @@ You have to put the sql schema at the root of the repository
 
 You have to create a .env file at the root of the repository.
 
-```MYSQL_ROOT_PASSWORD=rootpassword
-MYSQL_DATABASE=EpiPool-DB
-MYSQL_USER=user
-MYSQL_PASSWORD=password
-PMA_HOST=mysql
-PMA_USER=root
-PMA_PASSWORD=rootpassword
-DB_NAME=EpiPool-DB
-DB_USER=user
-DB_PASSWORD=password
-DB_HOST=mysql
-DB_DIALECT=mysql
-IP_HUB=10.73.190.91
-JWT_SECRET=Potat_Gang_Corp_Epitech
-POSITION_AVAILABLE=64
+```MYSQL_ROOT_PASSWORD=
+MYSQL_DATABASE=
+MYSQL_USER=
+MYSQL_PASSWORD=
+PMA_HOST=
+PMA_USER=
+PMA_PASSWORD=
+DB_HOST=
+DB_DIALECT=
+JWT_SECRET=
+POSITION_AVAILABLE=
 ```
 You can change the value as you like
 

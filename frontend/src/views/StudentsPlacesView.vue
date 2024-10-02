@@ -13,7 +13,7 @@
                 <h2>Table {{ tableIndex + 1 }}</h2>
                 <ul>
                     <li v-for="(student, studentIndex) in table.students" :key="student.student_id">
-                        <strong>{{ getSeatNumber(tableIndex, studentIndex) }}:</strong> {{ student.name }}
+                        <strong>{{ student.position }}:</strong> {{ student.name }}
                     </li>
                 </ul>
             </div>
@@ -80,8 +80,7 @@ export default {
 
             this.tables.forEach((table, tableIndex) => {
                 table.students.forEach((student, studentIndex) => {
-                    const seatNumber = this.getSeatNumber(tableIndex, studentIndex).toString().padStart(2, '0');
-                    csvContent += `${student.name},${seatNumber}\n`;
+                    csvContent += `${student.name},${student.position}\n`;
                 });
             });
 
